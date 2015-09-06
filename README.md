@@ -17,14 +17,13 @@
 1. **Install JDK 8u40 or later**: Earlier Java version will not work. You can get it 
    [here] (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 
-# Two
+# Feature Details
 asdasdasd
-#Three
-asdsadasd
+
 
 # Cheatsheet
 Command | Description
 --------| ------------
-`add <event> <XX:XX> <DD/MM/YY>` | add a new event to your to-do list
+`add <event> <XX:XX> <DD/MM/YY>` | add a new event with do-time to your to-do list
 `search <Key Word>` | Search for the event in your list
 `exit` | Exit Just_Do
