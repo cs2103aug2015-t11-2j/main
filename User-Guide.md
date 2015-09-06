@@ -16,6 +16,11 @@
 # Quick Start
 1. **Install JDK 8u40 or later**: Earlier Java version will not work. You can get it 
    [here] (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
+2. **Download Just_Do**: You can then download `Just_Do.jar` from the latest release 
+   here: https://github.com/Just_Do/releases   (Haven't had now)
+3. **Launch Just-Do** Simply double-click on the `Just_Do-GUI.jar` file to start Just_Do. 
+   You will be greeted with a simple interface that has a command bar. 
+   This command bar is where you enter short commands to tell Collate what to do. <br>
 
 # Feature Details
 asdasdasd
