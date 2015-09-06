@@ -21,3 +21,10 @@
 asdasdasd
 #Three
 asdsadasd
+
+# Cheatsheet
+Command | Description
+--------| ------------
+`add <event> <XX:XX> <DD/MM/YY>` | add a new event to your to-do list
+`search <Key Word>` | Search for the event in your list
+`exit` | Exit Just_Do
