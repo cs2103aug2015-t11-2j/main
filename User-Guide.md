@@ -1,4 +1,5 @@
-#CS2103T Project of Team t11-2j
+# About
+Now that you know what Just-Do is [about](../README.md)(haven't update), you can follow this guide to learn how to use Just-Do effectively.
 
 # Table of Contents
 - [Quick Start](#quick-start)
