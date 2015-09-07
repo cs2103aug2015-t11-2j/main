@@ -1,19 +1,20 @@
 # About
-Now that you know what Just-Do is [about](../README.md)(haven't update), you can follow this guide to learn how to use Just-Do effectively.
+Now that you know what Just_Do is [about](../README.md)(haven't update), you can follow this guide to learn how to use Just_Do effectively.
 
 # Table of Contents
 - [Quick Start](#quick-start)
 - [Feature Details](#feature-details)
   - [Add Events](#add-events)
     - [Simple add](#simple-add)
-    - [Add events with details](#add-events-with-details)
+    - [Add events with deadlines](#add-events-with-deadlines)
     - [Add events with start and end time](#add-events-with-start-and-end-time)
   - [Show Events](#show-events)
+  - [Outline](#outline)
   - [Mark Completed](#mark-completed)
   - [Comment Events](#comment-events)
   - [Update and Delete Events](#update-and-delete-events)
   - [Search Event](#search-event)
-  - [Undo Redo](#undo-redo)
+  - [Undo and Redo](#undo-and-redo)
   - [Import Export the data](#import-export-the-data)
   - [Recurring Tasks](#recurring-tasks)
   - [Help List](#help-list)
@@ -25,9 +26,9 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
    [here] (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 2. **Download Just_Do**: You can then download `Just_Do.jar` from the latest release 
    here: https://github.com/Just_Do/releases   (Haven't put up yet)
-3. **Launch Just-Do** Simply double-click on the `Just_Do-GUI.jar` file to start Just_Do. 
+3. **Launch Just_Do** Simply double-click on the `Just_Do-GUI.jar` file to start Just_Do. 
    You will be greeted with a simple interface that has a command bar. 
-   This command bar is where you enter short commands to tell Collate what to do. <br>
+   This command bar is where you enter short commands to tell Just-Do what to do. <br>
 4. **Add new events**. You can type `add <event>` to add a new event to your to-do list.
 5. **Show event list**: The event list can be shown by typing `show`. 
 6. **Try more commands**: 
@@ -41,87 +42,90 @@ To learn more details of Just_Do features, refer to the 'Feature Details' sectio
 ## Add Events
 There are three formats to add new events to users' to-do list
 ### Simple add
-Use command `add <event>` to add a simple event quick.
+Use command `add <event>` to add a simple event quickly.
 
 Examples:
 * `add have a CS2013T class`
-* `add dating with girl friend`
-* `add having lunch with Mao`
+* `add date with girl friend`
+* `add have lunch with Mao`
 
-### Add events with details
-Use command `add <event> <XX:XX> <DD/MM/YY>` to add an event with the start time
+### Add events with deadlines
+Use command `add <event> <XX:XX> <DD/MM/YY>` to add an event with the deadlines
 
 Examples:
-* `add have CS2103T class 9:00 tomorrow`
-* `add have a dating 20:00 05/10/2015`
-* `add have lunch with Mao 12:00 today`
+* `add finish CS2103T tutorial 9:00 tomorrow`
+* `add buy flower for girl friend 20:00 05/10/2015`
+* `add cook lunch 12:00 today`
 
 ### Add events with start and end time
 Use command `add <event> <XX:XX> to <XX:XX> <DD/MM/YY>` to add an event with start time and deadline
 
 Example:
 * `add have CS2103T class 9:00 to 11:00 tomorrow`
-* `add have a dating 20:00 to 24:00 05/10/2015`
-* `add have lunch with Mao 12:00 to 13:00 today`
+* `add date with girl friend 20:00 to 24:00 05/10/2015`
+* `add have lunch with father 12:00 to 13:00 today`
 
 ## Show Events
 Show all the events added by typing following command. These events would be shown in a table.
 
 `show`
 
+## Outline
+Show all the events which need to be done today or tomorrow by typing following command. These events would be shown in a table.
+
+`outline`
+
 ## Mark Completed
 Mark the event as completed by typing following command. Then, the event would not be shown in your reminder list any more.
 
 `mark`
-> Tip: the function can only be used when an event has been chosed.
+> Tip: the function can only be used when an event has been chosen.
 
 ## Comment Events
 Use `comment <Your Comment>` to add comments to your selected event. You can add some details for the event.
 
 Example:
 * `comment E3-06-09`
-* `comment remember to take flower`
-* `comment Do not eat eggs`
+* `comment remember to buy flower`
+* `comment do not eat eggs`
 
-> Tip: the function can only be used when an event has been chosed.
+> Tip: the function can only be used when an event has been chosen.
 
 ## Update and Delete Events
 You can delete the event with the following command.
 
 `delete`
-> Tip: the function can only be used when an event has been chosed.
+> Tip: the function can only be used when an event has been chosen.
 
 You can update the information of the event with the following command.
 
 `update`
-> Tip: the function can only be used when an event has been chosed. Also, when you update the event, the used information
-would be showned in the command window and used event would be deleted. 
+> Tip: the function can only be used when an event has been chosen. Also, when you update the event, the original information would be shown in the command window and original event would be deleted. The user can proceed to add the event after modification.
 
 ## Search Event
-Use `search <Key Word>` to search events form your to do lists. These events would be shown in a table.
+Use `search <Key Word>` to search events from your to-do lists. These events would be shown in a table.
 
 Example:
 * `search class`
 * `search dating`
 * `search lunch`
 
-## Undo Redo
+## Undo and Redo
 You can use the following command to undo your last operation.
 
 `undo`
 > Tip: Users can also use `Ctrl + Z` to achieve the undo operation.
 
-You can use the following command to redo the operation undoed.
+You can use the following command to redo the operation "undo"ed.
 
 `redo`
 > Tip: these operations can only be saved before closing the software.
 
 ## Import Export the data
-You can use the following command to open the folder where the data file has saved.
+You can use the following command to open the folder where the data file is saved.
 
 `locate`
-> Tip: As the folder has been opened, you can backup the date file and copy it to other computer. Also, you can copy 
-the file from other computers to this computer.
+> Tip: As the folder has been opened, you can backup the date file and copy it to another computer. Also, you can copy the file from other computers to this computer.
 
 ## Recurring Tasks
 Use `recur <days>` to set this event as a recurring task.
@@ -130,13 +134,13 @@ Example:
 * `recur 7`
 * `recur 30`
 
-> Tip: the function can only be used when an event has been chosed.
+> Tip: the function can only be used when an event has been chosen.
 
 ## Help List
 Show the help list and see all the commands available. Type the following command in the command bar.
 
 `-help`
-> Tip: The available commands are shown in the cheat sheet below.
+> Tip: The available commands are shown in the cheatsheet below.
 
 ## Exiting
 Simply close the window or type the following command in the command bar.
@@ -152,9 +156,9 @@ Command | Description
 `mark`| Mark event as done
 `comment <Your Comment>`| Comment on users' current event
 `show` | Show all events
-`locate` | Show the file in the file explorer to allow users to import/export or backup
+`locate` | Show the data file in the file explorer which allows users to import/export or backup
 `update` | Update the details of users' events
-`undo` | Undo the previous operation (This is also able to do by Ctrl + Z)
+`undo` | Undo the previous operation (This can also be achieved by Ctrl + Z)
 `redo` | Redo the undo operation
 `delete` | Delete the event
 `-help` | Call the help menu to view all the commands available
