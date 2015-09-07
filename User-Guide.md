@@ -75,8 +75,14 @@ Mark the event as completed by typing following command. Then, the event would n
 `mark`
 > Tip: the function can only be used when an event has been chosed.
 
-
 ## Comment Events
+Use `comment <Your Comment>` to add comments to your selected event. You can add some details for the event.
+
+Example:
+* `comment E3-06-09`
+* `comment remember to take flower`
+* `comment Do not eat eggs`
+> Tip: the function can only be used when an event has been chosed.
 
 ## Update and Deltet Events
 
