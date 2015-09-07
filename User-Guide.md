@@ -87,10 +87,12 @@ Example:
 
 ## Update and Delete Events
 You can delete the event with the following command.
+
 `delete`
 > Tip: the function can only be used when an event has been chosed.
 
 You can update the information of the event with the following command.
+
 `update`
 > Tip: the function can only be used when an event has been chosed. Also, when you update the event, the used information
 would be showned in the command window and used event would be deleted. 
