@@ -4,10 +4,11 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
 # Table of Contents
 - [Quick Start](#quick-start)
 - [Feature Details](#feature-details)
-  - [Marking code](#marking-code)
+  - [Add Events](#add-event)
+    - [Simple add](#simple-add)
+    - [Add events with details](#add-events-with-detail)
+    - [Add events with strat and end time](#add-events-with-start-and-end-time)
   - [Collating](#collating)
-    - [Omitting sub folders](#omitting-sub-folders)
-    - [Collating only certain types of files](#collating-only-certain-types-of-files)
   - [Viewing an author's statistics](#viewing-an-authors-statistics)
   - [Viewing the summary](#viewing-the-summary)
   - [Exiting](#exiting)
@@ -32,6 +33,15 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
 To learn more details of Just_Do features, refer to the 'Feature Details' section below. 
 
 # Feature Details
+## Add Events
+There are three formats to add new events to users' to-do list
+### Simple add
+Use command `add <event>` to add a simple event quick.
+
+Examples:
+*`add have a CS2013T class`
+*`add dating with girl friend`
+*`add having lunch with Mao`
 
 ## Exiting
 Simply close the window or type the following command in the command bar.
