@@ -106,12 +106,37 @@ Example:
 * `search lunch`
 
 ## Undo Redo
+You can use the following command to undo your last operation.
+
+`undo`
+> Tip: Users can also use `Ctrl + Z` to achieve the undo operation.
+
+You can use the following command to redo the operation undoed.
+
+`redo`
+> Tip: these operations can only be saved before closing the software.
 
 ## Import Export the data
+You can use the following command to open the folder where the data file has saved.
+
+`locate`
+> Tip: As the folder has been opened, you can backup the date file and copy it to other computer. Also, you can copy 
+the file from other computers to this computer.
 
 ## Recurring Tasks
+Use `recur <days>` to set this event as a recurring task.
+
+Example:
+* `recur 7`
+* `recur 30`
+
+> Tip: the function can only be used when an event has been chosed.
 
 ## Help List
+Show the help list and see all the commands available. Type the following command in the command bar.
+
+`-help`
+> Tip: The available commands are shown in the cheat sheet below.
 
 ## Exiting
 Simply close the window or type the following command in the command bar.
