@@ -14,7 +14,7 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
   - [Update and Deltet Events](#update-and-delete-events)
   - [Search Event](#search-event)
   - [Undo Redo](#undo-redo)
-  - [Import/Export the data](#improt-export-the-data)
+  - [Import Export the data](#import-export-the-data)
   - [Recurring Tasks](#recurring-tasks)
   - [Help List](#help-list)
   - [Exiting](#exiting)
