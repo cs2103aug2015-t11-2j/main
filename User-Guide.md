@@ -4,7 +4,7 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
 # Table of Contents
 - [Quick Start](#quick-start)
 - [Feature Details](#feature-details)
-  - [Add Events](#add-event)
+  - [Add Events](#add-events)
     - [Simple add](#simple-add)
     - [Add events with details](#add-events-with-details)
     - [Add events with start and end time](#add-events-with-start-and-end-time)
