@@ -33,6 +33,10 @@ To learn more details of Just_Do features, refer to the 'Feature Details' sectio
 
 # Feature Details
 
+## Exiting
+Simply close the window or type the following command in the command bar.
+
+`exit`
 
 # Cheatsheet
 Command | Description
