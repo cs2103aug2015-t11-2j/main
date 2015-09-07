@@ -65,8 +65,16 @@ Example:
 * `add have lunch with Mao 12:00 to 13:00 today`
 
 ## Show Events
+Show all the events added by typing following command. These events would be shown in a table.
+
+`show`
 
 ## Mark Completed
+Mark the event as completed by typing following command. Then, the event would not be shown in your reminder list any more.
+
+`mark`
+> Tip: the function can only be used when an event has been chosed.
+
 
 ## Comment Events
 
