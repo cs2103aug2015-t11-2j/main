@@ -22,9 +22,16 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
 3. **Launch Just-Do** Simply double-click on the `Just_Do-GUI.jar` file to start Just_Do. 
    You will be greeted with a simple interface that has a command bar. 
    This command bar is where you enter short commands to tell Collate what to do. <br>
+4. **Add new events**. You can type `add <event>` to add a new event to your to-do list.
+5. **Show event list**: The event list can be shown by typing `show`. 
+6. **Try more commands**: 
+     * `comment <Your Comment>` - Add comments to your added events
+     * `-help` - See all the commands available
+     * `exit` - Exit Just_Do using the command bar
+
+To learn more details of Just_Do features, refer to the 'Feature Details' section below. 
 
 # Feature Details
-asdasdasd
 
 
 # Cheatsheet
