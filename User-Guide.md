@@ -49,9 +49,20 @@ Examples:
 * `add having lunch with Mao`
 
 ### Add events with details
+Use command `add <event> <XX:XX> <DD/MM/YY>` to add an event with the start time
+
+Examples:
+* `add have CS2103T class 9:00 tomorrow`
+* `add have a dating 20:00 05/10/2015`
+* `add have lunch with Mao 12:00 today`
 
 ### Add events with start and end time
+Use command `add <event> <XX:XX> to <XX:XX> <DD/MM/YY>` to add an event with start time and deadline
 
+Example:
+* `add have CS2103T class 9:00 to 11:00 tomorrow`
+* `add have a dating 20:00 to 24:00 05/10/2015`
+* `add have lunch with Mao 12:00 to 13:00 today`
 
 ## Show Events
 
@@ -81,7 +92,7 @@ Command | Description
 --------| ------------
 `add <event> <XX:XX> <DD/MM/YY>` | Add a new event with deadline to users' to-do list
 `add <event>`| Add a new event without details
-`add <event> <XX:XX> <XX:XX> <DD/MM/YY>` | Add a new event with specific do-time
+`add <event> <XX:XX> to <XX:XX> <DD/MM/YY>` | Add a new event with specific do-time
 `mark`| Mark event as done
 `comment <Your Comment>`| Comment on users' current event
 `show` | Show all events
