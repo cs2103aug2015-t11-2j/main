@@ -39,9 +39,9 @@ There are three formats to add new events to users' to-do list
 Use command `add <event>` to add a simple event quick.
 
 Examples:
-*`add have a CS2013T class`
-*`add dating with girl friend`
-*`add having lunch with Mao`
+* `add have a CS2013T class`
+* `add dating with girl friend`
+* `add having lunch with Mao`
 
 ## Exiting
 Simply close the window or type the following command in the command bar.
