@@ -47,7 +47,7 @@ Examples:
 * `add have a CS2013T class`
 * `add dating with girl friend`
 * `add having lunch with Mao`
-* 
+
 ### Add events with details
 
 ### Add events with strat and end time
