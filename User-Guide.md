@@ -6,15 +6,15 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
 - [Feature Details](#feature-details)
   - [Add Events](#add-event)
     - [Simple add](#simple-add)
-    - [Add events with details](#add-events-with-detail)
-    - [Add events with strat and end time](#add-events-with-start-and-end-time)
+    - [Add events with details](#add-events-with-details)
+    - [Add events with start and end time](#add-events-with-start-and-end-time)
   - [Show Events](#show-events)
   - [Mark Completed](#mark-completed)
   - [Comment Events](#comment-events)
   - [Update and Deltet Events](#update-and-delete-events)
   - [Search Event](#search-event)
-  - [Undo/Redo](#undo/redo)
-  - [Import/Export the data](#improt/export-the-data)
+  - [Undo Redo](#undo-redo)
+  - [Import/Export the data](#improt-export-the-data)
   - [Recurring Tasks](#recurring-tasks)
   - [Help List](#help-list)
   - [Exiting](#exiting)
@@ -50,7 +50,7 @@ Examples:
 
 ### Add events with details
 
-### Add events with strat and end time
+### Add events with start and end time
 
 
 ## Show Events
@@ -63,9 +63,9 @@ Examples:
 
 ## Search Event
 
-## Undo/Redo
+## Undo Redo
 
-## Import/Export the data
+## Import Export the data
 
 ## Recurring Tasks
 
