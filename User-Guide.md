@@ -47,6 +47,29 @@ Examples:
 * `add have a CS2013T class`
 * `add dating with girl friend`
 * `add having lunch with Mao`
+* 
+### Add events with details
+
+### Add events with strat and end time
+
+
+## Show Events
+
+## Mark Completed
+
+## Comment Events
+
+## Update and Deltet Events
+
+## Search Event
+
+## Undo/Redo
+
+## Import/Export the data
+
+## Recurring Tasks
+
+## Help List
 
 ## Exiting
 Simply close the window or type the following command in the command bar.
