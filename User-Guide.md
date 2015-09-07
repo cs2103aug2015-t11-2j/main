@@ -98,6 +98,12 @@ You can update the information of the event with the following command.
 would be showned in the command window and used event would be deleted. 
 
 ## Search Event
+Use `search <Key Word>` to search events form your to do lists. These events would be shown in a table.
+
+Example:
+* `search class`
+* `search dating`
+* `search lunch`
 
 ## Undo Redo
 
