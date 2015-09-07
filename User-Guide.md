@@ -11,7 +11,7 @@ Now that you know what Just-Do is [about](../README.md)(haven't update), you can
   - [Show Events](#show-events)
   - [Mark Completed](#mark-completed)
   - [Comment Events](#comment-events)
-  - [Update and Deltet Events](#update-and-delete-events)
+  - [Update and Delete Events](#update-and-delete-events)
   - [Search Event](#search-event)
   - [Undo Redo](#undo-redo)
   - [Import Export the data](#import-export-the-data)
@@ -85,7 +85,7 @@ Example:
 
 > Tip: the function can only be used when an event has been chosed.
 
-## Update and Deltet Events
+## Update and Delete Events
 You can delete the event with the following command.
 `delete`
 > Tip: the function can only be used when an event has been chosed.
