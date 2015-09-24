@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class Action {
+	
+	static void addToList(ArrayList<String> list, String parameter){
+		list.add(parameter);
+	}
+	static void showAll(ArrayList<String> list) {
+		printEvent(list);
+	}
+	private static void printEvent(ArrayList<String> list) {
+		// TODO Auto-generated method stub
+		
+	}
+	static void exit() {
+		ToDoList.shouldExit = true;
+	}
+
+	static void searchKey(ArrayList<String> list, String parameter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	static void deleteEvent(ArrayList<String> list, String parameter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	static void chooseFile(ArrayList<String> list, String parameter) {
+		// TODO Auto-generated method stub
+		
+	}
+}
