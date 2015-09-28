@@ -3,22 +3,23 @@ package main;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class ToDoList {
 
 	private static final int MAX_NUMBER_OF_EVENTS = 1000;
 
 	private static final String EXIT_MSG = "Thanks for using Yui!";
+	private static final String WELCOME_MSG = "Hello, my master. This is Yui." + "\n" + "What would you like to do? \n";
 
 	private static final String ERROR_MSG = "Error!";
+	private static ArrayList<String> list;
 
-	static boolean shouldExit = false;
+	protected static boolean shouldExit = false;
 
-	private static void implement(ArrayList<String> list, String userCommand) throws IOException {
-		while (!shouldExit) {
+	public static String implement(String userCommand) throws IOException {
 			String command = Parser.getAction(userCommand);
 			String parameter = Parser.getParameter(userCommand);
-			modify(list, command, parameter);
-		}
+			return modify(list, command, parameter);
 	}
 
 	private static String modify(ArrayList<String> list, String command, String parameter) throws IOException {
@@ -50,9 +51,10 @@ public class ToDoList {
 
 	}
 
-	public static void initialize() {
-		ArrayList<String> list = new ArrayList<String>(MAX_NUMBER_OF_EVENTS);
-		implement(list, userCommand);
+	public static String initialize() throws IOException {
+		list = new ArrayList<String>(MAX_NUMBER_OF_EVENTS);
+		shouldExit = false;
+		return WELCOME_MSG;
 	}
 
 }

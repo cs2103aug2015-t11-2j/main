@@ -1,5 +1,7 @@
 package Yui;
  
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -17,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import main.ToDoList;
  
 public class Yui_GUI extends Application{
 	public String userCommand;
@@ -30,7 +33,7 @@ public class Yui_GUI extends Application{
     }
   
    @Override
-   public void start(Stage primaryStage) {
+   public void start(Stage primaryStage) throws IOException {
        primaryStage.setTitle("Yui");
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
@@ -118,7 +121,6 @@ public class Yui_GUI extends Application{
        Scene scene = new Scene(backg, 600, 400); 
        primaryStage.setScene(scene);  
        
-       
        /*Scene scene = new Scene(grid, 600, 400);
        primaryStage.setScene(scene);*/
        
@@ -141,6 +143,9 @@ public class Yui_GUI extends Application{
        grid.add(userCommandBox, 0, 3);
        userCommandBox.requestFocus();
        
+       returnCommand = ToDoList.initialize();
+       showBox.appendText(returnCommand + "\n");
+       
        userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
     	   @Override
     	   public void handle(KeyEvent event) { 
@@ -151,7 +156,13 @@ public class Yui_GUI extends Application{
     			   userCommandBox.clear();
     			   //link with logic
     			   if(!userCommand.equals("")){
-    				   showBox.appendText(userCommand + "\n");
+    				   try {
+						returnCommand = ToDoList.implement(userCommand);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    				   showBox.appendText(returnCommand + "\n" + "\n");
     			   }
     		   }
     	   }
@@ -166,8 +177,14 @@ public class Yui_GUI extends Application{
     		   userCommandBox.clear();
     		   //link with logic
     		   if(!userCommand.equals("")){
-    			   showBox.appendText(userCommand + "\n");
-    			   }
+				   try {
+					returnCommand = ToDoList.implement(userCommand);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				   showBox.appendText(returnCommand + "\n");
+			   }
     		   }
     	   });
        
