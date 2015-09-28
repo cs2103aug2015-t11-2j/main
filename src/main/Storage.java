@@ -22,8 +22,8 @@ public class Storage {
 	private static final Path DEFAULT_TEMP_DIRECTORY = Paths
 			.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
 
-	public Path mainDir;
-	public Path tempDir;
+	public static Path mainDir;
+	public static Path tempDir;
 
 	// constructor
 	public Storage(String fileName) throws IOException {
@@ -41,7 +41,7 @@ public class Storage {
 	}
 
 	// public method, no static one so need to use constructor be4hand
-	public void save(ArrayList<String> arr) throws IOException {
+	public static void save(ArrayList<String> arr) throws IOException {
 		backup();
 		writeIntoFile(arr);
 	}
@@ -71,7 +71,7 @@ public class Storage {
 		return newFile.createNewFile();
 	}
 
-	private void backup() throws IOException {
+	private static void backup() throws IOException {
 		Files.copy(mainDir, tempDir, StandardCopyOption.REPLACE_EXISTING);
 	}
 
@@ -84,7 +84,7 @@ public class Storage {
 		return copy;
 	}
 
-	private void writeIntoFile(ArrayList<String> arr) throws IOException {
+	private static void writeIntoFile(ArrayList<String> arr) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(mainDir.toString()));
 		for (String line : arr) {
 			bw.write(line);

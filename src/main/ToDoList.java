@@ -1,3 +1,5 @@
+package main;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,7 +31,7 @@ public class ToDoList {
 			Action.showAll(list);
 		}
 		case "choose": {
-			Action.chooseFile(list, parameter);
+			//Action.chooseFile(list, parameter);
 		}
 		case "delete": { // need to decide when to backup and which actions need
 							// backup

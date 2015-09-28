@@ -2,12 +2,12 @@ package main;
 
 public class Parser {
 	
-	public String getAction(String userCommand){
+	public static String getAction(String userCommand){
 		String action = getFirstWord(userCommand).toLowerCase();
 		return action;
 	}
 	
-	public String getParameter(String userCommand){
+	public static String getParameter(String userCommand){
 		String parameter = removeFirstWord(userCommand);
 		return parameter;
 	}
