@@ -1,5 +1,5 @@
-package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Action {
@@ -7,28 +7,28 @@ public class Action {
 	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
+	private static final String ADD_SUCCESS_MSG = "Event added successful!";
 
-	static void addToList(ArrayList<String> list, String parameter) {
+	static String addToList(ArrayList<String> list, String parameter) throws IOException {
 		list.add(parameter);
+		Storage.save(list);
+		return ADD_SUCCESS_MSG;
 	}
 
-	static void showAll(ArrayList<String> list) {
-		printEvent(list);
-	}
-
-	private static void printEvent(ArrayList<String> list) {
+	static String showAll(ArrayList<String> list) {
+		StringBuilder output = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println((i+1)+". "+list.get(i));
+			output.append((i+1)+". "+list.get(i));
 		}
+		return output.toString();
 	}
 
 	static void exit() {
 		ToDoList.shouldExit = true;
 	}
 
-	static void searchKey(ArrayList<String> list, String parameter) {
-		String result = searchResult(list, parameter);
-		System.out.print(result);
+	static String searchKey(ArrayList<String> list, String parameter) {
+		return searchResult(list, parameter);
 	}
 
 	private static String searchResult(ArrayList<String> list, String parameter) {
@@ -56,17 +56,18 @@ public class Action {
 
 	}
 
-	static void deleteEvent(ArrayList<String> list, String parameter) {
+	static String deleteEvent(ArrayList<String> list, String parameter) throws IOException {
 		if (Integer.valueOf(parameter)>Integer.valueOf(list.size())){
-			System.out.println(DELETE_OUT_OF_BOUND_MSG);
+			return DELETE_OUT_OF_BOUND_MSG;
 		} else {
 			list.remove(Integer.valueOf(parameter)-1);
-			System.out.println(DELETE_SUCCESSFUL_MSG);
+			Storage.save(list);
+			return DELETE_SUCCESSFUL_MSG;
 		}
 	}
 
-	static void chooseEvent(ArrayList<String> list, String parameter) {
+	static String chooseEvent(ArrayList<String> list, String parameter) {
 		// TODO Auto-generated method stub
-
+		return parameter;
 	}
 }

@@ -1,56 +1,56 @@
-package main;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ToDoList {
 
 	private static final int MAX_NUMBER_OF_EVENTS = 1000;
 
-	private static Scanner sc = new Scanner(System.in);
+	private static final String EXIT_MSG = "Thanks for using Yui!";
+
+	private static final String ERROR_MSG = "Error!";
 
 	static boolean shouldExit = false;
 
-	private static void implement(ArrayList<String> list, Scanner sc2) throws IOException {
+	private static void implement(ArrayList<String> list, String userCommand) throws IOException {
 		while (!shouldExit) {
-			String input = sc.nextLine();
-			String command = Parser.getAction(input);
-			String parameter = Parser.getParameter(input);
+			String command = Parser.getAction(userCommand);
+			String parameter = Parser.getParameter(userCommand);
 			modify(list, command, parameter);
 		}
 	}
 
-	private static void modify(ArrayList<String> list, String command, String parameter) throws IOException {
+	private static String modify(ArrayList<String> list, String command, String parameter) throws IOException {
 		switch (command) {
 		case "add": {
-			Action.addToList(list, parameter);
-			Storage.save(list);
+			return Action.addToList(list, parameter);
+
 		}
 		case "show": {
-			Action.showAll(list);
+			return Action.showAll(list);
 		}
 		case "choose": {
-			//Action.chooseFile(list, parameter);
+			return Action.chooseEvent(list, parameter);
 		}
 		case "delete": { // need to decide when to backup and which actions need
 							// backup
-			Action.deleteEvent(list, parameter);
-			Storage.save(list);
+			return Action.deleteEvent(list, parameter);
+
 		}
 		case "search": {
-			Action.searchKey(list, parameter);
+			return Action.searchKey(list, parameter);
 		}
 		case "exit": {
 			Action.exit();
+			return EXIT_MSG;
 		}
 		}
+		return ERROR_MSG;
 
 	}
 
-	public static void main(String args[]) throws IOException {
+	public static void initialize() {
 		ArrayList<String> list = new ArrayList<String>(MAX_NUMBER_OF_EVENTS);
-		implement(list, sc);
+		implement(list, userCommand);
 	}
 
 }
