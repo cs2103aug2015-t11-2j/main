@@ -20,6 +20,7 @@ import javafx.stage.WindowEvent;
  
 public class Yui_GUI extends Application{
 	public String userCommand;
+	public String returnCommand;
 	private double xOffset = 0;  
     private double yOffset = 0;
 	
