@@ -183,10 +183,10 @@ public class Yui_GUI extends Application{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				   showBox.appendText(returnCommand + "\n");
-			   }
-    		   }
-    	   });
+				   showBox.appendText(returnCommand + "\n" + "\n");
+			   	}
+    	   }
+       });
        
    }
 }
