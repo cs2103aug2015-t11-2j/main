@@ -27,6 +27,7 @@ public class Action {
 
 	static void exit() {
 		ToDoList.shouldExit = true;
+		System.exit(0);
 	}
 
 	static String searchKey(ArrayList<String> list, String parameter) {
