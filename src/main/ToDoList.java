@@ -16,7 +16,7 @@ public class ToDoList {
 	private static final String SPACE = " ";
 	private static ArrayList<String> list;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    private static String nowTime;
+    	private static String nowTime;
 	protected static boolean shouldExit = false;
 
 	public static String implement(String userCommand) throws IOException {
