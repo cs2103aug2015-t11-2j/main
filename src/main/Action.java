@@ -20,18 +20,13 @@ public class Action {
 	static String showAll(ArrayList<String> list) {
 		StringBuilder output = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			if(i == 0){
-				output.append((i+1) + ". " + list.get(i) + "\n");
-			} else {
-				output.append(" " + (i+1) + ". " + list.get(i) + "\n");
-			}
+			output.append((i+1)+". "+list.get(i));
 		}
 		return output.toString();
 	}
 
 	static void exit() {
 		ToDoList.shouldExit = true;
-		System.exit(0);
 	}
 
 	static String searchKey(ArrayList<String> list, String parameter) {
