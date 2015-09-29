@@ -50,8 +50,11 @@ public class ToDoList {
 			Action.exit();
 			return EXIT_MSG;
 		}
+		default: {
+			return ERROR_MSG;
 		}
-		return ERROR_MSG;
+		}
+
 
 	}
 
