@@ -41,7 +41,7 @@ public class Storage {
 	}
 
 	// public method, no static one so need to use constructor be4hand
-	public static void save(ArrayList<String> arr) throws IOException {
+	public void save(ArrayList<String> arr) throws IOException {
 		backup();
 		writeIntoFile(arr);
 	}
