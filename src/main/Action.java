@@ -20,7 +20,11 @@ public class Action {
 	static String showAll(ArrayList<String> list) {
 		StringBuilder output = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			output.append((i+1)+". "+list.get(i));
+			if(i == 0){
+				output.append((i+1) + ". " + list.get(i) + "\n");
+			} else {
+				output.append(" " + (i+1) + ". " + list.get(i) + "\n");
+			}
 		}
 		return output.toString();
 	}
