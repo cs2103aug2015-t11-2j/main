@@ -52,6 +52,7 @@ public class Action {
 					isFound = true; // set status found
 					resultList.append(index++);
 					resultList.append(task);
+					resultList.append("\n");
 				}
 			}
 			if (isFound) {
