@@ -36,7 +36,7 @@ Now that you know what Yui is [about](../README.md)(haven't update), you can fol
      * `-help` - See all the commands available
      * `exit` - Exit Yui using the command bar
 
-To learn more details of Just_Do features, refer to the 'Feature Details' section below. 
+To learn more details of Yui's features, refer to the 'Feature Details' section below. 
 
 # Feature Details
 ## Add Events
@@ -165,4 +165,4 @@ Command | Description
 `outline` | Show today and tomorrow outlines to users
 `recur <days>` | Creat recuring tasks
 `search <Key Word>` | Search for the event in your list
-`exit` | Exit Just_Do
+`exit` | Exit Yui
