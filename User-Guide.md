@@ -50,20 +50,20 @@ Examples:
 * `add have lunch with Mao`
 
 ### Add events with deadlines
-Use command `add <event> <XX:XX> <DD/MM/YY>` to add an event with the deadlines
+Use command `add <event> by <XX:XX> <DD/MM/YY>` to add an event with the deadlines
 
 Examples:
-* `add finish CS2103T tutorial 9:00 tomorrow`
-* `add buy flower for girl friend 20:00 05/10/2015`
-* `add cook lunch 12:00 today`
+* `add finish CS2103T tutorial by 9:00 tomorrow`
+* `add buy flower for girl friend by 20:00 05/10/2015`
+* `add cook lunch by 12:00 today`
 
 ### Add events with start and end time
-Use command `add <event> <XX:XX> to <XX:XX> <DD/MM/YY>` to add an event with start time and deadline
+Use command `add <event> from <XX:XX> to <XX:XX> <DD/MM/YY>` to add an event with start time and deadline
 
 Example:
-* `add have CS2103T class 9:00 to 11:00 tomorrow`
-* `add date with girl friend 20:00 to 24:00 05/10/2015`
-* `add have lunch with father 12:00 to 13:00 today`
+* `add have CS2103T class from 9:00 to 11:00 tomorrow`
+* `add date with girl friend from 20:00 to 24:00 05/10/2015`
+* `add have lunch with father from 12:00 to 13:00 today`
 
 ## Show Events
 Show all the events added by typing following command. These events would be shown in a table.
