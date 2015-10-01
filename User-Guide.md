@@ -1,5 +1,5 @@
 # About
-Now that you know what Just_Do is [about](../README.md)(haven't update), you can follow this guide to learn how to use Just_Do effectively.
+Now that you know what Yui is [about](../README.md)(haven't update), you can follow this guide to learn how to use Yui effectively.
 
 # Table of Contents
 - [Quick Start](#quick-start)
@@ -24,17 +24,17 @@ Now that you know what Just_Do is [about](../README.md)(haven't update), you can
 # Quick Start
 1. **Install JDK 8u40 or later**: Earlier Java version will not work. You can get it 
    [here] (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
-2. **Download Just_Do**: You can then download `Just_Do.jar` from the latest release 
-   here: https://github.com/Just_Do/releases   (Haven't put up yet)
-3. **Launch Just_Do** Simply double-click on the `Just_Do-GUI.jar` file to start Just_Do. 
+2. **Download Yui**: You can then download `Yui.jar` from the latest release 
+   here: https://github.com/Yui/releases   (Haven't put up yet)
+3. **Launch Yui** Simply double-click on the `Yui.jar` file to start Yui. 
    You will be greeted with a simple interface that has a command bar. 
-   This command bar is where you enter short commands to tell Just-Do what to do. <br>
+   This command bar is where you enter short commands to tell Yui what to do. <br>
 4. **Add new events**. You can type `add <event>` to add a new event to your to-do list.
 5. **Show event list**: The event list can be shown by typing `show`. 
 6. **Try more commands**: 
      * `comment <Your Comment>` - Add comments to your added events
      * `-help` - See all the commands available
-     * `exit` - Exit Just_Do using the command bar
+     * `exit` - Exit Yui using the command bar
 
 To learn more details of Just_Do features, refer to the 'Feature Details' section below. 
 
