@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * Storage class. Contains save, saveAs, load, load from different dir. Also
  * generate a temp file saved in temp folder only for undo cmd
- * 
+ *
  *
  */
 public class Storage {
@@ -41,7 +41,7 @@ public class Storage {
 	}
 
 	// public method, no static one so need to use constructor be4hand
-	public void save(ArrayList<String> arr) throws IOException {
+	public static void save(ArrayList<String> arr) throws IOException {
 		backup();
 		writeIntoFile(arr);
 	}
