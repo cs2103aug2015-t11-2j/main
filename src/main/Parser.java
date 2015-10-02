@@ -36,4 +36,11 @@ public class Parser {
 		return commandTypeString;
 	}
 	
+	public static int getUpdateIndex(String parameter) {
+		return Integer.valueOf(parameter.substring(0, parameter.indexOf(" ")));
+	}
+
+	public static String getUpdateParameter(String parameter) {
+		return parameter.substring(parameter.indexOf(" ") + 1);
+	}
 }
