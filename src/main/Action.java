@@ -1,6 +1,5 @@
 package main;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,6 +9,7 @@ public class Action {
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
 	private static final String ADD_SUCCESS_MSG = "Event added successful!";
+	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
 
 	static String addToList(ArrayList<String> list, String parameter) throws IOException {
 		list.add(parameter);
@@ -20,10 +20,10 @@ public class Action {
 	static String showAll(ArrayList<String> list) {
 		StringBuilder output = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			if(i == 0){
-				output.append((i+1) + ". " + list.get(i) + "\n");
+			if (i == 0) {
+				output.append((i + 1) + ". " + list.get(i) + "\n");
 			} else {
-				output.append(" " + (i+1) + ". " + list.get(i) + "\n");
+				output.append(" " + (i + 1) + ". " + list.get(i) + "\n");
 			}
 		}
 		return output.toString();
@@ -65,17 +65,25 @@ public class Action {
 	}
 
 	static String deleteEvent(ArrayList<String> list, String parameter) throws IOException {
-		if (Integer.valueOf(parameter)>Integer.valueOf(list.size())){
+		if (Integer.valueOf(parameter) > Integer.valueOf(list.size())) {
 			return DELETE_OUT_OF_BOUND_MSG;
 		} else {
-			list.remove(Integer.valueOf(parameter)-1);
+			list.remove(Integer.valueOf(parameter) - 1);
 			Storage.save(list);
 			return DELETE_SUCCESSFUL_MSG;
 		}
+	}
+
+	static String update(ArrayList<String> list, String parameter) throws IOException {
+		list.set(Integer.valueOf(parameter.substring(0, parameter.indexOf(" "))),
+				parameter.substring(parameter.indexOf(" ") + 1));
+		Storage.save(list);
+		return UPDATE_SUCCESS_MSG;
 	}
 
 	static String chooseEvent(ArrayList<String> list, String parameter) {
 		// TODO Auto-generated method stub
 		return parameter;
 	}
+
 }
