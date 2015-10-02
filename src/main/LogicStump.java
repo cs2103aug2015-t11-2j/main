@@ -23,11 +23,11 @@ public class LogicStump {
 
 		System.out.println(storage.mainDir);
 
-		arr = storage.load();
+		arr = storage.load(storage.mainDir);
 		// use storage.load(Path dir) to import or load temp file
 		// careful not to use wrong dir
 
-		System.out.println(storage.load());
+		System.out.println(storage.load(storage.mainDir));
 
 		while (!input.isEmpty()) {
 			input = sc.nextLine();
