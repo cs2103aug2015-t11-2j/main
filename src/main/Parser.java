@@ -37,7 +37,7 @@ public class Parser {
 	}
 	
 	public static int getUpdateIndex(String parameter) {
-		return Integer.valueOf(parameter.substring(0, parameter.indexOf(" ")));
+		return Integer.valueOf(parameter.substring(0, parameter.indexOf(" ")))-1;
 	}
 
 	public static String getUpdateParameter(String parameter) {
