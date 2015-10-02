@@ -32,7 +32,7 @@ public class Yui_GUI extends Application{
     }
 
    @Override
-   public void start(Stage primaryStage) throws IOException {
+   public void start(final Stage primaryStage) throws IOException {
        primaryStage.setTitle("Yui");
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
@@ -88,9 +88,7 @@ public class Yui_GUI extends Application{
 
        /*final Text actiontarget = new Text();
        grid.add(actiontarget, 1, 6);
-
        btn.setOnAction(new EventHandler<ActionEvent>() {
-
     	    public void handle(ActionEvent e) {
     	        actiontarget.setFill(Color.FIREBRICK);
     	        actiontarget.setText("Sign in button pressed");
@@ -126,11 +124,10 @@ public class Yui_GUI extends Application{
        /*Text scenetitle = new Text("Welcome");
        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
        grid.add(scenetitle, 0, 0, 2, 1);
-
        Label userName = new Label("User Name:");
        grid.add(userName, 0, 1);*/
 
-       TextArea showBox = new TextArea();
+       final TextArea showBox = new TextArea();
        //showBox.setScaleY(1.7);
        showBox.setPrefSize(490, 275);
        grid.add(showBox, 0, 2);
@@ -138,7 +135,7 @@ public class Yui_GUI extends Application{
 
        /*Label pw = new Label("Password:");
        grid.add(pw, 0, 2);*/
-       TextField userCommandBox = new TextField();
+       final TextField userCommandBox = new TextField();
        grid.add(userCommandBox, 0, 3);
        userCommandBox.requestFocus();
 
