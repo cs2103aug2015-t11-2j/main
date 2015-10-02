@@ -46,6 +46,9 @@ public class ToDoList {
 		case "search": {
 			return Action.searchKey(list, parameter);
 		}
+		case "update": {
+			return Action.update(list, parameter);
+		}
 		case "exit": {
 			Action.exit();
 			return EXIT_MSG;
