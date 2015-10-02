@@ -75,8 +75,7 @@ public class Action {
 	}
 
 	static String update(ArrayList<String> list, String parameter) throws IOException {
-		list.set(Integer.valueOf(parameter.substring(0, parameter.indexOf(" "))),
-				parameter.substring(parameter.indexOf(" ") + 1));
+		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateParameter(parameter));
 		Storage.save(list);
 		return UPDATE_SUCCESS_MSG;
 	}
