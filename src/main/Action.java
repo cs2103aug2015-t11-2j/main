@@ -11,9 +11,9 @@ public class Action {
 	private static final String ADD_SUCCESS_MSG = "Event added successful!";
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
 
-	static String addToList(ArrayList<String> list, String parameter) throws IOException {
+	static String addToList(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		list.add(parameter);
-		Storage.save(list);
+		s.save(list);
 		return ADD_SUCCESS_MSG;
 	}
 
@@ -26,6 +26,7 @@ public class Action {
 				output.append(" " + (i + 1) + ". " + list.get(i) + "\n");
 			}
 		}
+		output.deleteCharAt(output.length() - 1);// remove the last new line
 		return output.toString();
 	}
 
@@ -64,19 +65,19 @@ public class Action {
 
 	}
 
-	static String deleteEvent(ArrayList<String> list, String parameter) throws IOException {
+	static String deleteEvent(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		if (Integer.valueOf(parameter) > Integer.valueOf(list.size())) {
 			return DELETE_OUT_OF_BOUND_MSG;
 		} else {
 			list.remove(Integer.valueOf(parameter) - 1);
-			Storage.save(list);
+			s.save(list);
 			return DELETE_SUCCESSFUL_MSG;
 		}
 	}
 
-	static String update(ArrayList<String> list, String parameter) throws IOException {
+	static String update(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateParameter(parameter));
-		Storage.save(list);
+		s.save(list);
 		return UPDATE_SUCCESS_MSG;
 	}
 
