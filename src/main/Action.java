@@ -52,6 +52,7 @@ public class Action {
 				if (task.toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true; // set status found
 					resultList.append(index++);
+					resultList.append(".");
 					resultList.append(task);
 					resultList.append("\n");
 				}

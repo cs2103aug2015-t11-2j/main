@@ -16,7 +16,7 @@ public class LogicStump {
 		// initialize
 		String fileName = sc.nextLine();
 		Path folderToTest = Paths.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
-		Path fileToTest = Paths.get(folderToTest.toString() + File.separator + fileName);
+		//Path fileToTest = Paths.get(folderToTest.toString() + File.separator + fileName);
 
 		// testing
 		Storage storage = new Storage(fileName, folderToTest);// folder with main file
