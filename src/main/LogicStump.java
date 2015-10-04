@@ -42,7 +42,7 @@ public class LogicStump {
 		// storage.saveAs(arr, fileToTest) to export file
 
 		System.out.println(arr);
-		System.out.println(storage.load());
+		//System.out.println(storage.load());
 	}
 
 }
