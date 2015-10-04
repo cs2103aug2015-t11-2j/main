@@ -18,10 +18,12 @@ import java.util.List;
 public class Storage {
 	// edit be4 use, these 2 are for default setting
 	private static final Path DEFAULT_MAIN_DIRECTORY = Paths
-			.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
+			.get("user.dir");
+			//.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
 	private static final Path DEFAULT_TEMP_DIRECTORY = Paths
-			.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
-	
+			.get("user.dir");
+			//.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
+
 	// public non-static, so you can get it using s.mainDir (for Storage s)
 	public Path mainDir;
 	public Path tempDir;
@@ -35,7 +37,8 @@ public class Storage {
 		createFile(tempDir);
 	}
 
-	// use specified folder directory, create sub-folder to store temp file inside
+	// use specified folder directory, create sub-folder to store temp file
+	// inside
 	public Storage(String fileName, Path folderDir) throws IOException {
 		mainDir = Paths.get(folderDir.toString() + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + "\\temp\\" + fileName);
@@ -44,8 +47,8 @@ public class Storage {
 	}
 
 	// public method, non-static
-	
-	//save arraylist into main directory
+
+	// save arraylist into main directory
 	public void save(ArrayList<String> arr) throws IOException {
 		backup();
 		writeIntoFile(arr);
@@ -59,13 +62,13 @@ public class Storage {
 		mainDir = dir;
 		writeIntoFile(arr);
 	}
-	
+
 	// load the file from the directory, do not change main directory
 	// useful for loading backup file
 	public ArrayList<String> load(Path dir) throws IOException {
 		return readFile(dir);
 	}
-	
+
 	// same as saveAs, but with load
 	// to import, use loadAs and then saveAs
 	public ArrayList<String> loadAs(Path dir) throws IOException {
