@@ -10,6 +10,7 @@ public class Action {
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
 	private static final String ADD_SUCCESS_MSG = "Event added successful!";
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
+	private static final String NO_EVENT_MSG = "Your event list is empty!";
 
 	static String addToList(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		list.add(parameter);
@@ -26,8 +27,12 @@ public class Action {
 				output.append(" " + (i + 1) + ". " + list.get(i) + "\n");
 			}
 		}
-		output.deleteCharAt(output.length() - 1);// remove the last new line
-		return output.toString();
+		if (output.length() == 0) {
+			return NO_EVENT_MSG;
+		} else {
+			output.deleteCharAt(output.length() - 1);// remove the last new line
+			return output.toString();
+		}
 	}
 
 	static void exit() {
