@@ -11,6 +11,7 @@ public class Action {
 	private static final String ADD_SUCCESS_MSG = "Event added successful!";
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
 	private static final String NO_EVENT_MSG = "Your event list is empty!";
+	private static final String UNDO_MSG = "Undo operation successful!";
 
 	static String addToList(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		list.add(parameter);
@@ -18,8 +19,9 @@ public class Action {
 		return ADD_SUCCESS_MSG;
 	}
 
-	static String showAll(ArrayList<String> list) {
+	static String showAll(Storage s) throws IOException {
 		StringBuilder output = new StringBuilder();
+		ArrayList<String> list = s.load(s.mainDir);
 		for (int i = 0; i < list.size(); i++) {
 			if (i == 0) {
 				output.append((i + 1) + ". " + list.get(i) + "\n");
@@ -91,5 +93,13 @@ public class Action {
 		// TODO Auto-generated method stub
 		return parameter;
 	}
+
+	public static String undo(Storage s) throws IOException {
+			s.save(s.load(s.tempDir));
+			return UNDO_MSG;
+		
+	}
+
+
 
 }
