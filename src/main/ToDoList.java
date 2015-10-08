@@ -32,10 +32,9 @@ public class ToDoList {
 		switch (command) {
 		case "add": {
 			return Action.addToList(s, list, parameter);
-
 		}
 		case "show": {
-			return Action.showAll(list);
+			return Action.showAll(s);
 		}
 		case "choose": {
 			return Action.chooseEvent(list, parameter);
@@ -50,6 +49,9 @@ public class ToDoList {
 		}
 		case "update": {
 			return Action.update(s, list, parameter);
+		}
+		case "undo": {
+			return Action.undo(s);
 		}
 		case "exit": {
 			Action.exit();
