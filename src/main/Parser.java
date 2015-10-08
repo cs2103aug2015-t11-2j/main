@@ -28,7 +28,7 @@ public class Parser {
 	
 	
 	private static String removeFirstWord(String userCommand) {
-		return userCommand.replace(getFirstWord(userCommand), "").trim();
+		return userCommand.replaceFirst(getFirstWord(userCommand), "").trim();
 	}
 	
 	private static String getFirstWord(String userCommand) {
