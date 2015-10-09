@@ -46,6 +46,9 @@ public class ToDoList {
 		case "undo": {
 			return Action.undo(s);
 		}
+		case "redo": {
+			return Action.redo(s);
+		}
 		case "exit": {
 			Action.exit();
 			return EXIT_MSG;
