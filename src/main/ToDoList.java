@@ -2,7 +2,6 @@ package main;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class ToDoList {
@@ -13,7 +12,6 @@ public class ToDoList {
 	private static final String ERROR_MSG = "Error!";
 	private static final String SPACE = " ";
 	private static Storage s;
-	private static ArrayList<String> list;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static String nowTime;
 	protected static boolean shouldExit = false;
@@ -22,26 +20,26 @@ public class ToDoList {
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
 		String command = Parser.getAction(userCommand);
 		String parameter = Parser.getParameter(userCommand);
-		return nowTime + SPACE + modify(s, list, command, parameter);
+		return nowTime + SPACE + modify(s, command, parameter);
 	}
 
-	private static String modify(Storage s, ArrayList<String> list, String command, String parameter)
+	private static String modify(Storage s, String command, String parameter)
 			throws IOException {
 		switch (command) {
 		case "add": {
-			return Action.addToList(s, list, parameter);
+			return Action.addToList(s, parameter);
 		}
 		case "show": {
 			return Action.show(s, parameter);
 		}
 		case "delete": {
-			return Action.deleteEvent(s, list, parameter);
+			return Action.deleteEvent(s, parameter);
 		}
 		case "search": {
-			return Action.searchKey(list, parameter);
+			return Action.searchKey(s, parameter);
 		}
 		case "update": {
-			return Action.update(s, list, parameter);
+			return Action.update(s, parameter);
 		}
 		case "undo": {
 			return Action.undo(s);
@@ -62,7 +60,6 @@ public class ToDoList {
 
 	public static String initialize() throws IOException {
 		s = new Storage("Yui");
-		list = s.load(s.mainDir);
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
 		return nowTime + WELCOME_MSG;
