@@ -12,10 +12,13 @@ public class Action {
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
 	private static final String NO_EVENT_MSG = "Your event list is empty!";
 	private static final String UNDO_MSG = "Undo operation successful!";
+	private static final String UNABLE_UNDO_MSG = "Cannot undo twice!";
+	private static boolean canUndo = true;
 
 	static String addToList(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		list.add(parameter);
 		s.save(list);
+		canUndo = true;
 		return ADD_SUCCESS_MSG;
 	}
 
@@ -84,6 +87,7 @@ public class Action {
 		} else {
 			list.remove(Integer.valueOf(parameter) - 1);
 			s.save(list);
+			canUndo = true;
 			return DELETE_SUCCESSFUL_MSG;
 		}
 	}
@@ -91,12 +95,18 @@ public class Action {
 	static String update(Storage s, ArrayList<String> list, String parameter) throws IOException {
 		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateParameter(parameter));
 		s.save(list);
+		canUndo = true;
 		return UPDATE_SUCCESS_MSG;
 	}
 
 	public static String undo(Storage s) throws IOException {
-		s.save(s.load(s.tempDir));
-		return UNDO_MSG;
+		if (canUndo){
+			s.save(s.load(s.tempDir));
+			canUndo = false;
+			return UNDO_MSG;
+		} else {
+			return UNABLE_UNDO_MSG;
+		}
 
 	}
 
