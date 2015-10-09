@@ -36,9 +36,6 @@ public class ToDoList {
 		case "show": {
 			return Action.showAll(s);
 		}
-		case "choose": {
-			return Action.chooseEvent(list, parameter);
-		}
 		case "delete": { // need to decide when to backup and which actions need
 							// backup
 			return Action.deleteEvent(s, list, parameter);
