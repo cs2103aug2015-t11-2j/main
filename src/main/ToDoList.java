@@ -7,8 +7,6 @@ import java.util.Date;
 
 public class ToDoList {
 
-	// private static final int MAX_NUMBER_OF_EVENTS = 1000;
-
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String WELCOME_MSG = " Hello, my master. Welcome back. This is Yui!" + "\n"
 			+ " What would you like to do? \n";
@@ -36,11 +34,8 @@ public class ToDoList {
 		case "show": {
 			return Action.show(s, parameter);
 		}
-
-		case "delete": { // need to decide when to backup and which actions need
-							// backup
+		case "delete": {
 			return Action.deleteEvent(s, list, parameter);
-
 		}
 		case "search": {
 			return Action.searchKey(list, parameter);
@@ -65,7 +60,6 @@ public class ToDoList {
 	public static String initialize() throws IOException {
 		s = new Storage("Yui");
 		list = s.load(s.mainDir);
-		// list = new ArrayList<String>(MAX_NUMBER_OF_EVENTS);
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
 		return nowTime + WELCOME_MSG;
