@@ -89,11 +89,6 @@ public class Action {
 		return UPDATE_SUCCESS_MSG;
 	}
 
-	static String chooseEvent(ArrayList<String> list, String parameter) {
-		// TODO Auto-generated method stub
-		return parameter;
-	}
-
 	public static String undo(Storage s) throws IOException {
 			s.save(s.load(s.tempDir));
 			return UNDO_MSG;
