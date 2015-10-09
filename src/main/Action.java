@@ -13,6 +13,8 @@ public class Action {
 	private static final String NO_EVENT_MSG = "Your event list is empty!";
 	private static final String UNDO_MSG = "Undo operation successful!";
 	private static final String UNABLE_UNDO_MSG = "Cannot undo twice!";
+	private static final String REDO_MSG = "Redo operation successful!";
+	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static boolean canUndo = true;
 
 	static String addToList(Storage s, ArrayList<String> list, String parameter) throws IOException {
@@ -107,7 +109,16 @@ public class Action {
 		} else {
 			return UNABLE_UNDO_MSG;
 		}
+	}
 
+	public static String redo(Storage s) throws IOException {
+		if (!canUndo){
+			s.save(s.load(s.tempDir));
+			canUndo = true;
+			return REDO_MSG;
+		} else {
+			return UNABLE_REDO_MSG;
+		}
 	}
 
 }
