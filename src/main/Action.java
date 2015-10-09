@@ -19,21 +19,26 @@ public class Action {
 		return ADD_SUCCESS_MSG;
 	}
 
-	static String showAll(Storage s) throws IOException {
+	static String show(Storage s, String parameter) throws IOException {
 		StringBuilder output = new StringBuilder();
 		ArrayList<String> list = s.load(s.mainDir);
-		for (int i = 0; i < list.size(); i++) {
-			if (i == 0) {
-				output.append((i + 1) + ". " + list.get(i) + "\n");
-			} else {
-				output.append(" " + (i + 1) + ". " + list.get(i) + "\n");
+		if (parameter.length() == 0) {
+			for (int i = 0; i < list.size(); i++) {
+				if (i == 0) {
+					output.append((i + 1) + ". " + list.get(i) + "\n");
+				} else {
+					output.append(" " + (i + 1) + ". " + list.get(i) + "\n");
+				}
 			}
-		}
-		if (output.length() == 0) {
-			return NO_EVENT_MSG;
+			if (output.length() == 0) {
+				return NO_EVENT_MSG;
+			} else {
+				output.deleteCharAt(output.length() - 1);// remove the last new
+															// line
+				return output.toString();
+			}
 		} else {
-			output.deleteCharAt(output.length() - 1);// remove the last new line
-			return output.toString();
+			return parameter;
 		}
 	}
 
@@ -90,11 +95,9 @@ public class Action {
 	}
 
 	public static String undo(Storage s) throws IOException {
-			s.save(s.load(s.tempDir));
-			return UNDO_MSG;
-		
+		s.save(s.load(s.tempDir));
+		return UNDO_MSG;
+
 	}
-
-
 
 }
