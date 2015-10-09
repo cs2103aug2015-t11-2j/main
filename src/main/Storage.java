@@ -21,7 +21,7 @@ public class Storage {
 			.get("user.dir");
 			//.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
 	private static final Path DEFAULT_TEMP_DIRECTORY = Paths
-			.get("user.dir");
+			.get("temp.dir");
 			//.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
 
 	// public non-static, so you can get it using s.mainDir (for Storage s)
