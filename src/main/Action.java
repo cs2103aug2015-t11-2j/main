@@ -17,7 +17,8 @@ public class Action {
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static boolean canUndo = true;
 
-	static String addToList(Storage s, ArrayList<String> list, String parameter) throws IOException {
+	static String addToList(Storage s, String parameter) throws IOException {
+		ArrayList<String> list = s.load();
 		list.add(parameter);
 		s.save(list);
 		canUndo = true;
@@ -52,8 +53,8 @@ public class Action {
 		System.exit(0);
 	}
 
-	static String searchKey(ArrayList<String> list, String parameter) {
-		return searchResult(list, parameter);
+	static String searchKey(Storage s, String parameter) throws IOException {
+		return searchResult(s.load(), parameter);
 	}
 
 	private static String searchResult(ArrayList<String> list, String parameter) {
@@ -83,7 +84,8 @@ public class Action {
 
 	}
 
-	static String deleteEvent(Storage s, ArrayList<String> list, String parameter) throws IOException {
+	static String deleteEvent(Storage s, String parameter) throws IOException {
+		ArrayList<String> list = s.load();
 		if (Integer.valueOf(parameter) > Integer.valueOf(list.size())) {
 			return DELETE_OUT_OF_BOUND_MSG;
 		} else {
@@ -94,7 +96,8 @@ public class Action {
 		}
 	}
 
-	static String update(Storage s, ArrayList<String> list, String parameter) throws IOException {
+	static String update(Storage s, String parameter) throws IOException {
+		ArrayList<String> list = s.load();
 		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateParameter(parameter));
 		s.save(list);
 		canUndo = true;
