@@ -69,6 +69,11 @@ public class Storage {
 		return readFile(dir);
 	}
 
+	//default load
+	public ArrayList<String> load() throws IOException{
+		return load(mainDir);
+	}
+	
 	// same as saveAs, but with load
 	// to import, use loadAs and then saveAs
 	public ArrayList<String> loadAs(Path dir) throws IOException {
