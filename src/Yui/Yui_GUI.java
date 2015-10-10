@@ -21,8 +21,8 @@ import javafx.stage.WindowEvent;
 import main.ToDoList;
 
 public class Yui_GUI extends Application{
-	public String userCommand;
-	public String returnCommand;
+	private String userCommand;
+	private String returnCommand;
 	private double xOffset = 0;
     private double yOffset = 0;
 
