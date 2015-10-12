@@ -21,15 +21,18 @@ public class Parser {
 				String[] parameters = unsplitParameter.split("from |to ");
 				parameter.add(parameters[0]); //event
 				parameter.add(parameters[1]); //start time
-				parameter.add(parameters[2]); //end time
-				parameter.add(parameters[3]); //date
+				
+				String[] timeAndDate = parameters[2].split("\\s+");
+				parameter.add(timeAndDate[0]); //end time
+				parameter.add(timeAndDate[1]); //date
 			}
 			
 			else if (unsplitParameter.contains("by")){ //deadline
 				String[] parameters = unsplitParameter.split("by ");
 				parameter.add(parameters[0]); //event
-				parameter.add(parameters[1]); //time
-				parameter.add(parameters[2]); //date
+				String[] timeAndDate = parameters[1].split("\\s+");
+				parameter.add(timeAndDate[0]); //time
+				parameter.add(timeAndDate[1]); //date
 			}
 		}
 		else{
@@ -40,16 +43,16 @@ public class Parser {
 	}*/
 	
 	
-	private static String removeFirstWord(String userCommand) {
+	private static String removeFirstWord(String userCommand) { //SHIFT TO SPLITTER CLASS
 		return userCommand.replaceFirst(getFirstWord(userCommand), "").trim();
 	}
 	
-	private static String getFirstWord(String userCommand) {
+	private static String getFirstWord(String userCommand) { //SHIFT TO SPLITTER CLASS
 		String commandTypeString = userCommand.trim().split("\\s+")[0];
 		return commandTypeString;
 	}
 	
-	public static int getUpdateIndex(String parameter) {
+	public static int getUpdateIndex(String parameter) { 
 		return Integer.valueOf(parameter.substring(0, parameter.indexOf(" ")))-1;
 	}
 
