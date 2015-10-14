@@ -26,8 +26,7 @@ public class MotionCatcher {
 	    				   try {
 	    					   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
 	    				   } catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+	    					   e.printStackTrace();
 	    				   }
 	    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
 	    			   }
@@ -47,10 +46,9 @@ public class MotionCatcher {
 	    		   //link with logic
 	    		   if(!Yui_GUI.userCommand.equals("")){
 					   try {
-						Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
+						   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
 					   } catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						   e.printStackTrace();
 					   }
 					   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
 				   	}
