@@ -11,8 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -21,8 +19,8 @@ import javafx.stage.WindowEvent;
 import main.ToDoList;
 
 public class Yui_GUI extends Application{
-	private String userCommand;
-	private String returnCommand;
+	protected static String userCommand;
+	protected static String returnCommand;
 	private double xOffset = 0;
     private double yOffset = 0;
 
@@ -67,15 +65,6 @@ public class Yui_GUI extends Application{
        ImageView enterKey = new ImageView(enter);
        grid.add(enterKey, 4, 3);
 
-       //Image opinion = new Image(getClass().getResourceAsStream("opinion.png"));
-       //grid.add(new ImageView(opinion), 1, 3);
-       /*btn.setOnAction(new EventHandler<ActionEvent>(){
-    	   public void handle(ActionEvent e) {
-    		   Event.fireEvent(primaryStage, new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST ));
-   	    }
-       });*/
-
-       //move the grid
        grid.setOnMousePressed(new EventHandler<MouseEvent>() {
            @Override
            public void handle(MouseEvent event) {
@@ -98,11 +87,7 @@ public class Yui_GUI extends Application{
        Scene scene = new Scene(backg, 600, 400);
        primaryStage.setScene(scene);
 
-       /*Scene scene = new Scene(grid, 600, 400);
-       primaryStage.setScene(scene);*/
-
        final TextArea showBox = new TextArea();
-       //showBox.setScaleY(1.7);
        showBox.setPrefSize(490, 275);
        grid.add(showBox, 0, 2);
        showBox.setEditable(false);
@@ -114,47 +99,7 @@ public class Yui_GUI extends Application{
        returnCommand = ToDoList.initialize();
        showBox.appendText(returnCommand + "\n");
 
-       userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
-    	   @Override
-    	   public void handle(KeyEvent event) {
-    		   if(event.getCode().equals(KeyCode.ENTER)){
-    			   userCommand = userCommandBox.getText();
-    			   //link with logic
-    			   System.out.print(userCommand);
-    			   userCommandBox.clear();
-    			   //link with logic
-    			   if(!userCommand.equals("")){
-    				   try {
-						returnCommand = ToDoList.implement(userCommand);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-    				   showBox.appendText(returnCommand + "\n" + "\n");
-    			   }
-    		   }
-    	   }
-       });
-
-       enterKey.setOnMouseClicked(new EventHandler<MouseEvent>(){
-    	   @Override
-    	   public void handle(MouseEvent event) {
-    		   userCommand = userCommandBox.getText();
-    		   //link with logic
-    		   System.out.print(userCommand);
-    		   userCommandBox.clear();
-    		   //link with logic
-    		   if(!userCommand.equals("")){
-				   try {
-					returnCommand = ToDoList.implement(userCommand);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				   showBox.appendText(returnCommand + "\n" + "\n");
-			   	}
-    	   }
-       });
-
+       MotionCatcher.keyboardCatcher(userCommandBox, showBox);
+       MotionCatcher.mouseCatcher(enterKey, userCommandBox, showBox);
    }
 }
