@@ -17,12 +17,10 @@ import java.util.List;
  */
 public class Storage {
 	// edit be4 use, these 2 are for default setting
-	private static final Path DEFAULT_MAIN_DIRECTORY = Paths
-			.get("user.dir");
-			//.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
-	private static final Path DEFAULT_TEMP_DIRECTORY = Paths
-			.get("temp.dir");
-			//.get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
+	private static final Path DEFAULT_MAIN_DIRECTORY = Paths.get("user.dir");
+	// .get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
+	private static final Path DEFAULT_TEMP_DIRECTORY = Paths.get("temp.dir");
+	// .get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
 
 	// public non-static, so you can get it using s.mainDir (for Storage s)
 	public Path mainDir;
@@ -69,11 +67,11 @@ public class Storage {
 		return readFile(dir);
 	}
 
-	//default load
-	public ArrayList<String> load() throws IOException{
+	// default load
+	public ArrayList<String> load() throws IOException {
 		return load(mainDir);
 	}
-	
+
 	// same as saveAs, but with load
 	// to import, use loadAs and then saveAs
 	public ArrayList<String> loadAs(Path dir) throws IOException {
@@ -92,7 +90,7 @@ public class Storage {
 	}
 
 	// read the file into arrayList
-	private static ArrayList<String> readFile(Path dir) throws IOException {
+	private static ArrayList<String> readFile(Path dir) throws IOException,FileNotFoundException {
 		List<String> preCopy = Files.readAllLines(dir);
 		ArrayList<String> copy = new ArrayList<String>();
 		for (String line : preCopy) {
@@ -102,13 +100,21 @@ public class Storage {
 	}
 
 	// overwrite arrayList into the file for main directory
-	private void writeIntoFile(ArrayList<String> arr) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(mainDir.toString()));
-		for (String line : arr) {
-			bw.write(line);
-			bw.newLine();
+	private void writeIntoFile(ArrayList<String> arr) {
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(mainDir.toString()));
+
+			for (String line : arr) {
+				bw.write(line);
+				bw.newLine();
+			}
+			bw.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("invalid save directory, unable to create save file in that location");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		bw.close();
 	}
 
 	// copy file from main directory to temp directory
