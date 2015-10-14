@@ -1,6 +1,8 @@
 package Yui;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
@@ -12,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import main.ToDoList;
 
 public class MotionCatcher {
+	private static Logger logger = Logger.getLogger("MotionCatcher");
 	public static void keyboardCatcher(TextField userCommandBox, TextArea showBox){
 		userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
 	    	   @Override
@@ -24,11 +27,14 @@ public class MotionCatcher {
 	    			   //link with logic
 	    			   if(!Yui_GUI.userCommand.equals("")){
 	    				   try {
+	    					   logger.log(Level.INFO, "get the output");
 	    					   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
 	    				   } catch (IOException e) {
+	    					   logger.log(Level.WARNING, "output error", e);
 	    					   e.printStackTrace();
 	    				   }
 	    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
+	    				   logger.log(Level.INFO, "end of processing");
 	    			   }
 	    		   }
 	    	   }

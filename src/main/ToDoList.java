@@ -3,9 +3,11 @@ package main;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ToDoList {
-
+	private static Logger logger = Logger.getLogger("ToDoList");
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String WELCOME_MSG = " Hello, my master. Welcome back. This is Yui!" + "\n"
 			+ " What would you like to do? \n";
@@ -18,6 +20,7 @@ public class ToDoList {
 
 	public static String implement(String userCommand) throws IOException {
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
+		assert !userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		String parameter = Parser.getParameter(userCommand);
 		return nowTime + SPACE + modify(s, command, parameter);
@@ -25,40 +28,48 @@ public class ToDoList {
 
 	private static String modify(Storage s, String command, String parameter)
 			throws IOException {
-		switch (command) {
-		case "add": {
-			return Action.addToList(s, parameter);
-		}
-		case "show": {
-			return Action.show(s, parameter);
-		}
-		case "delete": {
-			return Action.deleteEvent(s, parameter);
-		}
-		case "search": {
-			return Action.searchKey(s, parameter);
-		}
-		case "update": {
-			return Action.update(s, parameter);
-		}
-		case "undo": {
-			return Action.undo(s);
-		}
-		case "redo": {
-			return Action.redo(s);
-		}
-		case "exit": {
-			Action.exit();
-			return EXIT_MSG;
-		}
-		default: {
-			return ERROR_MSG;
-		}
+		try{
+			logger.log(Level.INFO, "handle a command once");
+			switch (command) {
+			case "add": {
+				return Action.addToList(s, parameter);
+			}
+			case "show": {
+				return Action.show(s, parameter);
+			}
+			case "delete": {
+				return Action.deleteEvent(s, parameter);
+			}
+			case "search": {
+				return Action.searchKey(s, parameter);
+			}
+			case "update": {
+				return Action.update(s, parameter);
+			}
+			case "undo": {
+				return Action.undo(s);
+			}
+			case "redo": {
+				return Action.redo(s);
+			}
+			case "exit": {
+				Action.exit();
+				return EXIT_MSG;
+			}
+			default: {
+				return ERROR_MSG;
+			}
+			}
+		} catch(IOException e) {
+			logger.log(Level.WARNING, "IO error", e);
+			e.printStackTrace();
+			return null;
 		}
 
 	}
 
 	public static String initialize() throws IOException {
+		logger.log(Level.INFO, "initialize the ToDoList");
 		s = new Storage("Yui");
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
