@@ -42,6 +42,12 @@ public class Yui_GUI extends Application{
        grid.setVgap(5);
        grid.setPadding(new Insets(10, 5, 5, 25));
        
+       //set event grid
+       GridPane eventGrid = new GridPane();
+       eventGrid.setHgap(5);
+       eventGrid.setPrefSize(490, 275);
+       grid.add(eventGrid, 0, 2);
+       
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));
        ImageView bk = new ImageView(background);
@@ -81,8 +87,8 @@ public class Yui_GUI extends Application{
 
        //add text box to show message
        final TextArea showBox = new TextArea();
-       showBox.setPrefSize(490, 275);
-       grid.add(showBox, 0, 2);
+       showBox.setPrefSize(240, 275);
+       eventGrid.add(showBox, 0, 0);
        showBox.setEditable(false);
 
        //add command box
