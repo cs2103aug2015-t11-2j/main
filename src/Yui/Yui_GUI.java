@@ -7,12 +7,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -42,11 +44,33 @@ public class Yui_GUI extends Application{
        grid.setVgap(5);
        grid.setPadding(new Insets(10, 5, 5, 25));
        
-       //set event grid
+       //set main grid
+       GridPane mainGrid = new GridPane();
+       mainGrid.setHgap(10);
+       mainGrid.setPrefSize(490, 275);
+       grid.add(mainGrid, 0, 2);
+       
+       //set eventPane
+       ScrollPane eventPane = new ScrollPane();
+       eventPane.setPrefSize(240, 275);
+       mainGrid.add(eventPane, 1, 0);
+       
+       //set eventGrid
        GridPane eventGrid = new GridPane();
-       eventGrid.setHgap(5);
-       eventGrid.setPrefSize(490, 275);
-       grid.add(eventGrid, 0, 2);
+       eventGrid.setHgap(3);
+       eventGrid.setVgap(3);
+       eventGrid.setPadding(new Insets(5, 5, 5, 5));
+       eventPane.setContent(eventGrid);
+       
+       GridPane events = new GridPane();
+       events.add(new Text("new event"), 0, 0);
+       events.setPrefSize(90, 45);
+       eventGrid.add(events, 0, 0);
+       
+       GridPane events2 = new GridPane();
+       events2.add(new Text("new event2"), 0, 0);
+       events2.setPrefSize(90, 45);
+       eventGrid.add(events2, 1, 0);
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));
@@ -88,7 +112,7 @@ public class Yui_GUI extends Application{
        //add text box to show message
        final TextArea showBox = new TextArea();
        showBox.setPrefSize(240, 275);
-       eventGrid.add(showBox, 0, 0);
+       mainGrid.add(showBox, 0, 0);
        showBox.setEditable(false);
 
        //add command box
