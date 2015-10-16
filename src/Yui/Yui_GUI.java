@@ -52,25 +52,29 @@ public class Yui_GUI extends Application{
        
        //set eventPane
        ScrollPane eventPane = new ScrollPane();
-       eventPane.setPrefSize(240, 275);
+       eventPane.setPrefSize(255, 275);
        mainGrid.add(eventPane, 1, 0);
        
        //set eventGrid
        GridPane eventGrid = new GridPane();
        eventGrid.setHgap(3);
        eventGrid.setVgap(3);
-       eventGrid.setPadding(new Insets(5, 5, 5, 5));
        eventPane.setContent(eventGrid);
        
+       //dealine icon
+       ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
+       eventGrid.add(deadline, 0, 0);
+       
+       //test events
        GridPane events = new GridPane();
        events.add(new Text("new event"), 0, 0);
-       events.setPrefSize(90, 45);
-       eventGrid.add(events, 0, 0);
+       events.setPrefSize(90, 25);
+       eventGrid.add(events, 0, 1);
        
        GridPane events2 = new GridPane();
        events2.add(new Text("new event2"), 0, 0);
-       events2.setPrefSize(90, 45);
-       eventGrid.add(events2, 1, 0);
+       events2.setPrefSize(90, 25);
+       eventGrid.add(events2, 0, 2);
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));
@@ -111,7 +115,7 @@ public class Yui_GUI extends Application{
 
        //add text box to show message
        final TextArea showBox = new TextArea();
-       showBox.setPrefSize(240, 275);
+       showBox.setPrefSize(225, 275);
        mainGrid.add(showBox, 0, 0);
        showBox.setEditable(false);
 
