@@ -44,7 +44,7 @@ public class Yui_GUI extends Application{
        grid.setVgap(5);
        grid.setPadding(new Insets(10, 5, 5, 25));
        
-       //set main grid
+       //set main grid of showing
        GridPane mainGrid = new GridPane();
        mainGrid.setHgap(10);
        mainGrid.setPrefSize(490, 275);
@@ -53,6 +53,7 @@ public class Yui_GUI extends Application{
        //set eventPane
        ScrollPane eventPane = new ScrollPane();
        eventPane.setPrefSize(255, 275);
+       eventPane.setStyle("overflow-x:hidden;");
        mainGrid.add(eventPane, 1, 0);
        
        //set eventGrid
@@ -124,6 +125,7 @@ public class Yui_GUI extends Application{
        //add text box to show message
        final TextArea showBox = new TextArea();
        showBox.setPrefSize(225, 275);
+       showBox.setStyle("overflow-x:hidden;");
        mainGrid.add(showBox, 0, 0);
        showBox.setEditable(false);
 
