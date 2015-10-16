@@ -59,11 +59,19 @@ public class Yui_GUI extends Application{
        GridPane eventGrid = new GridPane();
        eventGrid.setHgap(3);
        eventGrid.setVgap(3);
-       eventPane.setContent(eventGrid);
        
-       //dealine icon
+       
+       //deadline icon
        ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
        eventGrid.add(deadline, 0, 0);
+       
+       //event list background
+       ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
+       Group listAllBack = new Group();
+       listAllBack.getChildren().addAll(listBk, eventGrid);
+       eventPane.setContent(listAllBack);
+       
+       
        
        //test events
        GridPane events = new GridPane();
