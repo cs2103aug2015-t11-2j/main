@@ -66,6 +66,14 @@ public class Yui_GUI extends Application{
        ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
        eventGrid.add(deadline, 0, 0);
        
+       //event icon
+       ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
+       eventGrid.add(eventIcon, 0, 3);
+       
+       //floating tasks icon
+       ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
+       eventGrid.add(floatingIcon, 0, 5);
+ 
        //event list background
        ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
        Group listAllBack = new Group();
@@ -84,6 +92,11 @@ public class Yui_GUI extends Application{
        events2.add(new Text("new event2"), 0, 0);
        events2.setPrefSize(90, 25);
        eventGrid.add(events2, 0, 2);
+       
+       GridPane events3 = new GridPane();
+       events3.add(new Text("new event3"), 0, 0);
+       events3.setPrefSize(90, 25);
+       eventGrid.add(events3, 0, 4);
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));
