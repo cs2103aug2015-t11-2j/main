@@ -10,8 +10,8 @@ public class ToDoList {
 	private static Logger logger = Logger.getLogger("ToDoList");
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String SPACE = " ";
-	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!" + "\n"
-			+" -What would you like to do? \n";
+	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ " + "\n"
+			+" -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
 	private static Storage s;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");

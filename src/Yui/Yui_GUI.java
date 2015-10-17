@@ -8,12 +8,16 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -53,13 +57,13 @@ public class Yui_GUI extends Application{
        //set eventPane
        ScrollPane eventPane = new ScrollPane();
        eventPane.setPrefSize(255, 275);
-       eventPane.setStyle("overflow-x:hidden;");
+       eventPane.setHbarPolicy(ScrollBarPolicy.NEVER);
        mainGrid.add(eventPane, 1, 0);
        
        //set eventGrid
        GridPane eventGrid = new GridPane();
        eventGrid.setHgap(3);
-       eventGrid.setVgap(3);
+       //eventGrid.setVgap(1);
        
        
        //deadline icon
@@ -68,11 +72,11 @@ public class Yui_GUI extends Application{
        
        //event icon
        ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
-       eventGrid.add(eventIcon, 0, 3);
+       eventGrid.add(eventIcon, 0, 4);
        
        //floating tasks icon
        ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
-       eventGrid.add(floatingIcon, 0, 5);
+       eventGrid.add(floatingIcon, 0, 6);
  
        //event list background
        ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
@@ -83,20 +87,75 @@ public class Yui_GUI extends Application{
        
        
        //test events
+       GridPane deadlineEvent = new GridPane();
+       deadlineEvent.setAccessibleText(1+"CS2101");
+       Text tN = new Text(" 1" + " ");
+       tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tN.setFill(Color.WHITE);
+       deadlineEvent.add(tN, 0, 0);
+       Text t1 = new Text("CS2101");
+       t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       t1.setFill(Color.WHITE);
+       deadlineEvent.add(t1, 1, 0);
+       Text tD = new Text(" " + "15/10/18" + " ");
+       tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tD.setFill(Color.WHITE);
+       deadlineEvent.add(tD, 2, 0);
+       Text tT = new Text("3:46");
+       tT.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tT.setFill(Color.WHITE);
+       deadlineEvent.add(tT, 3, 0);
+       deadlineEvent.setPrefSize(273, 20); 
+       
+       Image deadlineBk = new Image(getClass().getResourceAsStream("greenEvent.png"));
+       ImageView ddlBk = new ImageView(deadlineBk);
+       Group ddlBackg = new Group();
+       ddlBackg.getChildren().addAll(ddlBk,deadlineEvent);
+       
+       eventGrid.add(ddlBackg, 0, 1);
+       
+       //test event 2
+       GridPane deadlineEvent2 = new GridPane();
+       deadlineEvent2.setAccessibleText(1+"CS2103");
+       Text tN2 = new Text(" 2" + " ");
+       tN2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tN2.setFill(Color.WHITE);
+       deadlineEvent2.add(tN2, 0, 0);
+       Text tNm2 = new Text("CS2103");
+       tNm2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tNm2.setFill(Color.WHITE);
+       deadlineEvent2.add(tNm2, 1, 0);
+       Text tD2 = new Text(" " + "15/10/19" + " ");
+       tD2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tD2.setFill(Color.WHITE);
+       deadlineEvent2.add(tD2, 2, 0);
+       Text tT2 = new Text("4:22");
+       tT2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tT2.setFill(Color.WHITE);
+       deadlineEvent2.add(tT2, 3, 0);
+       deadlineEvent2.setPrefSize(273, 20); 
+       
+       Image deadlineBk2 = new Image(getClass().getResourceAsStream("redEvent.png"));
+       ImageView ddlBk2 = new ImageView(deadlineBk2);
+       Group ddlBackg2 = new Group();
+       ddlBackg2.getChildren().addAll(ddlBk2,deadlineEvent2);
+       
+       eventGrid.add(ddlBackg2, 0, 2);
+       /*
        GridPane events = new GridPane();
        events.add(new Text("new event"), 0, 0);
        events.setPrefSize(90, 25);
        eventGrid.add(events, 0, 1);
-       
+       */
        GridPane events2 = new GridPane();
        events2.add(new Text("new event2"), 0, 0);
        events2.setPrefSize(90, 25);
-       eventGrid.add(events2, 0, 2);
+       eventGrid.add(events2, 0, 3);
        
        GridPane events3 = new GridPane();
        events3.add(new Text("new event3"), 0, 0);
        events3.setPrefSize(90, 25);
-       eventGrid.add(events3, 0, 4);
+       eventGrid.add(events3, 0, 5);
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));

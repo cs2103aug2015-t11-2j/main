@@ -13,11 +13,11 @@ public class Deadline {
 		this.date = date;
 	}
 
-	Time getTime() {
+	public Time getTime() {
 		return this.time;
 	}
 
-	Date getDate() {
+	public Date getDate() {
 		return this.date;
 	}
 }

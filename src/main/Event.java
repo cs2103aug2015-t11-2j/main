@@ -1,6 +1,7 @@
 package main;
 
 public class Event {
+	private String number;
 	private String detail;
 	private String comment;
 	private String status; // done, in-progress, etc.
@@ -21,6 +22,10 @@ public class Event {
 		this.eventTime = eventTime;
 	}
 
+	void setNumber(int numberInt){
+		this.number = String.valueOf(numberInt);
+	}
+	
 	void addComment(String comment){
 		this.comment = comment;
 	}
@@ -31,7 +36,11 @@ public class Event {
 		this.priority = priority;
 	}
 	
-	String getDetail(){
+	public String getNumber(){
+		return this.number;
+	}
+	
+	public String getDetail(){
 		return this.detail;
 	}
 	String getComment(){
@@ -43,7 +52,7 @@ public class Event {
 	String getPriority(){
 		return this.priority;
 	}
-	Deadline getDeadline(){
+	public Deadline getDeadline(){
 		return this.deadline;
 	}
 	EventTime getEventTime(){
