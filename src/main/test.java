@@ -33,10 +33,10 @@ public class test {
 		arr.add(str);
 	
 		
-		ArrayList<Event> e = Converter.stringToEvent(arr);		
+		/*ArrayList<Event> e = Converter.stringToEvent(arr);		
 		System.out.println(e);		
 		arr = Converter.eventToString(e);
-		System.out.println(arr);
+		System.out.println(arr);*/
 	
 		
 		SimpleDateFormat timeF = new SimpleDateFormat("HH:mm:ss a");
