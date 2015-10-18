@@ -1,9 +1,8 @@
 package main;
 
-import java.util.Calendar;
+
 
 public class Event {
-<<<<<<< HEAD
 	private String number;
 	private String detail;
 	private String comment;
@@ -11,15 +10,7 @@ public class Event {
 	private String priority;
 	private Deadline deadline;
 	private EventTime eventTime;
-=======
-	String detail = "";
-	String comment = "";
-	String status = "";
-	String priority = "";
-	
-	Calendar deadline = null;
-	Calendar start = null;//eventTime start
-	Calendar end = null;
+
 	
 /*	may need to parse it through Calendar.getInstance(), since it cannot use any Calendar command from null directly
 	
@@ -29,17 +20,15 @@ public class Event {
 	or my test.java for some way to extract date and time in correct format
 	
 	null value for boolean check in logic part(!?) and converter
->>>>>>> refs/remotes/origin/master
 	
 	
 */
 	// constructor
 	
-	Event() {
-	}
+
 	
 	//unused, edit directly from the above command
-/*	
+
 	Event(String detail) {
 		this.detail = detail;
 	}
@@ -53,7 +42,7 @@ public class Event {
 		this.detail = detail;
 		this.eventTime = eventTime;
 	}
-<<<<<<< HEAD
+
 
 	void setNumber(int numberInt){
 		this.number = String.valueOf(numberInt);
@@ -91,7 +80,5 @@ public class Event {
 	public EventTime getEventTime(){
 		return this.eventTime;
 	}
-=======
-*/
->>>>>>> refs/remotes/origin/master
+
 }
