@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Converter {
-	/*
 	static ArrayList<String> eventToString(ArrayList<Event> eventList) {
 		ArrayList<String> arr = new ArrayList<String>();
 		for (Event e : eventList) {
@@ -70,5 +69,5 @@ public class Converter {
 		return eventList;
 
 	}
-*/
+
 }
