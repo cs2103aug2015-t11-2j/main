@@ -36,15 +36,30 @@ public class GUILogic {
 	    ArrayList<Event> events = ToDoList.getEvents();
 	    int entLength = events.size();
 	    for(int i = 0; i < entLength; i++){
-	    	Event thisEvent = deadlines.get(i);
-	    	UIdeadline thisEntBox = new UIdeadline(thisEvent);
-	    	eventGrid.add(thisEntBox.getDdlBox(), 0, Y + i);
+	    	Event thisEvent = events.get(i);
+	    	UIevent thisEntBox = new UIevent(thisEvent);
+	    	eventGrid.add(thisEntBox.getEntBox(), 0, Y + i);
 	    }
 	    Y = Y + entLength + 1;
 	       
 	    //floating tasks icon
 	    ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
 	    eventGrid.add(floatingIcon, 0, Y);
-	    Y = Y + 1;
+	    
+	    //add floating
+	    ArrayList<Event> floating = ToDoList.getFloating();
+	    int fltLength = floating.size();
+	    for(int i = 0; i < fltLength; i++){
+	    	Event thisEvent = floating.get(i);
+	    	UIfloating thisEntBox = new UIfloating(thisEvent);
+	    	if( i%2 == 0){
+	    		X = 0;
+	    		Y = Y + 1;
+	    	} else {
+	    		X = 1;
+	    	}
+	    	eventGrid.add(thisEntBox.getFltBox(), X, Y);
+	    }
+	    
 	}
 }

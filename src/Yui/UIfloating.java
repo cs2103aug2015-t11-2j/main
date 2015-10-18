@@ -34,7 +34,7 @@ public class UIfloating {
 	    ddlBackg.getChildren().addAll(ddlBk,fltEvent);
 	}
 	
-	public Group getEntBox(){
+	public Group getFltBox(){
 		return ddlBackg;
 	}
 }
