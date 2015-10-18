@@ -4,11 +4,11 @@ package main;
 
 public class Event {
 	private String number;
-	private String detail;
-	private String comment;
-	private String status; // done, in-progress, etc.
-	private String priority;
-	private Deadline deadline;
+	String detail;
+	String comment;
+	String status; // done, in-progress, etc.
+	String priority;
+	Deadline deadline;
 	private EventTime eventTime;
 
 	
