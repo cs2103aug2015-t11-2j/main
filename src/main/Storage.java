@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,7 @@ public class Storage {
 		createFile(tempDir);
 	}
 
-	// use specified folder directory, create sub-folder to store temp file
-	// inside
+	// use specified folder directory, create sub-folder to store temp file inside
 	public Storage(String fileName, Path folderDir) throws IOException {
 		mainDir = Paths.get(folderDir.toString() + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + "\\temp\\" + fileName);
@@ -51,34 +51,48 @@ public class Storage {
 		backup();
 		writeIntoFile(arr);
 	}
-
+	public void saveE(ArrayList<Event> arr) throws IOException {
+		save(Converter.eventToString(arr));
+	}
+	
 	// switch main directory to the new one and save
-	// temp directory remains the same as before
 	// to export, saveAs(new location) and then saveAs(old location)
 	public void saveAs(ArrayList<String> arr, Path dir) throws IOException {
 		backup();
 		mainDir = dir;
 		writeIntoFile(arr);
 	}
-
-	// load the file from the directory, do not change main directory
-	// useful for loading backup file
+	public void saveAsE(ArrayList<Event> arr, Path dir) throws IOException {
+		saveAs(Converter.eventToString(arr),dir);
+	}
+	
+	// load the file from the directory
 	public ArrayList<String> load(Path dir) throws IOException {
 		return readFile(dir);
 	}
-
+	public ArrayList<Event> loadE(Path dir) throws IOException, ParseException {
+		return Converter.stringToEvent(load(dir));
+	}
+	
 	// default load
 	public ArrayList<String> load() throws IOException {
 		return load(mainDir);
 	}
-
-	// same as saveAs, but with load
+	public ArrayList<Event> loadE() throws IOException, ParseException {
+		return loadE(mainDir);
+	}
+	
+	// load the file from the directory, change main directory here
 	// to import, use loadAs and then saveAs
 	public ArrayList<String> loadAs(Path dir) throws IOException {
 		mainDir = dir;
-		return readFile(mainDir);
+		return readFile(dir);
 	}
-
+	public ArrayList<Event> loadAsE(Path dir) throws IOException, ParseException {
+		return Converter.stringToEvent(loadAs(dir));
+	}
+	
+	
 	// private method
 
 	// create file, do nothing if file already exist
