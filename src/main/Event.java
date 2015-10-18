@@ -3,6 +3,15 @@ package main;
 import java.util.Calendar;
 
 public class Event {
+<<<<<<< HEAD
+	private String number;
+	private String detail;
+	private String comment;
+	private String status; // done, in-progress, etc.
+	private String priority;
+	private Deadline deadline;
+	private EventTime eventTime;
+=======
 	String detail = "";
 	String comment = "";
 	String status = "";
@@ -20,6 +29,7 @@ public class Event {
 	or my test.java for some way to extract date and time in correct format
 	
 	null value for boolean check in logic part(!?) and converter
+>>>>>>> refs/remotes/origin/master
 	
 	
 */
@@ -43,5 +53,45 @@ public class Event {
 		this.detail = detail;
 		this.eventTime = eventTime;
 	}
+<<<<<<< HEAD
+
+	void setNumber(int numberInt){
+		this.number = String.valueOf(numberInt);
+	}
+	
+	void addComment(String comment){
+		this.comment = comment;
+	}
+	void setStatus(String status){
+		this.status = status;
+	}
+	void setPriority(String priority){
+		this.priority = priority;
+	}
+	
+	public String getNumber(){
+		return this.number;
+	}
+	
+	public String getDetail(){
+		return this.detail;
+	}
+	public String getComment(){
+		return this.comment;
+	}
+	public String getStatus(){
+		return this.status;
+	}
+	public String getPriority(){
+		return this.priority;
+	}
+	public Deadline getDeadline(){
+		return this.deadline;
+	}
+	public EventTime getEventTime(){
+		return this.eventTime;
+	}
+=======
 */
+>>>>>>> refs/remotes/origin/master
 }

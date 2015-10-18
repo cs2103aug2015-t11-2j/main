@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,10 +10,10 @@ import java.util.logging.Logger;
 public class ToDoList {
 	private static Logger logger = Logger.getLogger("ToDoList");
 	private static final String EXIT_MSG = "Thanks for using Yui!";
-	private static final String WELCOME_MSG = " Hello, my master. Welcome back. This is Yui!" + "\n"
-			+ " What would you like to do? \n";
-	private static final String ERROR_MSG = "Error!";
 	private static final String SPACE = " ";
+	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ " + "\n"
+			+" -What would you like to do?\n";
+	private static final String ERROR_MSG = "Error!";
 	private static Storage s;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static String nowTime;
@@ -68,6 +69,21 @@ public class ToDoList {
 
 	}
 
+	//need to be updated
+	public static ArrayList<Event> getDealine(){
+		return null;
+	}
+	
+	public static ArrayList<Event> getEvents(){
+		return null;
+	}
+	
+	public static ArrayList<Event> getFloating(){
+		return null;
+	}
+	
+	
+	
 	public static String initialize() throws IOException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		s = new Storage("Yui");

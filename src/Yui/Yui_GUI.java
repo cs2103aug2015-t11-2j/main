@@ -7,12 +7,18 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -41,6 +47,111 @@ public class Yui_GUI extends Application{
        grid.setHgap(5);
        grid.setVgap(5);
        grid.setPadding(new Insets(10, 5, 5, 25));
+       
+       //set main grid of showing
+       GridPane mainGrid = new GridPane();
+       mainGrid.setHgap(10);
+       mainGrid.setPrefSize(490, 275);
+       grid.add(mainGrid, 0, 2);
+       
+       //set eventPane
+       ScrollPane eventPane = new ScrollPane();
+       eventPane.setPrefSize(255, 275);
+       eventPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+       mainGrid.add(eventPane, 1, 0);
+       
+       //set eventGrid
+       GridPane eventGrid = new GridPane();
+       eventGrid.setHgap(3);
+       //eventGrid.setVgap(1);
+       
+       
+       //deadline icon
+       ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
+       eventGrid.add(deadline, 0, 0);
+       
+       //event icon
+       ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
+       eventGrid.add(eventIcon, 0, 3);
+       
+       //floating tasks icon
+       ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
+       eventGrid.add(floatingIcon, 0, 5);
+ 
+       //event list background
+       ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
+       Group listAllBack = new Group();
+       listAllBack.getChildren().addAll(listBk, eventGrid);
+       eventPane.setContent(listAllBack);
+       
+       
+       
+       //test events
+       GridPane deadlineEvent = new GridPane();
+       deadlineEvent.setAccessibleText(1+"CS2101");
+       Text tN = new Text(" 1" + " ");
+       tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tN.setFill(Color.WHITE);
+       deadlineEvent.add(tN, 0, 0);
+       Text t1 = new Text("CS2101");
+       t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       t1.setFill(Color.WHITE);
+       deadlineEvent.add(t1, 1, 0);
+       Text tD = new Text(" " + "15/10/18" + " ");
+       tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tD.setFill(Color.WHITE);
+       deadlineEvent.add(tD, 2, 0);
+       Text tT = new Text("3:46");
+       tT.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tT.setFill(Color.WHITE);
+       deadlineEvent.add(tT, 3, 0);
+       deadlineEvent.setPrefSize(273, 20); 
+       
+       Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
+       ImageView ddlBk = new ImageView(deadlineBk);
+       Group ddlBackg = new Group();
+       ddlBackg.getChildren().addAll(ddlBk,deadlineEvent);
+       
+       eventGrid.add(ddlBackg, 0, 1);
+       
+       //test event 2
+       GridPane deadlineEvent2 = new GridPane();
+       deadlineEvent2.setAccessibleText(1+"CS2103");
+       Text tN2 = new Text(" 2" + " ");
+       tN2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tN2.setFill(Color.WHITE);
+       deadlineEvent2.add(tN2, 0, 0);
+       Text tNm2 = new Text("CS2103");
+       tNm2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tNm2.setFill(Color.WHITE);
+       deadlineEvent2.add(tNm2, 1, 0);
+       Text tD2 = new Text(" " + "15/10/19" + " ");
+       tD2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tD2.setFill(Color.WHITE);
+       deadlineEvent2.add(tD2, 2, 0);
+       Text tT2 = new Text("4:22");
+       tT2.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+       tT2.setFill(Color.WHITE);
+       deadlineEvent2.add(tT2, 3, 0);
+       deadlineEvent2.setPrefSize(273, 20); 
+       
+       Image deadlineBk2 = new Image(getClass().getResourceAsStream("commonEvent.png"));
+       ImageView ddlBk2 = new ImageView(deadlineBk2);
+       Group ddlBackg2 = new Group();
+       ddlBackg2.getChildren().addAll(ddlBk2,deadlineEvent2);
+       
+       eventGrid.add(ddlBackg2, 0, 2);
+       /*
+       GridPane events = new GridPane();
+       events.add(new Text("new event"), 0, 0);
+       events.setPrefSize(90, 25);
+       eventGrid.add(events, 0, 1);
+       */
+
+       GridPane events3 = new GridPane();
+       events3.add(new Text("new event3"), 0, 0);
+       events3.setPrefSize(90, 25);
+       eventGrid.add(events3, 0, 4);
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));
@@ -81,8 +192,9 @@ public class Yui_GUI extends Application{
 
        //add text box to show message
        final TextArea showBox = new TextArea();
-       showBox.setPrefSize(490, 275);
-       grid.add(showBox, 0, 2);
+       showBox.setPrefSize(225, 275);
+       showBox.setStyle("overflow-x:hidden;");
+       mainGrid.add(showBox, 0, 0);
        showBox.setEditable(false);
 
        //add command box
