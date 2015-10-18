@@ -43,19 +43,19 @@ public class Event {
 	public String getDetail(){
 		return this.detail;
 	}
-	String getComment(){
+	public String getComment(){
 		return this.comment;
 	}
-	String getStatus(){
+	public String getStatus(){
 		return this.status;
 	}
-	String getPriority(){
+	public String getPriority(){
 		return this.priority;
 	}
 	public Deadline getDeadline(){
 		return this.deadline;
 	}
-	EventTime getEventTime(){
+	public EventTime getEventTime(){
 		return this.eventTime;
 	}
 }

@@ -72,11 +72,11 @@ public class Yui_GUI extends Application{
        
        //event icon
        ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
-       eventGrid.add(eventIcon, 0, 4);
+       eventGrid.add(eventIcon, 0, 3);
        
        //floating tasks icon
        ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
-       eventGrid.add(floatingIcon, 0, 6);
+       eventGrid.add(floatingIcon, 0, 5);
  
        //event list background
        ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
@@ -107,7 +107,7 @@ public class Yui_GUI extends Application{
        deadlineEvent.add(tT, 3, 0);
        deadlineEvent.setPrefSize(273, 20); 
        
-       Image deadlineBk = new Image(getClass().getResourceAsStream("greenEvent.png"));
+       Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
        ImageView ddlBk = new ImageView(deadlineBk);
        Group ddlBackg = new Group();
        ddlBackg.getChildren().addAll(ddlBk,deadlineEvent);
@@ -135,7 +135,7 @@ public class Yui_GUI extends Application{
        deadlineEvent2.add(tT2, 3, 0);
        deadlineEvent2.setPrefSize(273, 20); 
        
-       Image deadlineBk2 = new Image(getClass().getResourceAsStream("redEvent.png"));
+       Image deadlineBk2 = new Image(getClass().getResourceAsStream("commonEvent.png"));
        ImageView ddlBk2 = new ImageView(deadlineBk2);
        Group ddlBackg2 = new Group();
        ddlBackg2.getChildren().addAll(ddlBk2,deadlineEvent2);
@@ -147,15 +147,11 @@ public class Yui_GUI extends Application{
        events.setPrefSize(90, 25);
        eventGrid.add(events, 0, 1);
        */
-       GridPane events2 = new GridPane();
-       events2.add(new Text("new event2"), 0, 0);
-       events2.setPrefSize(90, 25);
-       eventGrid.add(events2, 0, 3);
-       
+
        GridPane events3 = new GridPane();
        events3.add(new Text("new event3"), 0, 0);
        events3.setPrefSize(90, 25);
-       eventGrid.add(events3, 0, 5);
+       eventGrid.add(events3, 0, 4);
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));

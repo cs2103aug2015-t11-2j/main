@@ -17,19 +17,19 @@ public class EventTime {
 		this.endDate = endDate;
 	}
 
-	Time getStartTime() {
+	public Time getStartTime() {
 		return this.startTime;
 	}
 
-	Date getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
-	Time getEndTime() {
+	public Time getEndTime() {
 		return this.endTime;
 	}
 
-	Date getEndDate() {
+	public Date getEndDate() {
 		return this.endDate;
 	}
 }

@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,6 +69,21 @@ public class ToDoList {
 
 	}
 
+	//need to be updated
+	public static ArrayList<Event> getDealine(){
+		return null;
+	}
+	
+	public static ArrayList<Event> getEvents(){
+		return null;
+	}
+	
+	public static ArrayList<Event> getFloating(){
+		return null;
+	}
+	
+	
+	
 	public static String initialize() throws IOException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		s = new Storage("Yui");
