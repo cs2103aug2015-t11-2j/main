@@ -5,12 +5,12 @@ import java.util.*;
 public class Parser {
 	
 	public static String getAction(String userCommand){
-		String action = getFirstWord(userCommand).toLowerCase();
+		String action = Splitter.getFirstWord(userCommand).toLowerCase();
 		return action;
 	}
 	
 	/*public static String getParameter(String userCommand){
-		String parameter = removeFirstWord(userCommand);
+		String parameter = Splitter.removeFirstWord(userCommand);
 		return parameter;
 	}*/
 	
@@ -18,39 +18,25 @@ public class Parser {
 		String action = getAction(userCommand);
 		ArrayList<String> parameter = new ArrayList<String>();
 		if (action.equals("add")){
-			String unsplitParameter = removeFirstWord(userCommand);
+			String unsplitParameter = Splitter.removeFirstWord(userCommand);
 			if (unsplitParameter.contains("from")){ //event with specific time interval
-				String[] parameters = unsplitParameter.split("from |to ");
-				parameter.add(parameters[0]); //event
-				parameter.add(parameters[1]); //start time
-				parameter.add(parameters[2]); //end time
-				parameter.add(parameters[3]); //date
+				parameter = Splitter.splitEvent(parameter, unsplitParameter);
 			}
 			
 			else if (unsplitParameter.contains("by")){ //deadline
-				String[] parameters = unsplitParameter.split("by ");
-				parameter.add(parameters[0]); //event
-				parameter.add(parameters[1]); //time
-				parameter.add(parameters[2]); //date
+				parameter = Splitter.splitDeadline(parameter, unsplitParameter);
+			}
+			else{//no time specified
+				parameter.add(Splitter.removeFirstWord(userCommand));
 			}
 		}
 		else{
-			parameter.add(removeFirstWord(userCommand)); //no time specified
+			parameter.add(Splitter.removeFirstWord(userCommand)); //not an "add" event
 		}
 		
 		return parameter;
 	}
-	
-	
-	private static String removeFirstWord(String userCommand) {
-		return userCommand.replaceFirst(getFirstWord(userCommand), "").trim();
-	}
-	
-	private static String getFirstWord(String userCommand) {
-		String commandTypeString = userCommand.trim().split("\\s+")[0];
-		return commandTypeString;
-	}
-	
+		
 	public static int getUpdateIndex(ArrayList<String> parameter) {
 		return Integer.valueOf(parameter.get(0).substring(0, parameter.indexOf(" ")))-1;
 	}
