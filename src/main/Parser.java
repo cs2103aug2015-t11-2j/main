@@ -3,53 +3,33 @@ package main;
 public class Parser {
 	
 	public static String getAction(String userCommand){
-		String action = getFirstWord(userCommand).toLowerCase();
+		String action = Splitter.getFirstWord(userCommand).toLowerCase();
 		return action;
 	}
 	
-	public static String getParameter(String userCommand){
-		String parameter = removeFirstWord(userCommand);
-		return parameter;
-	}
-	
-	/*	public static ArrayList<String> getParameter(String userCommand){
-		String action = getAction(userCommand);
-		ArrayList<String> parameter = new ArrayList<String>();
-		if (action.equals("add")){
-			String unsplitParameter = removeFirstWord(userCommand);
-			if (unsplitParameter.contains("from")){ //event with specific time interval
-				String[] parameters = unsplitParameter.split("from |to ");
-				parameter.add(parameters[0]); //event
-				parameter.add(parameters[1]); //start time
-				
-				String[] timeAndDate = parameters[2].split("\\s+");
-				parameter.add(timeAndDate[0]); //end time
-				parameter.add(timeAndDate[1]); //date
-			}
-			
-			else if (unsplitParameter.contains("by")){ //deadline
-				String[] parameters = unsplitParameter.split("by ");
-				parameter.add(parameters[0]); //event
-				String[] timeAndDate = parameters[1].split("\\s+");
-				parameter.add(timeAndDate[0]); //time
-				parameter.add(timeAndDate[1]); //date
-			}
-		}
-		else{
-			parameter.add(removeFirstWord(userCommand)); //no time specified
-		}
-		
+	/*public static String getParameter(String userCommand){
+		String parameter = Splitter.removeFirstWord(userCommand);
 		return parameter;
 	}*/
 	
-	
-	private static String removeFirstWord(String userCommand) { //SHIFT TO SPLITTER CLASS
-		return userCommand.replaceFirst(getFirstWord(userCommand), "").trim();
-	}
-	
-	private static String getFirstWord(String userCommand) { //SHIFT TO SPLITTER CLASS
-		String commandTypeString = userCommand.trim().split("\\s+")[0];
-		return commandTypeString;
+	public static ArrayList<String> getParameter(String userCommand){
+		String action = getAction(userCommand);
+		ArrayList<String> parameter = new ArrayList<String>();
+		if (action.equals("add")){
+			String unsplitParameter = Splitter.removeFirstWord(userCommand);
+			if (unsplitParameter.contains("from")){ //event with specific time interval
+				parameter = Splitter.splitEvent(parameter, unsplitParameter);
+			}
+			
+			else if (unsplitParameter.contains("by")){ //deadline
+				parameter = Splitter.splitDeadline(parameter, unsplitParameter);
+			}
+		}
+		else{
+			parameter.add(Splitter.removeFirstWord(userCommand)); //no time specified
+		}
+		
+		return parameter;
 	}
 	
 	public static int getUpdateIndex(String parameter) { 
