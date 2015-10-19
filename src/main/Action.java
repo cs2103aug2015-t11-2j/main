@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class Action {
@@ -15,20 +16,26 @@ public class Action {
 	private static final String UNABLE_UNDO_MSG = "Cannot undo twice!";
 	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
+	private static final String INVALID_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static boolean canUndo = true;
 
-	static String addToList(Storage s, String parameter) throws IOException {
-		ArrayList<String> list = s.load();
-		list.add(parameter);
-		s.save(list);
-		canUndo = true;
-		return ADD_SUCCESS_MSG;
+	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		Event newEvent = Parser.parseForEvent(parameter);
+		if (newEvent == null){
+			return INVALID_ADD_PARAMETER_MSG;
+		} else {
+			list.add(newEvent);
+			s.saveE(list);
+			canUndo = true;
+			return ADD_SUCCESS_MSG;			
+		}
 	}
 
-	static String show(Storage s, String parameter) throws IOException {
+	static String show(Storage s, ArrayList<String> parameter) throws IOException {
 		StringBuilder output = new StringBuilder();
 		ArrayList<String> list = s.load(s.mainDir);
-		if (parameter.length() == 0) {
+		if (parameter.size() == 0) {
 			for (int i = 0; i < list.size(); i++) {
 				if (i == 0) {
 					output.append((i + 1) + ". " + list.get(i) + "\n");
@@ -44,7 +51,7 @@ public class Action {
 				return output.toString();
 			}
 		} else {
-			return parameter;
+			return null;
 		}
 	}
 
@@ -53,11 +60,11 @@ public class Action {
 		System.exit(0);
 	}
 
-	static String searchKey(Storage s, String parameter) throws IOException {
-		return searchResult(s.load(), parameter);
+	static String searchKey(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		return searchResult(s.loadE(), parameter.get(0));
 	}
 
-	private static String searchResult(ArrayList<String> list, String parameter) {
+	private static String searchResult(ArrayList<Event> list, String parameter) {
 		if (list.size() == 0 || parameter == null) {
 			return SEARCH_NOT_FOUND_MSG;
 		} else {
@@ -65,7 +72,7 @@ public class Action {
 			boolean isFound = false;
 			int index = 1;
 			for (int i = 0; i < list.size(); i++) {
-				String task = list.get(i);
+				String task = list.get(i).getDetail();
 				// if key word found ignore case
 				if (task.toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true; // set status found
@@ -84,29 +91,29 @@ public class Action {
 
 	}
 
-	static String deleteEvent(Storage s, String parameter) throws IOException {
-		ArrayList<String> list = s.load();
-		if (Integer.valueOf(parameter) > Integer.valueOf(list.size())) {
+	static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		if (Integer.valueOf(parameter.get(0)) > Integer.valueOf(list.size())) {
 			return DELETE_OUT_OF_BOUND_MSG;
 		} else {
-			list.remove(Integer.valueOf(parameter) - 1);
-			s.save(list);
+			list.remove(Integer.valueOf(parameter.get(0)) - 1);
+			s.saveE(list);
 			canUndo = true;
 			return DELETE_SUCCESSFUL_MSG;
 		}
 	}
 
-	static String update(Storage s, String parameter) throws IOException {
-		ArrayList<String> list = s.load();
-		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateParameter(parameter));
-		s.save(list);
+	static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateEvent(parameter));
+		s.saveE(list);
 		canUndo = true;
 		return UPDATE_SUCCESS_MSG;
 	}
 
-	public static String undo(Storage s) throws IOException {
+	public static String undo(Storage s) throws IOException, ParseException {
 		if (canUndo){
-			s.save(s.load(s.tempDir));
+			s.saveE(s.loadE(s.tempDir));
 			canUndo = false;
 			return UNDO_MSG;
 		} else {
@@ -114,9 +121,9 @@ public class Action {
 		}
 	}
 
-	public static String redo(Storage s) throws IOException {
+	public static String redo(Storage s) throws IOException, ParseException {
 		if (!canUndo){
-			s.save(s.load(s.tempDir));
+			s.saveE(s.loadE(s.tempDir));
 			canUndo = true;
 			return REDO_MSG;
 		} else {
