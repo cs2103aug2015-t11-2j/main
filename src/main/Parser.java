@@ -24,9 +24,12 @@ public class Parser {
 			else if (unsplitParameter.contains("by")){ //deadline
 				parameter = Splitter.splitDeadline(parameter, unsplitParameter);
 			}
+			else{//no time specified
+				parameter.add(Splitter.removeFirstWord(userCommand));
+			}
 		}
 		else{
-			parameter.add(Splitter.removeFirstWord(userCommand)); //no time specified, or not an "add" event
+			parameter.add(Splitter.removeFirstWord(userCommand)); //not an "add" event
 		}
 		
 		return parameter;
