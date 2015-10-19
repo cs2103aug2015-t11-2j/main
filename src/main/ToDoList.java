@@ -74,7 +74,7 @@ public class ToDoList {
 		return null;
 	}
 	
-	public static ArrayList<Event> getEvents(){
+	public static ArrayList<Event> getEventTime(){
 		return null;
 	}
 	
