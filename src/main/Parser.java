@@ -26,7 +26,7 @@ public class Parser {
 			}
 		}
 		else{
-			parameter.add(Splitter.removeFirstWord(userCommand)); //no time specified
+			parameter.add(Splitter.removeFirstWord(userCommand)); //no time specified, or not an "add" event
 		}
 		
 		return parameter;
