@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,16 +20,16 @@ public class ToDoList {
 	private static String nowTime;
 	protected static boolean shouldExit = false;
 
-	public static String implement(String userCommand) throws IOException {
+	public static String implement(String userCommand) throws IOException, ParseException {
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
 		assert !userCommand.equals("");
 		String command = Parser.getAction(userCommand);
-		String parameter = Parser.getParameter(userCommand);
+		ArrayList<String> parameter = Parser.getParameter(userCommand);
 		return nowTime + SPACE + modify(s, command, parameter);
 	}
 
-	private static String modify(Storage s, String command, String parameter)
-			throws IOException {
+	private static String modify(Storage s, String command, ArrayList<String> parameter)
+			throws IOException, ParseException {
 		try{
 			logger.log(Level.INFO, "handle a command once");
 			switch (command) {
