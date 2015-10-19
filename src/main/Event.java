@@ -3,11 +3,11 @@ package main;
 
 
 public class Event {
-	private String number;
-	private String detail;
-	private String comment;
-	private String status; // done, in-progress, etc.
-	private String priority;
+	protected String number = "";
+	protected String detail = "";
+	protected String comment = "";
+	protected String status = ""; // done, in-progress, etc.
+	protected String priority = "";
 	private Deadline deadline = null;
 	private EventTime eventTime = null;
 
@@ -43,7 +43,7 @@ public class Event {
 		this.eventTime = eventTime;
 	}
 
-
+/*
 	void setNumber(int numberInt){
 		this.number = String.valueOf(numberInt);
 	}
@@ -56,7 +56,7 @@ public class Event {
 	}
 	void setPriority(String priority){
 		this.priority = priority;
-	}
+	}*/
 	
 	public String getNumber(){
 		return this.number;
