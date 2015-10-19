@@ -4,12 +4,12 @@ package main;
 
 public class Event {
 	private String number;
-	String detail;
-	String comment;
-	String status; // done, in-progress, etc.
-	String priority;
-	Deadline deadline;
-	private EventTime eventTime;
+	private String detail;
+	private String comment;
+	private String status; // done, in-progress, etc.
+	private String priority;
+	private Deadline deadline = null;
+	private EventTime eventTime = null;
 
 	
 /*	may need to parse it through Calendar.getInstance(), since it cannot use any Calendar command from null directly
