@@ -1,4 +1,4 @@
-
+/*
 package main;
 
 import java.sql.Date;
@@ -34,9 +34,9 @@ public class EventTime {
 		return this.endDate;
 	}
 }
+*/
 
 
-/*
 package main;
 
 import java.util.Calendar;
@@ -50,7 +50,13 @@ public class EventTime {
 		this.start = start;
 		this.end = end;
 	}
-
+	
+	public Calendar getStart(){
+		return this.start;
+	}
+	public Calendar getEnd(){
+		return this.end;
+	}
 }
 
-*/
+

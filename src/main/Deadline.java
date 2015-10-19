@@ -1,3 +1,4 @@
+/*
 package main;
 
 import java.sql.Date;
@@ -22,5 +23,23 @@ public class Deadline {
 
 	public Date getDate() {
 		return this.date;
+	}
+}
+*/
+
+package main;
+
+import java.util.Calendar;
+
+public class Deadline {
+	Calendar deadline = null;
+
+	// constructor
+	Deadline(Calendar deadline) {
+		this.deadline = deadline;
+	}
+
+	public Calendar getDeadline(){
+		return this.deadline;
 	}
 }
