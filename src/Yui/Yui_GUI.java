@@ -67,7 +67,12 @@ public class Yui_GUI extends Application{
        GridPane eventGrid = new GridPane();
        eventGrid.setHgap(3);
        //eventGrid.setVgap(1);
-       
+ 
+       //event list background
+       ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
+       Group listAllBack = new Group();
+       listAllBack.getChildren().addAll(listBk, eventGrid);
+       eventPane.setContent(listAllBack);
        
        //deadline icon
        ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
@@ -80,14 +85,6 @@ public class Yui_GUI extends Application{
        //floating tasks icon
        ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
        eventGrid.add(floatingIcon, 0, 5);
- 
-       //event list background
-       ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
-       Group listAllBack = new Group();
-       listAllBack.getChildren().addAll(listBk, eventGrid);
-       eventPane.setContent(listAllBack);
-       
-       
        
        //test events
        SimpleDateFormat date_format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");

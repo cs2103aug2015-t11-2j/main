@@ -1,7 +1,8 @@
 package Yui;
 
-import java.sql.Date;
-import java.sql.Time;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -12,21 +13,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.Event;
+import main.NumberedEvent;
 
 public class UIevent {
 	
 	private static Event events;
 	public Group ddlBackg = new Group();
-	public UIevent(Event event){
-		events = event;
-		Date startDate = events.getEventTime().getStartDate();
-		Time startTime = events.getEventTime().getStartTime();
-		Date endDate = events.getEventTime().getEndDate();
-		Time endTime = events.getEventTime().getEndTime();
-		String startString = startDate.toString() + " " + startTime.toString() + " -" + " ";
-		String endString = endDate.toString() + " " + endTime.toString();
+	private static SimpleDateFormat date_format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+	
+	public UIevent(NumberedEvent numberedEvent){
+		events = numberedEvent.getEvent();
+		Calendar startCal = events.getEventTime().getStart();
+		Calendar endCal = events.getEventTime().getEnd();
+		String startString = date_format.format(startCal.getTime()) + " -" + " ";
+		String endString = date_format.format(endCal.getTime());
 		String eventName = events.getDetail();
-		String num = events.getNumber();
+		int num = numberedEvent.getIndex();
 		
 		GridPane seEvent = new GridPane();
 		seEvent.setAccessibleText(num+eventName);

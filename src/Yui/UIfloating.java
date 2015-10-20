@@ -9,14 +9,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.Event;
+import main.NumberedEvent;
 
 public class UIfloating {
 	private static Event floating;
 	public Group ddlBackg = new Group();
-	public UIfloating(Event event){
-		floating = event;
+	public UIfloating(NumberedEvent numberedEvent){
+		floating = numberedEvent.getEvent();
 		String eventName = floating.getDetail();
-		String num = floating.getNumber();
+		int num = numberedEvent.getIndex();
 		
 		GridPane fltEvent = new GridPane();
 	    fltEvent.setAccessibleText(num+eventName);
