@@ -1,6 +1,9 @@
 package Yui;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -87,6 +90,11 @@ public class Yui_GUI extends Application{
        
        
        //test events
+       SimpleDateFormat date_format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+       Calendar theDay = Calendar.getInstance();
+       theDay.set(2011, 06, 24, 9, 59, 50);
+       String getDate = date_format.format(theDay.getTime());
+       
        GridPane deadlineEvent = new GridPane();
        deadlineEvent.setAccessibleText(1+"CS2101");
        Text tN = new Text(" 1" + " ");
@@ -97,14 +105,14 @@ public class Yui_GUI extends Application{
        t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
        t1.setFill(Color.WHITE);
        deadlineEvent.add(t1, 1, 0);
-       Text tD = new Text(" " + "15/10/18" + " ");
+       Text tD = new Text(" " + getDate);
        tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
        tD.setFill(Color.WHITE);
        deadlineEvent.add(tD, 2, 0);
-       Text tT = new Text("3:46");
+       /*Text tT = new Text("3:46");
        tT.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
        tT.setFill(Color.WHITE);
-       deadlineEvent.add(tT, 3, 0);
+       deadlineEvent.add(tT, 3, 0);*/
        deadlineEvent.setPrefSize(273, 20); 
        
        Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
