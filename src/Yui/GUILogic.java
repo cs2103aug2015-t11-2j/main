@@ -1,5 +1,7 @@
 package Yui;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
@@ -11,7 +13,7 @@ import main.ToDoList;
 public class GUILogic {
 	private static int X = 0;
 	private static int Y = 0;
-	public void showEvents(GridPane eventGrid){
+	public void showEvents(GridPane eventGrid) throws IOException, ParseException{
 		//deadline icon
 	    ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
 	    eventGrid.add(deadline, 0, 0);
@@ -33,7 +35,7 @@ public class GUILogic {
 	    Y = Y + 1;
 	    
 	    //add events
-	    ArrayList<Event> events = ToDoList.getEvents();
+	    ArrayList<Event> events = ToDoList.getEventTime();
 	    int entLength = events.size();
 	    for(int i = 0; i < entLength; i++){
 	    	Event thisEvent = events.get(i);
