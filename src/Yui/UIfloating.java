@@ -28,9 +28,10 @@ public class UIfloating {
 	    Text tNm = new Text(eventName);
 	    tNm.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tNm.setFill(Color.WHITE);
+	    fltEvent.add(tNm, 1, 0);
 	    fltEvent.setPrefSize(135, 20); 
 	       
-	    Image deadlineBk = new Image(getClass().getResourceAsStream("greenEvent.png"));
+	    Image deadlineBk = new Image(getClass().getResourceAsStream("greenEvent-half.png"));
 	    ImageView ddlBk = new ImageView(deadlineBk);
 	    ddlBackg.getChildren().addAll(ddlBk,fltEvent);
 	}
