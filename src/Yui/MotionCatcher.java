@@ -1,6 +1,7 @@
 package Yui;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,10 @@ public class MotionCatcher {
 	    				   } catch (IOException e) {
 	    					   logger.log(Level.WARNING, "output error", e);
 	    					   e.printStackTrace();
-	    				   }
+	    				   } catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 	    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
 	    				   logger.log(Level.INFO, "end of processing");
 	    			   }
@@ -55,7 +59,10 @@ public class MotionCatcher {
 						   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
 					   } catch (IOException e) {
 						   e.printStackTrace();
-					   }
+					   } catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
 				   	}
 	    	   }
