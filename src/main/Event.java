@@ -3,7 +3,6 @@ package main;
 
 
 public class Event {
-	protected String number = "";
 	protected String detail = "";
 	protected String comment = "";
 	protected String status = ""; // done, in-progress, etc.
@@ -58,9 +57,6 @@ public class Event {
 		this.priority = priority;
 	}*/
 	
-	public String getNumber(){
-		return this.number;
-	}
 	
 	public String getDetail(){
 		return this.detail;
