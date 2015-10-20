@@ -15,31 +15,28 @@ public class Converter {
 			arr.add(e.status);
 			arr.add(e.priority);
 			if (e.deadline != null) {
-				arr.add(e.deadline.getTime().toString());
+				arr.add(e.deadline.deadline.getTime().toString());
 			} else {
 				arr.add("X");
 			}
-			if (e.start != null) {
-				arr.add(e.start.getTime().toString());
+			if (e.eventTime != null) {
+				arr.add(e.eventTime.start.getTime().toString());
+				arr.add(e.eventTime.end.getTime().toString());
 			} else {
 				arr.add("X");
-			}
-			if (e.end != null) {
-				arr.add(e.end.getTime().toString());
-			} else {
 				arr.add("X");
 			}
+			
 		}
-
+		
 		return arr;
 
 	}
 
-	// ParseException: str not in correct format to parse
+	// ParseException: str not in correct format to parse, throw saying corrupt save file
 	static ArrayList<Event> stringToEvent(ArrayList<String> arr) throws ParseException, IOException {
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-		// cannot use null, since input data lacks all information
 		Calendar cal = Calendar.getInstance();
 		
 		if (arr.size() % 7 != 0) {
@@ -53,16 +50,16 @@ public class Converter {
 			e.status = arr.remove(0);
 			e.priority = arr.remove(0);
 			if (arr.get(0) != "X") {
+				e.deadline = new Deadline();
 				cal.setTime(dt.parse(arr.remove(0)));
-				e.deadline = cal;
+				e.deadline.deadline = cal;
 			}
-			if (arr.get(0) != "X") {
+			if (arr.get(0) != "X" && arr.get(1) != "X") {
+				e.eventTime = new EventTime();
 				cal.setTime(dt.parse(arr.remove(0)));
-				e.start = cal;
-			}
-			if (arr.get(0) != "X") {
+				e.eventTime.start = cal;
 				cal.setTime(dt.parse(arr.remove(0)));
-				e.end = cal;
+				e.eventTime.end = cal;
 			}
 			eventList.add(e);
 		}

@@ -32,9 +32,13 @@ package main;
 import java.util.Calendar;
 
 public class Deadline {
-	Calendar deadline = null;
+	protected Calendar deadline = null;
 
 	// constructor
+	Deadline(){
+		
+	}
+	
 	Deadline(Calendar deadline) {
 		this.deadline = deadline;
 	}

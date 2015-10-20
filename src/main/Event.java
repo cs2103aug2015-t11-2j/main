@@ -7,8 +7,8 @@ public class Event {
 	protected String comment = "";
 	protected String status = ""; // done, in-progress, etc.
 	protected String priority = "";
-	private Deadline deadline = null;
-	private EventTime eventTime = null;
+	protected Deadline deadline = null;
+	protected EventTime eventTime = null;
 
 	
 /*	may need to parse it through Calendar.getInstance(), since it cannot use any Calendar command from null directly
@@ -27,7 +27,10 @@ public class Event {
 
 	
 	//unused, edit directly from the above command
-
+	Event() {
+		
+	}
+	
 	Event(String detail) {
 		this.detail = detail;
 	}

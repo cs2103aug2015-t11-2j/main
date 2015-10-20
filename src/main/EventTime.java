@@ -42,10 +42,14 @@ package main;
 import java.util.Calendar;
 
 public class EventTime {
-	Calendar start = null;
-	Calendar end = null;
+	protected Calendar start = null;
+	protected Calendar end = null;
 
 	// constructor
+	EventTime(){
+		
+	}
+	
 	EventTime(Calendar start, Calendar end) {
 		this.start = start;
 		this.end = end;
