@@ -19,7 +19,7 @@ public class UIevent {
 	
 	private static Event events;
 	public Group ddlBackg = new Group();
-	private static SimpleDateFormat date_format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+	private static SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 	
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();

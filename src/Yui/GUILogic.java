@@ -19,7 +19,7 @@ public class GUILogic {
 	    //Y = Y + 1;
 	    
 	    //add deadlines
-	    /*ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
+	    ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
 	    int ddlLength = deadlines.size();
 	    Y = ddlLength;
 	    if(ddlLength > 0){
@@ -28,13 +28,13 @@ public class GUILogic {
 	    	UIdeadline thisDdlBox = new UIdeadline(thisEvent);
 	    	eventGrid.add(thisDdlBox.getDdlBox(), 0, i + 1);
 	    }
-	    }*/
+	    }
 	    Y = Y + 1;
 	    
 	    //event icon
 	    eventGrid.add(eventIcon, 0, Y);
 	    Y = Y + 1;
-	    /*
+	    
 	    //add events
 	    ArrayList<NumberedEvent> events = ToDoList.getEventTime();
 	    int entLength = events.size();
@@ -44,13 +44,14 @@ public class GUILogic {
 	    	eventGrid.add(thisEntBox.getEntBox(), 0, Y + i);
 	    }
 	    Y = Y + entLength + 1;
-	    */  
+	     
 	    //floating tasks icon
 	    eventGrid.add(floatingIcon, 0, Y);
 	    Y = Y + 1;
 	    
 	    //add floating
 	    ArrayList<NumberedEvent> floating = ToDoList.getFloating();
+	    //if(floating != null){
 	    int fltLength = floating.size();
 	    GridPane floatingBox = new GridPane();
 	    floatingBox.setHgap(1);
@@ -66,6 +67,6 @@ public class GUILogic {
 	    	floatingBox.add(thisEntBox.getFltBox(), X, y);
 	    }
 	    eventGrid.add(floatingBox, 0, Y);
-	    
+	    //}
 	}
 }

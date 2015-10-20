@@ -25,6 +25,7 @@ public class ToDoList {
 		assert !userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
+		Action.indexCount = 1;
 		return nowTime + SPACE + modify(s, command, parameter);
 	}
 
@@ -90,6 +91,7 @@ public class ToDoList {
 		s = new Storage("Yui");
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
+		Action.indexCount = 1;
 		return nowTime + WELCOME_MSG;
 	}
 

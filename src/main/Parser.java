@@ -1,5 +1,6 @@
 package main;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -96,10 +97,11 @@ public class Parser {
 			cal.add(Calendar.DATE, 1);
 		}
 		else{
-			SimpleDateFormat dateF = new SimpleDateFormat("dd/mm/yyyy");
-			cal.setTime(dateF.parse(date));
+			String timeAndDate = deadline + " " + date;
+			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+			cal.setTime(dateF.parse(timeAndDate));
 		}
-		return new Deadline(parseForCalendarTime(deadline,cal));
+		return new Deadline(cal);//parseForCalendarTime(deadline,cal));
 	}
 
 	private static Calendar parseForCalendarTime(String time, Calendar cal) throws ParseException {

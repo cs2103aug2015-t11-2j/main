@@ -15,7 +15,7 @@ import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;
-	private static SimpleDateFormat date_format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+	private static SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 	public Group ddlBackg = new Group();
 	
 	public UIdeadline(NumberedEvent numberedEvent){

@@ -18,7 +18,7 @@ public class Action {
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static final String INVALID_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static boolean canUndo = true;
-	private static int indexCount;
+	protected static int indexCount = 1;
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
@@ -132,10 +132,10 @@ public class Action {
 		}
 	}
 
-	@SuppressWarnings("null")
+	
 	public static ArrayList<NumberedEvent> getDeadlineList(Storage s) throws IOException, ParseException {
 		ArrayList<Event> fullList = s.loadE();
-		ArrayList<NumberedEvent> deadlineList = null;
+		ArrayList<NumberedEvent> deadlineList = new ArrayList<NumberedEvent>();
 		indexCount = 1;
 		for (int i = 0; i < fullList.size(); i++){
 			if (fullList.get(i).getDeadline() != null){
@@ -146,10 +146,10 @@ public class Action {
 		return deadlineList;
 	}
 
-	@SuppressWarnings("null")
+	
 	public static ArrayList<NumberedEvent> getEventTimeList(Storage s) throws IOException, ParseException {
 		ArrayList<Event> fullList = s.loadE();
-		ArrayList<NumberedEvent> eventTimeList = null;
+		ArrayList<NumberedEvent> eventTimeList = new ArrayList<NumberedEvent>();
 		for (int i = 0; i < fullList.size(); i++){
 			if (fullList.get(i).getEventTime() != null){
 				eventTimeList.add(new NumberedEvent(indexCount++, fullList.get(i)));
@@ -158,10 +158,10 @@ public class Action {
 		return eventTimeList;
 	}
 
-	@SuppressWarnings("null")
+	
 	public static ArrayList<NumberedEvent> getFloatingList(Storage s) throws IOException, ParseException {
 		ArrayList<Event> fullList = s.loadE();
-		ArrayList<NumberedEvent> floatingList = null;
+		ArrayList<NumberedEvent> floatingList = new ArrayList<NumberedEvent>();
 		for (int i = 0; i < fullList.size(); i++){
 			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)){
 				floatingList.add(new NumberedEvent(indexCount++, fullList.get(i)));

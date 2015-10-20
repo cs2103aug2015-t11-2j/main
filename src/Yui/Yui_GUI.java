@@ -2,6 +2,8 @@ package Yui;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.event.Event;
@@ -15,6 +17,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -27,6 +31,7 @@ public class Yui_GUI extends Application{
 	protected static String returnCommand;
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
+	private static Logger logger = Logger.getLogger("MotionCatcher");
 
 
    public static void main(String[] args) {
@@ -39,6 +44,8 @@ public class Yui_GUI extends Application{
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
        primaryStage.show();
+       
+       returnCommand = ToDoList.initialize();
        
        //Set main grid
        GridPane grid = new GridPane();
@@ -211,11 +218,38 @@ public class Yui_GUI extends Application{
        userCommandBox.requestFocus();
        
        //initialize GUI and Logic
-       returnCommand = ToDoList.initialize();
+       
        showBox.appendText(returnCommand + "\n");
        
        //catch the motion of users
-       MotionCatcher.keyboardCatcher(userCommandBox, showBox);
+       userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
+    	   @Override
+    	   public void handle(KeyEvent event) {
+    		   if(event.getCode().equals(KeyCode.ENTER)){
+    			   Yui_GUI.userCommand = userCommandBox.getText();
+    			   //link with logic
+    			   System.out.print(Yui_GUI.userCommand);
+    			   userCommandBox.clear();
+    			   //link with logic
+    			   if(!Yui_GUI.userCommand.equals("")){
+    				   try {
+    					   logger.log(Level.INFO, "get the output");
+    					   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
+    					   eventGrid.getChildren().clear();
+    					   GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
+    				   } catch (IOException e) {
+    					   logger.log(Level.WARNING, "output error", e);
+    					   e.printStackTrace();
+    				   } catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
+    				   logger.log(Level.INFO, "end of processing");
+    			   }
+    		   }
+    	   }
+       });
        MotionCatcher.mouseCatcher(enterKey, userCommandBox, showBox);
    }
 }
