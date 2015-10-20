@@ -60,9 +60,12 @@ public class Parser {
 		}
 		return null;
 	}
-
+	//parse exception if string stored not in tommorrow, today and not of dd/mm/yyyy format
 	private static EventTime parseForEventTime(String start, String end, String date) throws ParseException {
-		Calendar cal = Calendar.getInstance();// default today
+		Calendar cal = Calendar.getInstance();
+		if (date.equalsIgnoreCase("today")){
+			//do nothing, to break the else case
+		}
 		if (date.equalsIgnoreCase("tomorrow")){
 			cal.add(Calendar.DATE, 1);
 		}
@@ -75,7 +78,10 @@ public class Parser {
 	}
 
 	private static Deadline parseForDeadline(String deadline, String date) throws ParseException {
-		Calendar cal = Calendar.getInstance();// default today
+		Calendar cal = Calendar.getInstance();
+		if (date.equalsIgnoreCase("today")){
+			//do nothing, to break the else case
+		}
 		if (date.equalsIgnoreCase("tomorrow")){
 			cal.add(Calendar.DATE, 1);
 		}
@@ -87,8 +93,8 @@ public class Parser {
 	}
 
 	private static Calendar parseForCalendarTime(String time, Calendar cal) throws ParseException {
-		SimpleDateFormat dateF = new SimpleDateFormat("HH:mm");
-		cal.setTime(dateF.parse(time));
+		SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
+		cal.setTime(timeF.parse(time));
 		return cal;
 	}
 }
