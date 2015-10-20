@@ -73,40 +73,50 @@ public class Parser {
 	}
 	//parse exception if string stored not in tommorrow, today and not of dd/mm/yyyy format
 	private static EventTime parseForEventTime(String start, String end, String date) throws ParseException {
-		Calendar cal = Calendar.getInstance();
+		Date thisDate = new Date();
+		Date startDate = new Date();
+		Date endDate = new Date();
+		//need to be updated
 		if (date.equalsIgnoreCase("today")){
 			//do nothing, to break the else case
 		}
 		if (date.equalsIgnoreCase("tomorrow")){
-			cal.add(Calendar.DATE, 1);
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;//√Î  
+            thisDate.setTime(time * 1000);
 		}
 		else{
-			SimpleDateFormat dateF = new SimpleDateFormat("dd/mm/yyyy");
-			cal.setTime(dateF.parse(date));
+			String startS = start + " " + date;
+			String endS = end + " " + date;
+			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+			startDate = dateF.parse(startS);
+			endDate = dateF.parse(endS);
 		}
 		
-		return new EventTime(parseForCalendarTime(start, cal),parseForCalendarTime(end, cal));
+		return new EventTime(startDate, endDate);
 	}
 
 	private static Deadline parseForDeadline(String deadline, String date) throws ParseException {
-		Calendar cal = Calendar.getInstance();
+		Date thisDate = new Date();
+		//need to be updated
 		if (date.equalsIgnoreCase("today")){
 			//do nothing, to break the else case
 		}
 		if (date.equalsIgnoreCase("tomorrow")){
-			cal.add(Calendar.DATE, 1);
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;//√Î  
+            thisDate.setTime(time * 1000);
 		}
 		else{
 			String timeAndDate = deadline + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
-			cal.setTime(dateF.parse(timeAndDate));
+			thisDate = dateF.parse(timeAndDate);
 		}
-		return new Deadline(cal);//parseForCalendarTime(deadline,cal));
+		return new Deadline(thisDate);//parseForCalendarTime(deadline,cal));
 	}
-
+	
+	/*
 	private static Calendar parseForCalendarTime(String time, Calendar cal) throws ParseException {
 		SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
 		cal.setTime(timeF.parse(time));
 		return cal;
-	}
+	}*/
 }

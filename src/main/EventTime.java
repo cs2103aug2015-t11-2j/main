@@ -39,26 +39,26 @@ public class EventTime {
 
 package main;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class EventTime {
-	protected Calendar start = null;
-	protected Calendar end = null;
+	protected Date start = null;
+	protected Date end = null;
 
 	// constructor
 	EventTime(){
 		
 	}
 	
-	EventTime(Calendar start, Calendar end) {
+	EventTime(Date start, Date end) {
 		this.start = start;
 		this.end = end;
 	}
 	
-	public Calendar getStart(){
+	public Date getStart(){
 		return this.start;
 	}
-	public Calendar getEnd(){
+	public Date getEnd(){
 		return this.end;
 	}
 }

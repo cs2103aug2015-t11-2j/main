@@ -29,21 +29,21 @@ public class Deadline {
 
 package main;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class Deadline {
-	protected Calendar deadline = null;
+	protected Date deadline = null;
 
 	// constructor
 	Deadline(){
 		
 	}
 	
-	Deadline(Calendar deadline) {
+	Deadline(Date deadline) {
 		this.deadline = deadline;
 	}
 
-	public Calendar getDeadline(){
+	public Date getDeadline(){
 		return this.deadline;
 	}
 }

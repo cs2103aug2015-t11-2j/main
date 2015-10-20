@@ -15,13 +15,13 @@ import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;
-	private static SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+	private static SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	public Group ddlBackg = new Group();
 	
 	public UIdeadline(NumberedEvent numberedEvent){
 		deadline = numberedEvent.getEvent();
 		Deadline deadlineCal = deadline.getDeadline();
-		String ddlString = date_format.format(deadlineCal.getDeadline().getTime());
+		String ddlString = date_format.format(deadlineCal.getDeadline());
 		String eventName = deadline.getDetail();
 		int num = numberedEvent.getIndex();
 		

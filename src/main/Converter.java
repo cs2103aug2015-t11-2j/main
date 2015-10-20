@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Converter {
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	static ArrayList<String> eventToString(ArrayList<Event> eventList) {
 		ArrayList<String> arr = new ArrayList<String>();
@@ -17,13 +16,13 @@ public class Converter {
 			arr.add(e.status);
 			arr.add(e.priority);
 			if (e.deadline != null) {
-				arr.add(dateFormat.format(e.deadline.deadline.getTime()));
+				arr.add(dateFormat.format(e.deadline.deadline));
 			} else {
 				arr.add("X");
 			}
 			if (e.eventTime != null) {
-				arr.add(dateFormat.format(e.eventTime.start.getTime()));
-				arr.add(dateFormat.format(e.eventTime.end.getTime()));
+				arr.add(dateFormat.format(e.eventTime.start));
+				arr.add(dateFormat.format(e.eventTime.end));
 			} else {
 				arr.add("X");
 				arr.add("X");
@@ -39,7 +38,6 @@ public class Converter {
 	static ArrayList<Event> stringToEvent(ArrayList<String> arr) throws ParseException, IOException {
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		//SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-		Calendar cal = Calendar.getInstance();
 		
 		if (arr.size() % 7 != 0) {
 			throw new IOException("invalid array size");
@@ -53,15 +51,12 @@ public class Converter {
 			e.priority = arr.get(3);
 			if (!arr.get(4).equals("X")) {
 				e.deadline = new Deadline();
-				cal.setTime(dateFormat.parse(arr.get(4)));
-				e.deadline.deadline = cal;
+				e.deadline.deadline = dateFormat.parse(arr.get(4));
 			}
 			if (!arr.get(5).equals("X") && !arr.get(6).equals("X")) {
 				e.eventTime = new EventTime();
-				cal.setTime(dateFormat.parse(arr.get(5)));
-				e.eventTime.start = cal;
-				cal.setTime(dateFormat.parse(arr.get(6)));
-				e.eventTime.end = cal;
+				e.eventTime.start = dateFormat.parse(arr.get(5));
+				e.eventTime.end = dateFormat.parse(arr.get(6));
 			}
 			eventList.add(e);
 			for(int i = 0; i < 7; i++){

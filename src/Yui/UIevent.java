@@ -2,7 +2,6 @@ package Yui;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -19,14 +18,12 @@ public class UIevent {
 	
 	private static Event events;
 	public Group ddlBackg = new Group();
-	private static SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+	private static SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
-		Calendar startCal = events.getEventTime().getStart();
-		Calendar endCal = events.getEventTime().getEnd();
-		String startString = date_format.format(startCal.getTime()) + " -" + " ";
-		String endString = date_format.format(endCal.getTime());
+		String startString = date_format.format(events.getEventTime().getStart()) + " -" + " ";
+		String endString = date_format.format(events.getEventTime().getEnd());
 		String eventName = events.getDetail();
 		int num = numberedEvent.getIndex();
 		
