@@ -44,10 +44,20 @@ public class Parser {
 		return Integer.valueOf(parameter.get(0).substring(0, parameter.indexOf(" "))) - 1;
 	}
 
-	public static Event getUpdateEvent(ArrayList<String> parameter) {
+	public static Event getUpdateEvent(ArrayList<String> parameter) throws ParseException {
 		String updateParameter = parameter.get(0).substring(parameter.indexOf(" ") + 1);
+		ArrayList<String> eventParameter = new ArrayList<String>();
+		if (updateParameter.contains("from")) { // event with specific time
+													// interval
+			eventParameter = Splitter.splitEvent(eventParameter, updateParameter);
+		}
 
-		return null;
+		else if (updateParameter.contains("by")) { // deadline
+			eventParameter = Splitter.splitDeadline(eventParameter, updateParameter);
+		} else {// no time specified
+			eventParameter.add(Splitter.removeFirstWord(updateParameter));
+		}
+		return parseForEvent(eventParameter);
 	}
 
 	public static Event parseForEvent(ArrayList<String> parameter) throws ParseException {
