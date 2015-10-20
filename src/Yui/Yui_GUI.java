@@ -1,8 +1,7 @@
 package Yui;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.text.ParseException;
 
 import javafx.application.Application;
 import javafx.event.Event;
@@ -18,10 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -39,7 +34,7 @@ public class Yui_GUI extends Application{
     }
 
    @Override
-   public void start(final Stage primaryStage) throws IOException {
+   public void start(final Stage primaryStage) throws IOException, ParseException {
        primaryStage.setTitle("Yui");
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
@@ -74,6 +69,13 @@ public class Yui_GUI extends Application{
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
        
+       ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
+       ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
+   	   ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
+   	   
+       
+       GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
+       /*
        //deadline icon
        ImageView deadline = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
        eventGrid.add(deadline, 0, 0);
@@ -106,10 +108,10 @@ public class Yui_GUI extends Application{
        tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
        tD.setFill(Color.WHITE);
        deadlineEvent.add(tD, 2, 0);
-       /*Text tT = new Text("3:46");
+       Text tT = new Text("3:46");
        tT.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
        tT.setFill(Color.WHITE);
-       deadlineEvent.add(tT, 3, 0);*/
+       deadlineEvent.add(tT, 3, 0);
        deadlineEvent.setPrefSize(273, 20); 
        
        Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
@@ -151,12 +153,13 @@ public class Yui_GUI extends Application{
        events.add(new Text("new event"), 0, 0);
        events.setPrefSize(90, 25);
        eventGrid.add(events, 0, 1);
-       */
+       
 
        GridPane events3 = new GridPane();
        events3.add(new Text("new event3"), 0, 0);
        events3.setPrefSize(90, 25);
        eventGrid.add(events3, 0, 4);
+       */
        
        //set background
        Image background = new Image(getClass().getResourceAsStream("uiground.png"));
