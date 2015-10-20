@@ -132,36 +132,36 @@ public class Action {
 	}
 
 	@SuppressWarnings("null")
-	public static ArrayList<Event> getDeadlineList(Storage s) throws IOException, ParseException {
+	public static ArrayList<NumberedEvent> getDeadlineList(Storage s) throws IOException, ParseException {
 		ArrayList<Event> fullList = s.loadE();
-		ArrayList<Event> deadlineList = null;
+		ArrayList<NumberedEvent> deadlineList = null;
 		for (int i = 0; i < fullList.size(); i++){
 			if (fullList.get(i).getDeadline() != null){
-				deadlineList.add(fullList.get(i));
+				deadlineList.add(new NumberedEvent(i+1, fullList.get(i)));
 			}
 		}
 		return deadlineList;
 	}
 
 	@SuppressWarnings("null")
-	public static ArrayList<Event> getEventTimeList(Storage s) throws IOException, ParseException {
+	public static ArrayList<NumberedEvent> getEventTimeList(Storage s) throws IOException, ParseException {
 		ArrayList<Event> fullList = s.loadE();
-		ArrayList<Event> eventTimeList = null;
+		ArrayList<NumberedEvent> eventTimeList = null;
 		for (int i = 0; i < fullList.size(); i++){
 			if (fullList.get(i).getEventTime() != null){
-				eventTimeList.add(fullList.get(i));
+				eventTimeList.add(new NumberedEvent(i+1, fullList.get(i)));
 			}
 		}
 		return eventTimeList;
 	}
 
 	@SuppressWarnings("null")
-	public static ArrayList<Event> getFloatingList(Storage s) throws IOException, ParseException {
+	public static ArrayList<NumberedEvent> getFloatingList(Storage s) throws IOException, ParseException {
 		ArrayList<Event> fullList = s.loadE();
-		ArrayList<Event> floatingList = null;
+		ArrayList<NumberedEvent> floatingList = null;
 		for (int i = 0; i < fullList.size(); i++){
 			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)){
-				floatingList.add(fullList.get(i));
+				floatingList.add(new NumberedEvent(i+1, fullList.get(i)));
 			}
 		}
 		return floatingList;
