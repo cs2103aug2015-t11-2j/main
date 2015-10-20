@@ -131,4 +131,40 @@ public class Action {
 		}
 	}
 
+	@SuppressWarnings("null")
+	public static ArrayList<Event> getDeadlineList(Storage s) throws IOException, ParseException {
+		ArrayList<Event> fullList = s.loadE();
+		ArrayList<Event> deadlineList = null;
+		for (int i = 0; i < fullList.size(); i++){
+			if (fullList.get(i).getDeadline() != null){
+				deadlineList.add(fullList.get(i));
+			}
+		}
+		return deadlineList;
+	}
+
+	@SuppressWarnings("null")
+	public static ArrayList<Event> getEventTimeList(Storage s) throws IOException, ParseException {
+		ArrayList<Event> fullList = s.loadE();
+		ArrayList<Event> eventTimeList = null;
+		for (int i = 0; i < fullList.size(); i++){
+			if (fullList.get(i).getEventTime() != null){
+				eventTimeList.add(fullList.get(i));
+			}
+		}
+		return eventTimeList;
+	}
+
+	@SuppressWarnings("null")
+	public static ArrayList<Event> getFloatingList(Storage s) throws IOException, ParseException {
+		ArrayList<Event> fullList = s.loadE();
+		ArrayList<Event> floatingList = null;
+		for (int i = 0; i < fullList.size(); i++){
+			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)){
+				floatingList.add(fullList.get(i));
+			}
+		}
+		return floatingList;
+	}
+
 }

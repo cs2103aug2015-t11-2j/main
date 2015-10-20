@@ -71,16 +71,16 @@ public class ToDoList {
 	}
 
 	//need to be updated
-	public static ArrayList<Event> getDealine(){
-		return null;
+	public static ArrayList<Event> getDealine() throws IOException, ParseException{
+		return Action.getDeadlineList(s);
 	}
 	
-	public static ArrayList<Event> getEventTime(){
-		return null;
+	public static ArrayList<Event> getEventTime() throws IOException, ParseException{
+		return Action.getEventTimeList(s);
 	}
 	
-	public static ArrayList<Event> getFloating(){
-		return null;
+	public static ArrayList<Event> getFloating() throws IOException, ParseException{
+		return Action.getFloatingList(s);
 	}
 	
 	
