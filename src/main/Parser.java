@@ -63,9 +63,9 @@ public class Parser {
 	public static Event parseForEvent(ArrayList<String> parameter) throws ParseException {
 		if (parameter.size() == 1) {
 			return new Event(parameter.get(0));
-		} else if (parameter.size() == 2) {
-			return new Event(parameter.get(0), parseForDeadline(parameter.get(1), parameter.get(2)));
 		} else if (parameter.size() == 3) {
+			return new Event(parameter.get(0), parseForDeadline(parameter.get(1), parameter.get(2)));
+		} else if (parameter.size() == 4) {
 			return new Event(parameter.get(0), parseForEventTime(parameter.get(1), parameter.get(2),parameter.get(3)));
 		}
 		return null;
