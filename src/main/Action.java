@@ -14,7 +14,7 @@ public class Action {
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
 	// private static final String NO_EVENT_MSG = "Your event list is empty!";
 	private static final String UNDO_MSG = "Undo operation successful!";
-	private static final String UNABLE_UNDO_MSG = "Cannot undo twice!";
+	private static final String UNABLE_UNDO_MSG = "Cannot undo! Have some operations first!";
 	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static final String INVALID_ADD_PARAMETER_MSG = "Cannot add empty event!";
