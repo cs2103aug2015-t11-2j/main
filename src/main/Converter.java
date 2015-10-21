@@ -18,14 +18,14 @@ public class Converter {
 			if (e.deadline != null) {
 				arr.add(dateFormat.format(e.deadline.deadline));
 			} else {
-				arr.add("X");
+				arr.add("------");
 			}
 			if (e.eventTime != null) {
 				arr.add(dateFormat.format(e.eventTime.start));
 				arr.add(dateFormat.format(e.eventTime.end));
 			} else {
-				arr.add("X");
-				arr.add("X");
+				arr.add("------");
+				arr.add("------");
 			}
 			
 		}
@@ -49,11 +49,11 @@ public class Converter {
 			e.comment = arr.get(1);
 			e.status = arr.get(2);
 			e.priority = arr.get(3);
-			if (!arr.get(4).equals("X")) {
+			if (!arr.get(4).equals("------")) {
 				e.deadline = new Deadline();
 				e.deadline.deadline = dateFormat.parse(arr.get(4));
 			}
-			if (!arr.get(5).equals("X") && !arr.get(6).equals("X")) {
+			if (!arr.get(5).equals("------") && !arr.get(6).equals("------")) {
 				e.eventTime = new EventTime();
 				e.eventTime.start = dateFormat.parse(arr.get(5));
 				e.eventTime.end = dateFormat.parse(arr.get(6));
