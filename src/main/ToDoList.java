@@ -60,6 +60,9 @@ public class ToDoList {
 			case "comment": {
 				return Action.comment(s, parameter);
 			}
+			case "priority": {
+				return Action.priority(s, parameter);
+			}
 			case "exit": {
 				Action.exit();
 				return EXIT_MSG;

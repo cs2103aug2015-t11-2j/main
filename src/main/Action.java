@@ -23,6 +23,8 @@ public class Action {
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
 	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
 	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
+	private static final String PRIORITY_OUT_OF_BOUND_MSG = "Cannot set priority. Index entered is larger than current event amount!";
+	private static final String PRIORITY_SUCCESSFUL_MSG = "Priority set successfully!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -253,6 +255,23 @@ public class Action {
 			list.get(indexInFullList).comment = comment;
 			s.saveE(list);
 			return COMMENT_SUCCESSFUL_MSG;
+		} else {
+			return null;
+		}
+	}
+
+	public static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
+		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		if (indexInFullList == -2) {
+			return INVALID_LIST_TYPE_MSG;
+		} else if (indexInFullList == -1) {
+			return PRIORITY_OUT_OF_BOUND_MSG;
+		} else if (indexInFullList >= 0) {
+			list.get(indexInFullList).priority = priority;
+			s.saveE(list);
+			return PRIORITY_SUCCESSFUL_MSG;
 		} else {
 			return null;
 		}
