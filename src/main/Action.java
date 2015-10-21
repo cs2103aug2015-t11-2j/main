@@ -183,7 +183,7 @@ public class Action {
 					output.append(" Time: " + eventStart_format.format(reading.getEventTime().getStart())
 							+ eventEnd_format.format(reading.getEventTime().getEnd()));
 				}
-			} else if (parameter.get(0).toLowerCase().contains("f")) {
+			} else if (parameter.get(0).toLowerCase().contains("m")) {
 				ArrayList<NumberedEvent> list = getFloatingList(s);
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {

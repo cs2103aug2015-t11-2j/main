@@ -145,7 +145,7 @@ public class Parser {
 			if (count < index) {
 				return -1;
 			}
-		} else if (typeAndIndex.toLowerCase().contains("f")) {
+		} else if (typeAndIndex.toLowerCase().contains("m")) {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
 			for (int i = 0; i < list.size(); i++) {
