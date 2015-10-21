@@ -81,7 +81,7 @@ public class Parser {
 			//do nothing, to break the else case
 		}
 		if (date.equalsIgnoreCase("tomorrow")){
-			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;//취  
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;//취
             thisDate.setTime(time * 1000);
 		}
 		else{
@@ -91,7 +91,7 @@ public class Parser {
 			startDate = dateF.parse(startS);
 			endDate = dateF.parse(endS);
 		}
-		
+
 		return new EventTime(startDate, endDate);
 	}
 
@@ -102,7 +102,7 @@ public class Parser {
 			//do nothing, to break the else case
 		}
 		if (date.equalsIgnoreCase("tomorrow")){
-			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;//취  
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;//취
             thisDate.setTime(time * 1000);
 		}
 		else{
@@ -112,7 +112,7 @@ public class Parser {
 		}
 		return new Deadline(thisDate);//parseForCalendarTime(deadline,cal));
 	}
-	
+
 	/*
 	private static Calendar parseForCalendarTime(String time, Calendar cal) throws ParseException {
 		SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
