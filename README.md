@@ -1,3 +1,3 @@
 # main
 CS2103T Project of Team t11-2j
-#Yui V0.1
+#Yui V0.2
