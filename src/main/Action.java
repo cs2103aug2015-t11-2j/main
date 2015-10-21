@@ -19,7 +19,7 @@ public class Action {
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static final String INVALID_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
-	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or f)!";
+	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m)!";
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
 	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
 	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
