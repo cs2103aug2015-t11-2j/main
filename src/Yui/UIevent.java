@@ -2,6 +2,7 @@ package Yui;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -20,9 +21,11 @@ public class UIevent {
 	public Group ddlBackg = new Group();
 	private static SimpleDateFormat dateFormat1 = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
+		Date theDate = events.getEventTime().getStart();
 		String startString = dateFormat1.format(events.getEventTime().getStart()) + " -" + " ";
 		String endString = dateFormat2.format(events.getEventTime().getEnd());
 		String eventName = events.getDetail();
@@ -48,9 +51,26 @@ public class UIevent {
 	    seEvent.add(tE, 3, 0);
 	    seEvent.setPrefSize(273, 20);
 
-	    Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
-	    ImageView ddlBk = new ImageView(deadlineBk);
+	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("commonEvent.png"));
+	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent.png"));
+	    ImageView ddlBk = new ImageView();
+	    if(isToday(theDate)){
+	    	ddlBk.setImage(deadlineBkNear);
+	    } else {
+	    	ddlBk.setImage(deadlineBkCom);
+	    }
+
 	    ddlBackg.getChildren().addAll(ddlBk,seEvent);
+	}
+
+	private boolean isToday(Date theDate){
+		Date today = new Date();
+		String theDateString = formatCompare.format(theDate);
+		String todayString = formatCompare.format(today);
+		if(theDateString.equals(todayString)){
+			return true;
+		}
+		return false;
 	}
 
 	public Group getEntBox(){
