@@ -1,6 +1,8 @@
 package Yui;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,13 +17,15 @@ import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;
-	private static SimpleDateFormat date_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 	public Group ddlBackg = new Group();
 
 	public UIdeadline(NumberedEvent numberedEvent){
 		deadline = numberedEvent.getEvent();
 		Deadline deadlineCal = deadline.getDeadline();
-		String ddlString = date_format.format(deadlineCal.getDeadline());
+		Date theDate = deadlineCal.getDeadline();
+		String ddlString = dateFormat.format(theDate);
 		String eventName = deadline.getDetail();
 		int num = numberedEvent.getIndex();
 
@@ -47,9 +51,26 @@ public class UIdeadline {
 	    */
 	    deadlineEvent.setPrefSize(273, 20);
 
-	    Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
-	    ImageView ddlBk = new ImageView(deadlineBk);
+	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("commonEvent.png"));
+	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent.png"));
+	    ImageView ddlBk = new ImageView();
+	    if(isToday(theDate)){
+	    	ddlBk.setImage(deadlineBkNear);
+	    } else {
+	    	ddlBk.setImage(deadlineBkCom);
+	    }
+
 	    ddlBackg.getChildren().addAll(ddlBk,deadlineEvent);
+	}
+
+	private boolean isToday(Date theDate){
+		Date today = new Date();
+		String theDateString = formatCompare.format(theDate);
+		String todayString = formatCompare.format(today);
+		if(theDateString.equals(todayString)){
+			return true;
+		}
+		return false;
 	}
 
 	public Group getDdlBox(){

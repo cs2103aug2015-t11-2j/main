@@ -18,13 +18,13 @@ public class UIevent {
 
 	private static Event events;
 	public Group ddlBackg = new Group();
-	private static SimpleDateFormat date_format1 = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat date_format2 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+	private static SimpleDateFormat dateFormat1 = new SimpleDateFormat("HH:mm");
+	private static SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
-		String startString = date_format1.format(events.getEventTime().getStart()) + " -" + " ";
-		String endString = date_format2.format(events.getEventTime().getEnd());
+		String startString = dateFormat1.format(events.getEventTime().getStart()) + " -" + " ";
+		String endString = dateFormat2.format(events.getEventTime().getEnd());
 		String eventName = events.getDetail();
 		int num = numberedEvent.getIndex();
 
