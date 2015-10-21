@@ -30,7 +30,7 @@ public class Action {
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
-	private static boolean canUndo = true;
+	private static boolean canUndo = false;
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
