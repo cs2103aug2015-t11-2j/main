@@ -21,6 +21,8 @@ public class Action {
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
 	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or f)!";
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
+	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
+	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -73,14 +75,6 @@ public class Action {
 			}
 		}
 
-	}
-
-	static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
-		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateEvent(parameter));
-		s.saveE(list);
-		canUndo = true;
-		return UPDATE_SUCCESS_MSG;
 	}
 
 	public static String undo(Storage s) throws IOException, ParseException {
@@ -199,68 +193,69 @@ public class Action {
 		return output.toString();
 	}
 
+	static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		list.set(Parser.getUpdateIndex(s, parameter), Parser.getUpdateEvent(s, parameter));
+		s.saveE(list);
+		canUndo = true;
+		return UPDATE_SUCCESS_MSG;
+	}
+
 	static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
-		if (parameter.get(0).toLowerCase().contains("d")) {
-			int index = Integer.valueOf(parameter.get(0).substring(1));
-			int count = 0;
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getDeadline() != null) {
-					count++;
-					if (count == index) {
-						list.remove(i);
-						s.saveE(list);
-						canUndo = true;
-						return DELETE_SUCCESSFUL_MSG;
-					}
-				}
-			}
-			if (count < index) {
-				return DELETE_OUT_OF_BOUND_MSG;
-			}
-		} else if (parameter.get(0).toLowerCase().contains("e")) {
-			int index = Integer.valueOf(parameter.get(0).substring(1));
-			int count = 0;
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getEventTime() != null) {
-					count++;
-					if (count == index) {
-						list.remove(i);
-						s.saveE(list);
-						canUndo = true;
-						return DELETE_SUCCESSFUL_MSG;
-					}
-				}
-			}
-			if (count < index) {
-				return DELETE_OUT_OF_BOUND_MSG;
-			}
-		} else if (parameter.get(0).toLowerCase().contains("f")) {
-			int index = Integer.valueOf(parameter.get(0).substring(1));
-			int count = 0;
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getEventTime() == null && list.get(i).getDeadline() == null) {
-					count++;
-					if (count == index) {
-						list.remove(i);
-						s.saveE(list);
-						canUndo = true;
-						return DELETE_SUCCESSFUL_MSG;
-					}
-				}
-			}
-			if (count < index) {
-				return DELETE_OUT_OF_BOUND_MSG;
-			}
-		} else {
+		int indexInFullList = Parser.indexInFullList(s, parameter.get(0));
+		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
+		} else if (indexInFullList == -1) {
+			return DELETE_OUT_OF_BOUND_MSG;
+		} else if (indexInFullList >= 0) {
+			list.remove(indexInFullList);
+			s.saveE(list);
+			canUndo = true;
+			return DELETE_SUCCESSFUL_MSG;
+		} else {
+			return null;
 		}
-		return null;
+
 		/*
-		 * if (Integer.valueOf(parameter.get(0)) > Integer.valueOf(list.size()))
-		 * { return DELETE_OUT_OF_BOUND_MSG; } else {
-		 * list.remove(Integer.valueOf(parameter.get(0)) - 1); s.saveE(list);
-		 * canUndo = true; return DELETE_SUCCESSFUL_MSG; }
+		 * if (parameter.get(0).toLowerCase().contains("d")) { int index =
+		 * Integer.valueOf(parameter.get(0).substring(1)); int count = 0; for
+		 * (int i = 0; i < list.size(); i++) { if (list.get(i).getDeadline() !=
+		 * null) { count++; if (count == index) { list.remove(i); s.saveE(list);
+		 * canUndo = true; return DELETE_SUCCESSFUL_MSG; } } } if (count <
+		 * index) { return DELETE_OUT_OF_BOUND_MSG; } } else if
+		 * (parameter.get(0).toLowerCase().contains("e")) { int index =
+		 * Integer.valueOf(parameter.get(0).substring(1)); int count = 0; for
+		 * (int i = 0; i < list.size(); i++) { if (list.get(i).getEventTime() !=
+		 * null) { count++; if (count == index) { list.remove(i); s.saveE(list);
+		 * canUndo = true; return DELETE_SUCCESSFUL_MSG; } } } if (count <
+		 * index) { return DELETE_OUT_OF_BOUND_MSG; } } else if
+		 * (parameter.get(0).toLowerCase().contains("f")) { int index =
+		 * Integer.valueOf(parameter.get(0).substring(1)); int count = 0; for
+		 * (int i = 0; i < list.size(); i++) { if (list.get(i).getEventTime() ==
+		 * null && list.get(i).getDeadline() == null) { count++; if (count ==
+		 * index) { list.remove(i); s.saveE(list); canUndo = true; return
+		 * DELETE_SUCCESSFUL_MSG; } } } if (count < index) { return
+		 * DELETE_OUT_OF_BOUND_MSG; } } else { return INVALID_LIST_TYPE_MSG; }
+		 * return null;
 		 */
 	}
+
+	static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		String comment = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
+		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		if (indexInFullList == -2) {
+			return INVALID_LIST_TYPE_MSG;
+		} else if (indexInFullList == -1) {
+			return COMMENT_OUT_OF_BOUND_MSG;
+		} else if (indexInFullList >= 0) {
+			list.get(indexInFullList).comment = comment;
+			s.saveE(list);
+			return COMMENT_SUCCESSFUL_MSG;
+		} else {
+			return null;
+		}
+	}
+
 }

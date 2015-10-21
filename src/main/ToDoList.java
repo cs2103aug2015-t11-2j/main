@@ -57,6 +57,9 @@ public class ToDoList {
 			case "redo": {
 				return Action.redo(s);
 			}
+			case "comment": {
+				return Action.comment(s, parameter);
+			}
 			case "exit": {
 				Action.exit();
 				return EXIT_MSG;
