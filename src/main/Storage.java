@@ -1,6 +1,7 @@
 package main;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -105,7 +106,7 @@ public class Storage {
 
 	// read the file into arrayList
 	private static ArrayList<String> readFile(Path dir) throws IOException,FileNotFoundException {
-		List<String> preCopy = Files.readAllLines(dir);
+		List<String> preCopy = Files.readAllLines(dir, Charset.forName("GBK"));
 		ArrayList<String> copy = new ArrayList<String>();
 		for (String line : preCopy) {
 			copy.add(line);
