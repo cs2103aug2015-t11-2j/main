@@ -60,7 +60,7 @@ public class Yui_GUI extends Application{
        grid.add(mainGrid, 0, 2);
 
        //set eventPane
-       ScrollPane eventPane = new ScrollPane();
+       final ScrollPane eventPane = new ScrollPane();
        eventPane.setPrefSize(255, 275);
        eventPane.setHbarPolicy(ScrollBarPolicy.NEVER);
        mainGrid.add(eventPane, 1, 0);
