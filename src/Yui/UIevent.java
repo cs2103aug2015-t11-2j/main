@@ -15,19 +15,19 @@ import main.Event;
 import main.NumberedEvent;
 
 public class UIevent {
-	
+
 	private static Event events;
 	public Group ddlBackg = new Group();
 	private static SimpleDateFormat date_format1 = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat date_format2 = new SimpleDateFormat("HH:mm dd/MM/yyyy ");
-	
+	private static SimpleDateFormat date_format2 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
 		String startString = date_format1.format(events.getEventTime().getStart()) + " -" + " ";
 		String endString = date_format2.format(events.getEventTime().getEnd());
 		String eventName = events.getDetail();
 		int num = numberedEvent.getIndex();
-		
+
 		GridPane seEvent = new GridPane();
 		seEvent.setAccessibleText(num+eventName);
 	    Text tN = new Text(" " + num + " ");
@@ -46,13 +46,13 @@ public class UIevent {
 	    tE.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tE.setFill(Color.WHITE);
 	    seEvent.add(tE, 3, 0);
-	    seEvent.setPrefSize(273, 20); 
-	       
+	    seEvent.setPrefSize(273, 20);
+
 	    Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
 	    ImageView ddlBk = new ImageView(deadlineBk);
 	    ddlBackg.getChildren().addAll(ddlBk,seEvent);
 	}
-	
+
 	public Group getEntBox(){
 		return ddlBackg;
 	}
