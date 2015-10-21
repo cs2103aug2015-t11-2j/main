@@ -75,18 +75,6 @@ public class Action {
 
 	}
 
-	static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
-		if (Integer.valueOf(parameter.get(0)) > Integer.valueOf(list.size())) {
-			return DELETE_OUT_OF_BOUND_MSG;
-		} else {
-			list.remove(Integer.valueOf(parameter.get(0)) - 1);
-			s.saveE(list);
-			canUndo = true;
-			return DELETE_SUCCESSFUL_MSG;
-		}
-	}
-
 	static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		list.set(Parser.getUpdateIndex(parameter), Parser.getUpdateEvent(parameter));
@@ -177,8 +165,8 @@ public class Action {
 				} else {
 					Event reading = list.get(index - 1).getEvent();
 					output.append("Detail: " + reading.getDetail() + "\n");
-					output.append("Comment: " + reading.getComment() + "\n");
-					output.append("Time: " + deadline_format.format(reading.getDeadline().getDeadline()));
+					output.append(" Comment: " + reading.getComment() + "\n");
+					output.append(" Time: " + deadline_format.format(reading.getDeadline().getDeadline()));
 				}
 			} else if (parameter.get(0).toLowerCase().contains("e")) {
 				ArrayList<NumberedEvent> list = getEventTimeList(s);
@@ -188,8 +176,8 @@ public class Action {
 				} else {
 					Event reading = list.get(index - 1).getEvent();
 					output.append("Detail: " + reading.getDetail() + "\n");
-					output.append("Comment: " + reading.getComment() + "\n");
-					output.append("Time: " + eventStart_format.format(reading.getEventTime().getStart())
+					output.append(" Comment: " + reading.getComment() + "\n");
+					output.append(" Time: " + eventStart_format.format(reading.getEventTime().getStart())
 							+ eventEnd_format.format(reading.getEventTime().getEnd()));
 				}
 			} else if (parameter.get(0).toLowerCase().contains("f")) {
@@ -200,8 +188,8 @@ public class Action {
 				} else {
 					Event reading = list.get(index - 1).getEvent();
 					output.append("Detail: " + reading.getDetail() + "\n");
-					output.append("Comment: " + reading.getComment() + "\n");
-					output.append("Time: ");
+					output.append(" Comment: " + reading.getComment() + "\n");
+					output.append(" Time: ");
 				}
 			} else {
 				return INVALID_LIST_TYPE_MSG;
@@ -211,4 +199,68 @@ public class Action {
 		return output.toString();
 	}
 
+	static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		if (parameter.get(0).toLowerCase().contains("d")) {
+			int index = Integer.valueOf(parameter.get(0).substring(1));
+			int count = 0;
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getDeadline() != null) {
+					count++;
+					if (count == index) {
+						list.remove(i);
+						s.saveE(list);
+						canUndo = true;
+						return DELETE_SUCCESSFUL_MSG;
+					}
+				}
+			}
+			if (count < index) {
+				return DELETE_OUT_OF_BOUND_MSG;
+			}
+		} else if (parameter.get(0).toLowerCase().contains("e")) {
+			int index = Integer.valueOf(parameter.get(0).substring(1));
+			int count = 0;
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getEventTime() != null) {
+					count++;
+					if (count == index) {
+						list.remove(i);
+						s.saveE(list);
+						canUndo = true;
+						return DELETE_SUCCESSFUL_MSG;
+					}
+				}
+			}
+			if (count < index) {
+				return DELETE_OUT_OF_BOUND_MSG;
+			}
+		} else if (parameter.get(0).toLowerCase().contains("f")) {
+			int index = Integer.valueOf(parameter.get(0).substring(1));
+			int count = 0;
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getEventTime() == null && list.get(i).getDeadline() == null) {
+					count++;
+					if (count == index) {
+						list.remove(i);
+						s.saveE(list);
+						canUndo = true;
+						return DELETE_SUCCESSFUL_MSG;
+					}
+				}
+			}
+			if (count < index) {
+				return DELETE_OUT_OF_BOUND_MSG;
+			}
+		} else {
+			return INVALID_LIST_TYPE_MSG;
+		}
+		return null;
+		/*
+		 * if (Integer.valueOf(parameter.get(0)) > Integer.valueOf(list.size()))
+		 * { return DELETE_OUT_OF_BOUND_MSG; } else {
+		 * list.remove(Integer.valueOf(parameter.get(0)) - 1); s.saveE(list);
+		 * canUndo = true; return DELETE_SUCCESSFUL_MSG; }
+		 */
+	}
 }
