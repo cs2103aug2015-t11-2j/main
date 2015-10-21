@@ -121,7 +121,7 @@ public class Parser {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getDeadline() != null) {
+				if (list.get(i).getDeadline() != null && !list.get(i).status.equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -135,7 +135,7 @@ public class Parser {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getEventTime() != null) {
+				if (list.get(i).getEventTime() != null && !list.get(i).status.equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -149,7 +149,8 @@ public class Parser {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getEventTime() == null && list.get(i).getDeadline() == null) {
+				if (list.get(i).getEventTime() == null && list.get(i).getDeadline() == null
+						&& !list.get(i).status.equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;

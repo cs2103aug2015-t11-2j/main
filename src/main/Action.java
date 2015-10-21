@@ -25,6 +25,8 @@ public class Action {
 	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
 	private static final String PRIORITY_OUT_OF_BOUND_MSG = "Cannot set priority. Index entered is larger than current event amount!";
 	private static final String PRIORITY_SUCCESSFUL_MSG = "Priority set successfully!";
+	private static final String MARK_OUT_OF_BOUND_MSG = "Cannot mark. Index entered is larger than current event amount!";
+	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -104,7 +106,7 @@ public class Action {
 		ArrayList<NumberedEvent> deadlineList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
-			if (fullList.get(i).getDeadline() != null) {
+			if (fullList.get(i).getDeadline() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
 				deadlineList.add(new NumberedEvent(++indexCount, fullList.get(i)));
 
 			}
@@ -117,7 +119,7 @@ public class Action {
 		ArrayList<NumberedEvent> eventTimeList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
-			if (fullList.get(i).getEventTime() != null) {
+			if (fullList.get(i).getEventTime() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
 				eventTimeList.add(new NumberedEvent(++indexCount, fullList.get(i)));
 			}
 		}
@@ -129,7 +131,8 @@ public class Action {
 		ArrayList<NumberedEvent> floatingList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
-			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)) {
+			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)
+					&& !fullList.get(i).status.equalsIgnoreCase("done")) {
 				floatingList.add(new NumberedEvent(++indexCount, fullList.get(i)));
 			}
 		}
@@ -254,13 +257,14 @@ public class Action {
 		} else if (indexInFullList >= 0) {
 			list.get(indexInFullList).comment = comment;
 			s.saveE(list);
+			canUndo = true;
 			return COMMENT_SUCCESSFUL_MSG;
 		} else {
 			return null;
 		}
 	}
 
-	public static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
@@ -271,7 +275,26 @@ public class Action {
 		} else if (indexInFullList >= 0) {
 			list.get(indexInFullList).priority = priority;
 			s.saveE(list);
+			canUndo = true;
 			return PRIORITY_SUCCESSFUL_MSG;
+		} else {
+			return null;
+		}
+	}
+
+	static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		String status = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
+		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		if (indexInFullList == -2) {
+			return INVALID_LIST_TYPE_MSG;
+		} else if (indexInFullList == -1) {
+			return MARK_OUT_OF_BOUND_MSG;
+		} else if (indexInFullList >= 0) {
+			list.get(indexInFullList).status = status;
+			s.saveE(list);
+			canUndo = true;
+			return MARK_SUCCESSFUL_MSG;
 		} else {
 			return null;
 		}

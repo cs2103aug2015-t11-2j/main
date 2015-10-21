@@ -63,6 +63,9 @@ public class ToDoList {
 			case "priority": {
 				return Action.priority(s, parameter);
 			}
+			case "mark": {
+				return Action.mark(s, parameter);
+			}
 			case "exit": {
 				Action.exit();
 				return EXIT_MSG;
