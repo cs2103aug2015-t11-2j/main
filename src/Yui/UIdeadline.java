@@ -15,16 +15,16 @@ import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;
-	private static SimpleDateFormat date_format = new SimpleDateFormat("HH:mm dd/MM/yyyy ");
+	private static SimpleDateFormat date_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	public Group ddlBackg = new Group();
-	
+
 	public UIdeadline(NumberedEvent numberedEvent){
 		deadline = numberedEvent.getEvent();
 		Deadline deadlineCal = deadline.getDeadline();
 		String ddlString = date_format.format(deadlineCal.getDeadline());
 		String eventName = deadline.getDetail();
 		int num = numberedEvent.getIndex();
-		
+
 		GridPane deadlineEvent = new GridPane();
 	    deadlineEvent.setAccessibleText(num+eventName);
 	    Text tN = new Text(" " + num + " ");
@@ -45,13 +45,13 @@ public class UIdeadline {
 	    tT.setFill(Color.WHITE);
 	    deadlineEvent.add(tT, 3, 0);
 	    */
-	    deadlineEvent.setPrefSize(273, 20); 
-	       
+	    deadlineEvent.setPrefSize(273, 20);
+
 	    Image deadlineBk = new Image(getClass().getResourceAsStream("commonEvent.png"));
 	    ImageView ddlBk = new ImageView(deadlineBk);
 	    ddlBackg.getChildren().addAll(ddlBk,deadlineEvent);
 	}
-	
+
 	public Group getDdlBox(){
 		return ddlBackg;
 	}
