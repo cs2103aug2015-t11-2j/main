@@ -16,7 +16,7 @@ import main.ToDoList;
 
 public class MotionCatcher {
 	private static Logger logger = Logger.getLogger("MotionCatcher");
-	public static void keyboardCatcher(TextField userCommandBox, TextArea showBox){
+	public static void keyboardCatcher(final TextField userCommandBox, final TextArea showBox){
 		userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
 	    	   @Override
 	    	   public void handle(KeyEvent event) {
@@ -45,7 +45,7 @@ public class MotionCatcher {
 	       });
 	}
 	
-	public static void mouseCatcher(ImageView enterKey, TextField userCommandBox, TextArea showBox){
+	public static void mouseCatcher(ImageView enterKey, final TextField userCommandBox, final TextArea showBox){
 		enterKey.setOnMouseClicked(new EventHandler<MouseEvent>(){
 	    	   @Override
 	    	   public void handle(MouseEvent event) {

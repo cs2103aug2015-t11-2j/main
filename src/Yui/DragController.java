@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class DragController {
-	public static void dragStage(GridPane grid, Stage primaryStage){
+	public static void dragStage(GridPane grid, final Stage primaryStage){
 		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
 	           @Override
 	           public void handle(MouseEvent event) {
