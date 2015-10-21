@@ -169,7 +169,7 @@ public class Action {
 		if (parameter.size() == 0) {
 			return NO_INDEX_TO_READ_MSG;
 		} else {
-			if (parameter.get(0).contains("d") || parameter.get(0).contains("D")) {
+			if (parameter.get(0).toLowerCase().contains("d")) {
 				ArrayList<NumberedEvent> list = getDeadlineList(s);
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {
@@ -180,7 +180,7 @@ public class Action {
 					output.append("Comment: " + reading.getComment() + "\n");
 					output.append("Time: " + deadline_format.format(reading.getDeadline().getDeadline()));
 				}
-			} else if (parameter.get(0).contains("e") || parameter.get(0).contains("E")) {
+			} else if (parameter.get(0).toLowerCase().contains("e")) {
 				ArrayList<NumberedEvent> list = getEventTimeList(s);
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {
@@ -192,7 +192,7 @@ public class Action {
 					output.append("Time: " + eventStart_format.format(reading.getEventTime().getStart())
 							+ eventEnd_format.format(reading.getEventTime().getEnd()));
 				}
-			} else if (parameter.get(0).contains("f") || parameter.get(0).contains("F")) {
+			} else if (parameter.get(0).toLowerCase().contains("f")) {
 				ArrayList<NumberedEvent> list = getFloatingList(s);
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {
