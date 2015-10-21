@@ -77,7 +77,7 @@ public class Action {
 				}
 			}
 			if (isFound) {
-				return resultList.toString();
+				return resultList.deleteCharAt(resultList.length()-1).toString();
 			} else {
 				return SEARCH_NOT_FOUND_MSG; // no result found
 			}
