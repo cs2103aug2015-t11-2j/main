@@ -60,13 +60,17 @@ public class Action {
 		} else {
 			StringBuilder resultList = new StringBuilder();
 			boolean isFound = false;
-			int index = 1;
+			int index = 0;
 			for (int i = 0; i < list.size(); i++) {
 				String task = list.get(i).getDetail();
 				// if key word found ignore case
 				if (task.toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true; // set status found
-					resultList.append(index++);
+					index++;
+					if(index > 1){
+						resultList.append(" ");
+					}
+					resultList.append(index);
 					resultList.append(". ");
 					resultList.append(task);
 					resultList.append("\n");
