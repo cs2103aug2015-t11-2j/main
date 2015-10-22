@@ -36,10 +36,10 @@ public class Deadline {
 
 	// constructor
 	Deadline(){
-		
+
 	}
-	
-	Deadline(Date deadline) {
+
+	public Deadline(Date deadline) {
 		this.deadline = deadline;
 	}
 

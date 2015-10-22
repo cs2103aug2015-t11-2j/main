@@ -10,37 +10,37 @@ public class Event {
 	protected Deadline deadline = null;
 	protected EventTime eventTime = null;
 
-	
+
 /*	may need to parse it through Calendar.getInstance(), since it cannot use any Calendar command from null directly
-	
+
 	Calendar.getInstance() generate current time and date and GMT and stuffs
-	
-	read api for calendar and SimpleDateFormat 
+
+	read api for calendar and SimpleDateFormat
 	or my test.java for some way to extract date and time in correct format
-	
+
 	null value for boolean check in logic part(!?) and converter
-	
-	
+
+
 */
 	// constructor
-	
 
-	
+
+
 	//unused, edit directly from the above command
-	Event() {
-		
+	public Event() {
+
 	}
-	
-	Event(String detail) {
+
+	public Event(String detail) {
 		this.detail = detail;
 	}
 
-	Event(String detail, Deadline deadline) {
+	public Event(String detail, Deadline deadline) {
 		this.detail = detail;
 		this.deadline = deadline;
 	}
 
-	Event(String detail, EventTime eventTime) {
+	public Event(String detail, EventTime eventTime) {
 		this.detail = detail;
 		this.eventTime = eventTime;
 	}
@@ -49,7 +49,7 @@ public class Event {
 	void setNumber(int numberInt){
 		this.number = String.valueOf(numberInt);
 	}
-	
+
 	void addComment(String comment){
 		this.comment = comment;
 	}
@@ -59,8 +59,8 @@ public class Event {
 	void setPriority(String priority){
 		this.priority = priority;
 	}*/
-	
-	
+
+
 	public String getDetail(){
 		return this.detail;
 	}

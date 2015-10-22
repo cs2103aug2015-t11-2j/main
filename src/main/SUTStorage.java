@@ -16,11 +16,11 @@ public class SUTStorage extends TestCase {
 		ArrayList<Event> arrE1 = new ArrayList<Event>();
 		ArrayList<Event> arrE2 = new ArrayList<Event>();
 		ArrayList<String> arr1 = new ArrayList<String>();
-		ArrayList<String> arr2 = new ArrayList<String>();
+		//ArrayList<String> arr2 = new ArrayList<String>();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String dateS = "01/02/2013 04:55:56";
 		Storage s = new Storage("SUTStorage.txt");
-		
+
 		//template arraylist string version
 		arr1.add("e1 detail");
 		arr1.add("e1 comment");
@@ -28,8 +28,8 @@ public class SUTStorage extends TestCase {
 		arr1.add("e1 priority");
 		arr1.add(dateS);
 		arr1.add("------");
-		arr1.add("------");	
-		
+		arr1.add("------");
+
 		arr1.add("e2 detail");
 		arr1.add("e2 comment");
 		arr1.add("e2 status");
@@ -56,7 +56,7 @@ public class SUTStorage extends TestCase {
 		e2.eventTime = new EventTime();
 		e2.eventTime.start = dateFormat.parse(dateS);
 		e2.eventTime.end = dateFormat.parse(dateS);
-		
+
 		arrE1.add(e1);
 		arrE1.add(e2);
 

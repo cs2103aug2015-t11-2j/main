@@ -47,14 +47,14 @@ public class EventTime {
 
 	// constructor
 	EventTime(){
-		
+
 	}
-	
-	EventTime(Date start, Date end) {
+
+	public EventTime(Date start, Date end) {
 		this.start = start;
 		this.end = end;
 	}
-	
+
 	public Date getStart(){
 		return this.start;
 	}
