@@ -137,4 +137,7 @@ public class Storage {
 		Files.copy(mainDir, tempDir, StandardCopyOption.REPLACE_EXISTING);
 	}
 
+	public void reset() throws IOException{
+		Files.deleteIfExists(mainDir);
+	}
 }
