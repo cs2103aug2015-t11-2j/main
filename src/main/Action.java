@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import Yui.Yui_GUI;
+
 public class Action {
 
 	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
@@ -27,6 +29,9 @@ public class Action {
 	private static final String PRIORITY_SUCCESSFUL_MSG = "Priority set successfully!";
 	private static final String MARK_OUT_OF_BOUND_MSG = "Cannot mark. Index entered is larger than current event amount!";
 	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
+	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
+	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
+	private static final String INVALID_THEME = "It is an invalid theme!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -50,6 +55,23 @@ public class Action {
 		System.exit(0);
 	}
 
+	public static String bground(ArrayList<String> parameter){
+		if(!(parameter.get(0).equals("default")||parameter.get(0).equals("1"))){
+			String theme = parameter.get(0);
+			if(theme.equals("2")){
+				Yui_GUI.listBkImage = Yui_GUI.listBkImage2;
+				return CHANGR_BK_SUCCESSFUL;
+			} else {
+				return INVALID_THEME;
+			}
+			
+		} else {
+			//Yui_GUI.listBackgroundPath = "listBK2.png";
+			Yui_GUI.listBkImage = Yui_GUI.listBkImage1;
+			return CHANGR_BK_DEFAULT;
+		}
+	}
+	
 	static String searchKey(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		return searchResult(s.loadE(), parameter.get(0));
 	}

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -32,19 +31,23 @@ public class Yui_GUI extends Application{
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
 	private static Logger logger = Logger.getLogger("MotionCatcher");
-
+	private static String listBackgroundPath1 = "listBK2.png";
+	private static String listBackgroundPath2 = "newBK.png";
+	public static Image listBkImage1;
+	public static Image listBkImage2;
+	public static Image listBkImage;
 
    public static void main(String[] args) {
        launch(args);
     }
 
    @Override
-   public void start(final Stage primaryStage) throws IOException, ParseException {
+   public void start(Stage primaryStage) throws IOException, ParseException {
        primaryStage.setTitle("Yui");
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
        primaryStage.show();
-
+       
        returnCommand = ToDoList.initialize();
 
        //Set main grid
@@ -71,7 +74,10 @@ public class Yui_GUI extends Application{
        //eventGrid.setVgap(1);
 
        //event list background
-       ImageView listBk = new ImageView(new Image(getClass().getResourceAsStream("listBK2.png")));
+       listBkImage1 = new Image(getClass().getResourceAsStream(listBackgroundPath1));
+       listBkImage2 = new Image(getClass().getResourceAsStream(listBackgroundPath2));
+       listBkImage = listBkImage1;
+       ImageView listBk = new ImageView(listBkImage);
        Group listAllBack = new Group();
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
@@ -160,6 +166,7 @@ public class Yui_GUI extends Application{
 						e.printStackTrace();
 					}
     				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
+    				   listBk.setImage(listBkImage);
     				   logger.log(Level.INFO, "end of processing");
     			   }
     		   }

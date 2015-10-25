@@ -36,9 +36,9 @@ public class ToDoList {
 			case "add": {
 				return Action.addToList(s, parameter);
 			}
-/*			case "show": {
-				return Action.show(s, parameter);
-			}*/
+			case "theme": {
+				return Action.bground(parameter);
+			}
 			case "read": {
 				return Action.read(s, parameter);
 			}
