@@ -6,24 +6,27 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Parser {
-
+	
+	// Two command types - Add/Other
+	enum COMMAND_TYPE {
+		ADD, OTHER
+	};
+		
 	public static String getAction(String userCommand) {
 		String action = Splitter.getFirstWord(userCommand).toLowerCase();
 		return action;
 	}
 
-	/*
-	 * public static String getParameter(String userCommand){ String parameter =
-	 * Splitter.removeFirstWord(userCommand); return parameter; }
-	 */
-
 	public static ArrayList<String> getParameter(String userCommand) {
 		String action = getAction(userCommand);
 		ArrayList<String> parameter = new ArrayList<String>();
-		if (action.equals("add")) {
+		
+		COMMAND_TYPE commandType = determineCommandType(action);
+		
+		switch(commandType){
+		case ADD:
 			String unsplitParameter = Splitter.removeFirstWord(userCommand);
-			if (unsplitParameter.contains("from")) { // event with specific time
-														// interval
+			if (unsplitParameter.contains("from")) { // event with specific time interval
 				parameter = Splitter.splitEvent(parameter, unsplitParameter);
 			}
 
@@ -32,13 +35,14 @@ public class Parser {
 			} else {// no time specified
 				parameter.add(Splitter.removeFirstWord(userCommand));
 			}
-		} else {
-			parameter.add(Splitter.removeFirstWord(userCommand)); // not an
-																	// "add"
-																	// event
+			return parameter;
+		
+		case OTHER:
+			parameter.add(Splitter.removeFirstWord(userCommand)); // not an "add" event
+			return parameter;
+		default:
+			return null;
 		}
-
-		return parameter;
 	}
 
 	public static int getUpdateIndex(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
@@ -48,8 +52,7 @@ public class Parser {
 	public static Event getUpdateEvent(Storage s, ArrayList<String> parameter) throws ParseException, IOException {
 		String updateParameter = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		ArrayList<String> eventParameter = new ArrayList<String>();
-		if (updateParameter.contains("from")) { // event with specific time
-												// interval
+		if (updateParameter.contains("from")) { // event with specific time interval
 			eventParameter = Splitter.splitEvent(eventParameter, updateParameter);
 		}
 
@@ -73,7 +76,19 @@ public class Parser {
 		}
 		return null;
 	}
+	
+	//Determines command type (add or other)
+	private static COMMAND_TYPE determineCommandType(String commandTypeString) {
+		if (commandTypeString == null)
+			throw new Error("command type string cannot be null!");
 
+		if (commandTypeString.equalsIgnoreCase("add") || commandTypeString.equalsIgnoreCase("create")) {
+			return COMMAND_TYPE.ADD;
+		} else {
+			return COMMAND_TYPE.OTHER;
+		}
+	}
+	
 	// parse exception if string stored not in tommorrow, today and not of
 	// dd/mm/yyyy format
 	private static EventTime parseForEventTime(String start, String end, String date) throws ParseException {
