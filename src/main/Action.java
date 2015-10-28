@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Yui.Yui_GUI;
 
@@ -32,10 +33,12 @@ public class Action {
 	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
 	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
 	private static final String INVALID_THEME = "It is an invalid theme!";
+	private static final String UNRECOGNIZED_OUTLINE_MSG = "You cannot enter a value after outline command!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static boolean canUndo = false;
+	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
@@ -165,22 +168,44 @@ public class Action {
 		return floatingList;
 	}
 
-	/*
-	 * static String show(Storage s, ArrayList<String> parameter) throws
-	 * IOException { StringBuilder output = new StringBuilder();
-	 * ArrayList<String> list = s.load(s.mainDir); if (parameter.size() == 0) {
-	 * for (int i = 0; i < list.size(); i++) { if (i == 0) { output.append((i +
-	 * 1) + ". " + list.get(i) + "\n"); } else { output.append(" " + (i + 1) +
-	 * ". " + list.get(i) + "\n"); } } if (output.length() == 0) { return
-	 * NO_EVENT_MSG; } else { output.deleteCharAt(output.length() - 1);// remove
-	 * the last new // line return output.toString(); } } else { return null; }
-	 * }
-	 */
-
 	public static String read(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		StringBuilder output = new StringBuilder();
 		if (parameter.size() == 0) {
 			return NO_INDEX_TO_READ_MSG;
+		} else if (parameter.get(0).equalsIgnoreCase("today")){
+			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
+			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
+			for (NumberedEvent dEvent : deadlineEvent){
+				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
+				if (isToday(eventDeadline)){
+					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
+				}
+			}
+			for (NumberedEvent eEvent : eventTimeEvent){
+				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
+				if (isToday(eventEventTime)){
+					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
+				}
+			}
+			output.deleteCharAt(0);
+			output.deleteCharAt(output.length()-1);
+		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr")){
+			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
+			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
+			for (NumberedEvent dEvent : deadlineEvent){
+				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
+				if (isTmr(eventDeadline)){
+					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
+				}
+			}
+			for (NumberedEvent eEvent : eventTimeEvent){
+				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
+				if (isTmr(eventEventTime)){
+					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
+				}
+			}
+			output.deleteCharAt(0);
+			output.deleteCharAt(output.length()-1);
 		} else {
 			if (parameter.get(0).toLowerCase().contains("d")) {
 				ArrayList<NumberedEvent> list = getDeadlineList(s);
@@ -224,6 +249,39 @@ public class Action {
 		return output.toString();
 	}
 
+	public static String outline(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		if (!parameter.get(0).equals("")){
+			return UNRECOGNIZED_OUTLINE_MSG;
+		} else {
+			ArrayList<String> readToday = new ArrayList<String>();
+			ArrayList<String> readTmr = new ArrayList<String>();
+			readToday.add("today");
+			readTmr.add("tmr");
+			return read(s, readToday) + "\n " + read(s, readTmr);
+		}
+	}
+	
+	private static boolean isToday(Date theDate){
+		Date today = new Date();
+		String theDateString = formatCompare.format(theDate);
+		String todayString = formatCompare.format(today);
+		if(theDateString.equals(todayString)){
+			return true;
+		}
+		return false;
+	}
+	
+	private static boolean isTmr(Date theDate){
+		Date today = new Date();
+		Date tmr = new Date(today.getTime() + 86400000);
+		String theDateString = formatCompare.format(theDate);
+		String tmrString = formatCompare.format(tmr);
+		if(theDateString.equals(tmrString)){
+			return true;
+		}
+		return false;
+	}
+	
 	static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		list.set(Parser.getUpdateIndex(s, parameter), Parser.getUpdateEvent(s, parameter));
@@ -247,29 +305,6 @@ public class Action {
 		} else {
 			return null;
 		}
-
-		/*
-		 * if (parameter.get(0).toLowerCase().contains("d")) { int index =
-		 * Integer.valueOf(parameter.get(0).substring(1)); int count = 0; for
-		 * (int i = 0; i < list.size(); i++) { if (list.get(i).getDeadline() !=
-		 * null) { count++; if (count == index) { list.remove(i); s.saveE(list);
-		 * canUndo = true; return DELETE_SUCCESSFUL_MSG; } } } if (count <
-		 * index) { return DELETE_OUT_OF_BOUND_MSG; } } else if
-		 * (parameter.get(0).toLowerCase().contains("e")) { int index =
-		 * Integer.valueOf(parameter.get(0).substring(1)); int count = 0; for
-		 * (int i = 0; i < list.size(); i++) { if (list.get(i).getEventTime() !=
-		 * null) { count++; if (count == index) { list.remove(i); s.saveE(list);
-		 * canUndo = true; return DELETE_SUCCESSFUL_MSG; } } } if (count <
-		 * index) { return DELETE_OUT_OF_BOUND_MSG; } } else if
-		 * (parameter.get(0).toLowerCase().contains("f")) { int index =
-		 * Integer.valueOf(parameter.get(0).substring(1)); int count = 0; for
-		 * (int i = 0; i < list.size(); i++) { if (list.get(i).getEventTime() ==
-		 * null && list.get(i).getDeadline() == null) { count++; if (count ==
-		 * index) { list.remove(i); s.saveE(list); canUndo = true; return
-		 * DELETE_SUCCESSFUL_MSG; } } } if (count < index) { return
-		 * DELETE_OUT_OF_BOUND_MSG; } } else { return INVALID_LIST_TYPE_MSG; }
-		 * return null;
-		 */
 	}
 
 	static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
@@ -325,5 +360,7 @@ public class Action {
 			return null;
 		}
 	}
+
+
 
 }

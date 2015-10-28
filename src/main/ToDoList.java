@@ -42,6 +42,9 @@ public class ToDoList {
 			case "read": {
 				return Action.read(s, parameter);
 			}
+			case "outline": {
+				return Action.outline(s, parameter);
+			}
 			case "delete": {
 				return Action.deleteEvent(s, parameter);
 			}
