@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ public class Action {
 	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
 	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
 	private static final String INVALID_THEME = "It is an invalid theme!";
+	private static final String NO_MY_THEME = "There is no user's theme! \n Please add in uer.dir. \n And name it as myTheme.png";
 	private static final String UNRECOGNIZED_OUTLINE_MSG = "You cannot enter a value after outline command!";
 	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
@@ -67,6 +69,14 @@ public class Action {
 			if (theme.equals("2")) {
 				Yui_GUI.listBkImage = Yui_GUI.listBkImage2;
 				return CHANGR_BK_SUCCESSFUL;
+			} else if (theme.equals("my theme")) {
+				File myTheme = new File(Yui_GUI.listBackgroundPath3);
+				if(myTheme.exists()){
+					Yui_GUI.listBkImage = Yui_GUI.listBkImage3;
+					return CHANGR_BK_SUCCESSFUL;
+				} else {
+					return NO_MY_THEME;
+				}
 			} else {
 				return INVALID_THEME;
 			}

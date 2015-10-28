@@ -1,5 +1,6 @@
 package Yui;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -33,8 +34,10 @@ public class Yui_GUI extends Application{
 	private static Logger logger = Logger.getLogger("MotionCatcher");
 	private static String listBackgroundPath1 = "listBK2.png";
 	private static String listBackgroundPath2 = "newBK.png";
+	public static String listBackgroundPath3 = "user.dir/myTheme.png";
 	public static Image listBkImage1;
 	public static Image listBkImage2;
+	public static Image listBkImage3;
 	public static Image listBkImage;
 
    public static void main(String[] args) {
@@ -47,7 +50,7 @@ public class Yui_GUI extends Application{
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
        primaryStage.show();
-       
+
        returnCommand = ToDoList.initialize();
 
        //Set main grid
@@ -76,6 +79,9 @@ public class Yui_GUI extends Application{
        //event list background
        listBkImage1 = new Image(getClass().getResourceAsStream(listBackgroundPath1));
        listBkImage2 = new Image(getClass().getResourceAsStream(listBackgroundPath2));
+       if(new File(listBackgroundPath3).exists()){
+    	   listBkImage3 = new Image(new File(listBackgroundPath3).toURI().toURL().toString());
+       }
        listBkImage = listBkImage1;
        final ImageView listBk = new ImageView(listBkImage);
        Group listAllBack = new Group();
@@ -170,7 +176,7 @@ public class Yui_GUI extends Application{
     				   logger.log(Level.INFO, "end of processing");
     			   }
     		   }
-    		   
+
     		   if(event.getCode().equals(KeyCode.UP)){
     			   eventPane.setVvalue(eventPane.getVvalue() - 0.3f);
     		   }
