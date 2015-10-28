@@ -42,16 +42,16 @@ public class UIdeadline {
 	    Text tD = new Text(" " + ddlString + " ");
 	    tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tD.setFill(Color.WHITE);
-	    deadlineEvent.add(tD, 2, 0);
+	    deadlineEvent.add(tD, 1, 1);
 	    /*
 	    Text tT = new Text(timeString);
 	    tT.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tT.setFill(Color.WHITE);
 	    deadlineEvent.add(tT, 3, 0);
 	    */
-	    deadlineEvent.setPrefSize(273, 20);
+	    deadlineEvent.setPrefSize(125, 38);
 
-	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("commonEvent.png"));
+	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("graybox.png"));
 	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent.png"));
 	    ImageView ddlBk = new ImageView();
 	    if(isToday(theDate)){

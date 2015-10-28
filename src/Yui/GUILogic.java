@@ -16,19 +16,26 @@ public class GUILogic {
 	public static void showEvents(GridPane eventGrid, ImageView deadline, ImageView eventIcon, ImageView floatingIcon) throws IOException, ParseException{
 		//deadline icon
 	    eventGrid.add(deadline, 0, 0);
-	    //Y = Y + 1;
+	    Y = Y + 1;
 	    
 	    //add deadlines
 	    ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
 	    int ddlLength = deadlines.size();
-	    Y = ddlLength;
-	    if(ddlLength > 0){
-	    for(int i = 0; i < Y; i++){
+	    GridPane deadlineBox = new GridPane();
+	    deadlineBox.setHgap(1);
+	    //Y = ddlLength;
+	    for(int i = 0; i < ddlLength; i++){
 	    	NumberedEvent thisEvent = deadlines.get(i);
 	    	UIdeadline thisDdlBox = new UIdeadline(thisEvent);
-	    	eventGrid.add(thisDdlBox.getDdlBox(), 0, i + 1);
+	    	if( i%2 == 0){
+	    		X = 0;
+	    	} else {
+	    		X = 1;
+	    	}
+	    	int y = i/2;
+	    	deadlineBox.add(thisDdlBox.getDdlBox(), X, y);
 	    }
-	    }
+	    eventGrid.add(deadlineBox, 0, Y);
 	    Y = Y + 1;
 	    
 	    //event icon
