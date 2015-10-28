@@ -118,7 +118,7 @@ public class Action {
 			for (NumberedEvent mEvent : memoEvent) {
 				if (mEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
 					isFound = true;
-					resultList.append(" e" + mEvent.getIndex() + ". " + mEvent.getEvent().getDetail() + "\n");
+					resultList.append(" m" + mEvent.getIndex() + ". " + mEvent.getEvent().getDetail() + "\n");
 				}
 			}
 			if (isFound) {
