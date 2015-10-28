@@ -15,7 +15,6 @@ public class Action {
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
 	private static final String ADD_SUCCESS_MSG = "Event added successful!";
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
-	// private static final String NO_EVENT_MSG = "Your event list is empty!";
 	private static final String UNDO_MSG = "Undo operation successful!";
 	private static final String UNABLE_UNDO_MSG = "Cannot undo! Have some operations first!";
 	private static final String REDO_MSG = "Redo operation successful!";
@@ -36,6 +35,8 @@ public class Action {
 	private static final String UNRECOGNIZED_OUTLINE_MSG = "You cannot enter a value after outline command!";
 	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
+	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
+	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -175,36 +176,48 @@ public class Action {
 		if (parameter.size() == 0) {
 			return NO_INDEX_TO_READ_MSG;
 		} else if (parameter.get(0).equalsIgnoreCase("today")){
+			boolean hasEvent = false;
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
 			for (NumberedEvent dEvent : deadlineEvent){
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
 				if (isToday(eventDeadline)){
+					hasEvent = true;
 					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
 				}
 			}
 			for (NumberedEvent eEvent : eventTimeEvent){
 				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
 				if (isToday(eventEventTime)){
+					hasEvent = true;
 					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
 				}
+			}
+			if (!hasEvent) {
+				return NO_EVENT_TODAY_MSG;
 			}
 			output.deleteCharAt(0);
 			output.deleteCharAt(output.length()-1);
 		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr")){
+			boolean hasEvent = false;
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
 			for (NumberedEvent dEvent : deadlineEvent){
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
 				if (isTmr(eventDeadline)){
+					hasEvent = true;
 					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
 				}
 			}
 			for (NumberedEvent eEvent : eventTimeEvent){
 				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
 				if (isTmr(eventEventTime)){
+					hasEvent = true;
 					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
 				}
+			}
+			if (!hasEvent) {
+				return NO_EVENT_TMR_MSG;
 			}
 			output.deleteCharAt(0);
 			output.deleteCharAt(output.length()-1);
