@@ -46,7 +46,7 @@ public class Action {
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		Event newEvent = Parser.parseForEvent(parameter);
-		if (newEvent == null) {
+		if (newEvent.getDetail().equals("")) {
 			return INVALID_ADD_PARAMETER_MSG;
 		} else {
 			list.add(newEvent);
@@ -61,51 +61,60 @@ public class Action {
 		System.exit(0);
 	}
 
-	public static String bground(ArrayList<String> parameter){
-		if(!(parameter.get(0).equals("default")||parameter.get(0).equals("1"))){
+	public static String bground(ArrayList<String> parameter) {
+		if (!(parameter.get(0).equals("default") || parameter.get(0).equals("1"))) {
 			String theme = parameter.get(0);
-			if(theme.equals("2")){
+			if (theme.equals("2")) {
 				Yui_GUI.listBkImage = Yui_GUI.listBkImage2;
 				return CHANGR_BK_SUCCESSFUL;
 			} else {
 				return INVALID_THEME;
 			}
-			
+
 		} else {
-			//Yui_GUI.listBackgroundPath = "listBK2.png";
+			// Yui_GUI.listBackgroundPath = "listBK2.png";
 			Yui_GUI.listBkImage = Yui_GUI.listBkImage1;
 			return CHANGR_BK_DEFAULT;
 		}
 	}
-	
-	static String searchKey(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		return searchResult(s.loadE(), parameter.get(0));
-	}
 
-	private static String searchResult(ArrayList<Event> list, String parameter) {
-		if (list.size() == 0 || parameter == null) {
+//	static String searchKey(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+//		return searchResult(s.loadE(), parameter.get(0));
+//	}
+
+	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList) throws IOException, ParseException {
+		ArrayList<Event> list = s.loadE();
+		String parameter = parameterArrayList.get(0);
+		StringBuilder resultList = new StringBuilder();
+		if (list.size() == 0 || parameter == "") {
 			return SEARCH_NOT_FOUND_MSG;
 		} else {
-			StringBuilder resultList = new StringBuilder();
-			boolean isFound = false;
-			int index = 0;
-			for (int i = 0; i < list.size(); i++) {
-				String task = list.get(i).getDetail();
-				// if key word found ignore case
-				if (task.toLowerCase().contains(parameter.toLowerCase())) {
-					isFound = true; // set status found
-					index++;
-					if(index > 1){
-						resultList.append(" ");
-					}
-					resultList.append(index);
-					resultList.append(". ");
-					resultList.append(task);
-					resultList.append("\n");
+			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
+			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
+			ArrayList<NumberedEvent> memoEvent = getFloatingList(s);
+			Boolean isFound = false;
+			for (NumberedEvent dEvent : deadlineEvent) {
+				if (dEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
+					isFound = true;
+					resultList.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
+				}
+			}
+			for (NumberedEvent eEvent : eventTimeEvent) {
+				if (eEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
+					isFound = true;
+					resultList.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
+				}
+			}
+			for (NumberedEvent mEvent : memoEvent) {
+				if (mEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
+					isFound = true;
+					resultList.append(" e" + mEvent.getIndex() + ". " + mEvent.getEvent().getDetail() + "\n");
 				}
 			}
 			if (isFound) {
-				return resultList.deleteCharAt(resultList.length()-1).toString();
+				resultList.deleteCharAt(resultList.length() - 1);
+				resultList.deleteCharAt(0);
+				return resultList.toString();
 			} else {
 				return SEARCH_NOT_FOUND_MSG; // no result found
 			}
@@ -175,20 +184,20 @@ public class Action {
 		StringBuilder output = new StringBuilder();
 		if (parameter.size() == 0) {
 			return NO_INDEX_TO_READ_MSG;
-		} else if (parameter.get(0).equalsIgnoreCase("today")){
+		} else if (parameter.get(0).equalsIgnoreCase("today")) {
 			boolean hasEvent = false;
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
-			for (NumberedEvent dEvent : deadlineEvent){
+			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
-				if (isToday(eventDeadline)){
+				if (isToday(eventDeadline)) {
 					hasEvent = true;
 					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
 				}
 			}
-			for (NumberedEvent eEvent : eventTimeEvent){
+			for (NumberedEvent eEvent : eventTimeEvent) {
 				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
-				if (isToday(eventEventTime)){
+				if (isToday(eventEventTime)) {
 					hasEvent = true;
 					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
 				}
@@ -197,21 +206,21 @@ public class Action {
 				return NO_EVENT_TODAY_MSG;
 			}
 			output.deleteCharAt(0);
-			output.deleteCharAt(output.length()-1);
-		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr")){
+			output.deleteCharAt(output.length() - 1);
+		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr")) {
 			boolean hasEvent = false;
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
-			for (NumberedEvent dEvent : deadlineEvent){
+			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
-				if (isTmr(eventDeadline)){
+				if (isTmr(eventDeadline)) {
 					hasEvent = true;
 					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
 				}
 			}
-			for (NumberedEvent eEvent : eventTimeEvent){
+			for (NumberedEvent eEvent : eventTimeEvent) {
 				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
-				if (isTmr(eventEventTime)){
+				if (isTmr(eventEventTime)) {
 					hasEvent = true;
 					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
 				}
@@ -220,7 +229,7 @@ public class Action {
 				return NO_EVENT_TMR_MSG;
 			}
 			output.deleteCharAt(0);
-			output.deleteCharAt(output.length()-1);
+			output.deleteCharAt(output.length() - 1);
 		} else {
 			if (parameter.get(0).toLowerCase().contains("d")) {
 				ArrayList<NumberedEvent> list = getDeadlineList(s);
@@ -265,7 +274,7 @@ public class Action {
 	}
 
 	public static String outline(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		if (!parameter.get(0).equals("")){
+		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZED_OUTLINE_MSG;
 		} else {
 			ArrayList<String> readToday = new ArrayList<String>();
@@ -275,28 +284,28 @@ public class Action {
 			return "Today:\n " + read(s, readToday) + "\n Tomorrow\n " + read(s, readTmr);
 		}
 	}
-	
-	private static boolean isToday(Date theDate){
+
+	private static boolean isToday(Date theDate) {
 		Date today = new Date();
 		String theDateString = formatCompare.format(theDate);
 		String todayString = formatCompare.format(today);
-		if(theDateString.equals(todayString)){
+		if (theDateString.equals(todayString)) {
 			return true;
 		}
 		return false;
 	}
-	
-	private static boolean isTmr(Date theDate){
+
+	private static boolean isTmr(Date theDate) {
 		Date today = new Date();
 		Date tmr = new Date(today.getTime() + 86400000);
 		String theDateString = formatCompare.format(theDate);
 		String tmrString = formatCompare.format(tmr);
-		if(theDateString.equals(tmrString)){
+		if (theDateString.equals(tmrString)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		list.set(Parser.getUpdateIndex(s, parameter), Parser.getUpdateEvent(s, parameter));
@@ -377,14 +386,12 @@ public class Action {
 	}
 
 	protected static String clearAll(Storage s, ArrayList<String> parameter) throws IOException {
-		if (!parameter.get(0).equals("")){
+		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;
 		} else {
 			s.reset();
 			return CLEARALL_MSG;
 		}
 	}
-
-
 
 }
