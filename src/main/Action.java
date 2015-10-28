@@ -257,7 +257,7 @@ public class Action {
 			ArrayList<String> readTmr = new ArrayList<String>();
 			readToday.add("today");
 			readTmr.add("tmr");
-			return read(s, readToday) + "\n " + read(s, readTmr);
+			return "Today:\n " + read(s, readToday) + "\n Tomorrow\n " + read(s, readTmr);
 		}
 	}
 	
