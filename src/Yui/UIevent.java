@@ -26,7 +26,7 @@ public class UIevent {
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
 		Date theDate = events.getEventTime().getStart();
-		String startString = dateFormat1.format(events.getEventTime().getStart()) + " -" + " ";
+		String startString = dateFormat1.format(events.getEventTime().getStart()) + " -";
 		String endString = dateFormat2.format(events.getEventTime().getEnd());
 		String eventName = events.getDetail();
 		int num = numberedEvent.getIndex();
