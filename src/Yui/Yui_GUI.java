@@ -42,7 +42,7 @@ public class Yui_GUI extends Application{
     }
 
    @Override
-   public void start(Stage primaryStage) throws IOException, ParseException {
+   public void start(final Stage primaryStage) throws IOException, ParseException {
        primaryStage.setTitle("Yui");
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
@@ -77,7 +77,7 @@ public class Yui_GUI extends Application{
        listBkImage1 = new Image(getClass().getResourceAsStream(listBackgroundPath1));
        listBkImage2 = new Image(getClass().getResourceAsStream(listBackgroundPath2));
        listBkImage = listBkImage1;
-       ImageView listBk = new ImageView(listBkImage);
+       final ImageView listBk = new ImageView(listBkImage);
        Group listAllBack = new Group();
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
