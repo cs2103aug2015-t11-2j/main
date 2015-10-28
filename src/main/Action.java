@@ -104,19 +104,19 @@ public class Action {
 			ArrayList<NumberedEvent> memoEvent = getFloatingList(s);
 			Boolean isFound = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
-				if (dEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
+				if (dEvent.getEvent().getDetail().toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true;
 					resultList.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
 				}
 			}
 			for (NumberedEvent eEvent : eventTimeEvent) {
-				if (eEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
+				if (eEvent.getEvent().getDetail().toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true;
 					resultList.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
 				}
 			}
 			for (NumberedEvent mEvent : memoEvent) {
-				if (mEvent.getEvent().getDetail().toLowerCase().contains(parameter)) {
+				if (mEvent.getEvent().getDetail().toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true;
 					resultList.append(" m" + mEvent.getIndex() + ". " + mEvent.getEvent().getDetail() + "\n");
 				}
