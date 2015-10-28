@@ -276,7 +276,7 @@ public class Action {
 					output.append("Detail: " + reading.getDetail() + "\n");
 					output.append(" Comment: " + reading.getComment() + "\n");
 					output.append(" Time: " + eventStart_format.format(reading.getEventTime().getStart())
-							+ eventEnd_format.format(reading.getEventTime().getEnd()));
+							+ " " + eventEnd_format.format(reading.getEventTime().getEnd()));
 				}
 			} else if (parameter.get(0).toLowerCase().contains("m")) {
 				ArrayList<NumberedEvent> list = getFloatingList(s);
