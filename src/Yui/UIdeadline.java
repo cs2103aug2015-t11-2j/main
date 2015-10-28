@@ -1,6 +1,6 @@
 package Yui;
 
-import java.io.File;
+
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,18 +33,18 @@ public class UIdeadline {
 		GridPane deadlineEvent = new GridPane();
 	    deadlineEvent.setAccessibleText(num+eventName);
 	    Text tN = new Text(" " + num + " ");
-	    tN.setFont(Font.loadFont(new File("UI.otf").toURI().toURL().toString(), 16));
+	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("UI.otf"), 16));
 	    //tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tN.setFill(Color.GRAY);
 	    deadlineEvent.add(tN, 0, 0);
 	    Text t1 = new Text(eventName);
 	    //t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    t1.setFont(Font.loadFont(new File("UI.otf").toURI().toURL().toString(), 16));
+	    t1.setFont(Font.loadFont(getClass().getResourceAsStream("UI.otf"), 16));
 	    t1.setFill(Color.GRAY);
 	    deadlineEvent.add(t1, 1, 0);
 	    Text tD = new Text(" " + ddlString + " ");
 	    //tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    tD.setFont(Font.loadFont(new File("UI.otf").toURI().toURL().toString(), 16));
+	    tD.setFont(Font.loadFont(getClass().getResourceAsStream("UI.otf"), 16));
 	    tD.setFill(Color.GRAY);
 	    deadlineEvent.add(tD, 1, 1);
 	    /*
