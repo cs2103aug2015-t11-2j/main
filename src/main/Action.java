@@ -34,6 +34,8 @@ public class Action {
 	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
 	private static final String INVALID_THEME = "It is an invalid theme!";
 	private static final String UNRECOGNIZED_OUTLINE_MSG = "You cannot enter a value after outline command!";
+	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
+	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -282,7 +284,7 @@ public class Action {
 		return false;
 	}
 	
-	static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		list.set(Parser.getUpdateIndex(s, parameter), Parser.getUpdateEvent(s, parameter));
 		s.saveE(list);
@@ -290,7 +292,7 @@ public class Action {
 		return UPDATE_SUCCESS_MSG;
 	}
 
-	static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	protected static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		int indexInFullList = Parser.indexInFullList(s, parameter.get(0));
 		if (indexInFullList == -2) {
@@ -307,7 +309,7 @@ public class Action {
 		}
 	}
 
-	static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	protected static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String comment = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
@@ -325,7 +327,7 @@ public class Action {
 		}
 	}
 
-	static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	protected static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
@@ -343,7 +345,7 @@ public class Action {
 		}
 	}
 
-	static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	protected static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String status = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
@@ -358,6 +360,15 @@ public class Action {
 			return MARK_SUCCESSFUL_MSG;
 		} else {
 			return null;
+		}
+	}
+
+	protected static String clearAll(Storage s, ArrayList<String> parameter) throws IOException {
+		if (!parameter.get(0).equals("")){
+			return UNRECOGNIZABLE_CLEARALL_MSG;
+		} else {
+			s.reset();
+			return CLEARALL_MSG;
 		}
 	}
 

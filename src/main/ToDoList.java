@@ -69,6 +69,9 @@ public class ToDoList {
 			case "mark": {
 				return Action.mark(s, parameter);
 			}
+			case "clearall": {
+				return Action.clearAll(s, parameter);
+			}
 			case "exit": {
 				Action.exit();
 				return EXIT_MSG;
