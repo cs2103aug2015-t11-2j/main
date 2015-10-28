@@ -1,5 +1,7 @@
 package Yui;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,7 +23,7 @@ public class UIdeadline {
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 	public Group ddlBackg = new Group();
 
-	public UIdeadline(NumberedEvent numberedEvent){
+	public UIdeadline(NumberedEvent numberedEvent) throws MalformedURLException{
 		deadline = numberedEvent.getEvent();
 		Deadline deadlineCal = deadline.getDeadline();
 		Date theDate = deadlineCal.getDeadline();
@@ -32,15 +34,19 @@ public class UIdeadline {
 		GridPane deadlineEvent = new GridPane();
 	    deadlineEvent.setAccessibleText(num+eventName);
 	    Text tN = new Text(" " + num + " ");
-	    tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    tN.setFont(Font.loadFont(new File("font/UI.otf").toURI().toURL().toString(), 16));
+	    //tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tN.setFill(Color.WHITE);
 	    deadlineEvent.add(tN, 0, 0);
 	    Text t1 = new Text(eventName);
-	    t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    //t1.setStyle("font-family: Agency FB; font-size: 16px; font-weight: 700;");
+	    //t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    t1.setFont(Font.loadFont(new File("font/UI.otf").toURI().toURL().toString(), 16));
 	    t1.setFill(Color.WHITE);
 	    deadlineEvent.add(t1, 1, 0);
 	    Text tD = new Text(" " + ddlString + " ");
-	    tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    //tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    tD.setFont(Font.loadFont(new File("font/UI.otf").toURI().toURL().toString(), 16));
 	    tD.setFill(Color.WHITE);
 	    deadlineEvent.add(tD, 1, 1);
 	    /*
