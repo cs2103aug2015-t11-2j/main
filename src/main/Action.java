@@ -39,6 +39,23 @@ public class Action {
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
 	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
+	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n priority\n mark\n help\n clearall\n exit";
+	private static final String ADD_HELP_MSG = "add";
+	private static final String THEME_HELP_MSG = null;
+	private static final String READ_HELP_MSG = null;
+	private static final String OUTLINE_HELP_MSG = null;
+	private static final String DELETE_HELP_MSG = null;
+	private static final String SEARCH_HELP_MSG = null;
+	private static final String UPDATE_HELP_MSG = null;
+	private static final String UNDO_HELP_MSG = null;
+	private static final String REDO_HELP_MSG = null;
+	private static final String COMMENT_HELP_MSG = null;
+	private static final String PRIORITY_HELP_MSG = null;
+	private static final String MARK_HELP_MSG = null;
+	private static final String HELP_HELP_MSG = null;
+	private static final String CLEARALL_HELP_MSG = null;
+	private static final String EXIT_HELP_MSG = null;
+	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = null;
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -71,7 +88,7 @@ public class Action {
 				return CHANGR_BK_SUCCESSFUL;
 			} else if (theme.equals("my theme")) {
 				File myTheme = new File(Yui_GUI.listBackgroundPath3);
-				if(myTheme.exists()){
+				if (myTheme.exists()) {
 					Yui_GUI.listBkImage = Yui_GUI.listBkImage3;
 					return CHANGR_BK_SUCCESSFUL;
 				} else {
@@ -88,11 +105,8 @@ public class Action {
 		}
 	}
 
-//	static String searchKey(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-//		return searchResult(s.loadE(), parameter.get(0));
-//	}
-
-	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList) throws IOException, ParseException {
+	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList)
+			throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String parameter = parameterArrayList.get(0);
 		StringBuilder resultList = new StringBuilder();
@@ -401,6 +415,45 @@ public class Action {
 		} else {
 			s.reset();
 			return CLEARALL_MSG;
+		}
+	}
+
+	protected static String help(ArrayList<String> parameterArrayList) {
+		String parameter = parameterArrayList.get(0).toLowerCase();
+		if (parameter.equals("")) {
+			return HELPLIST;
+		} else if (parameter.equals("add")) {
+			return ADD_HELP_MSG;
+		} else if (parameter.equals("theme")) {
+			return THEME_HELP_MSG;
+		} else if (parameter.equals("read")) {
+			return READ_HELP_MSG;
+		} else if (parameter.equals("outline")) {
+			return OUTLINE_HELP_MSG;
+		} else if (parameter.equals("delete")) {
+			return DELETE_HELP_MSG;
+		} else if (parameter.equals("search")) {
+			return SEARCH_HELP_MSG;
+		} else if (parameter.equals("update")) {
+			return UPDATE_HELP_MSG;
+		} else if (parameter.equals("undo")) {
+			return UNDO_HELP_MSG;
+		} else if (parameter.equals("redo")) {
+			return REDO_HELP_MSG;
+		} else if (parameter.equals("comment")) {
+			return COMMENT_HELP_MSG;
+		} else if (parameter.equals("priority")) {
+			return PRIORITY_HELP_MSG;
+		} else if (parameter.equals("mark")) {
+			return MARK_HELP_MSG;
+		} else if (parameter.equals("help")) {
+			return HELP_HELP_MSG;
+		} else if (parameter.equals("clearall")) {
+			return CLEARALL_HELP_MSG;
+		} else if (parameter.equals("exit")) {
+			return EXIT_HELP_MSG;
+		} else {
+			return COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG;
 		}
 	}
 
