@@ -97,11 +97,24 @@ public class Parser {
 		Date endDate = new Date();
 		// need to be updated
 		if (date.equalsIgnoreCase("today")) {
-			// do nothing, to break the else case
-		}
-		if (date.equalsIgnoreCase("tomorrow")) {
+			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
+			String dateString = dateF2.format(thisDate);
+			String startDateAndTime = start + " " + dateString;
+			String endDateAndTime = end + " " + dateString;
+			startDate = dateF1.parse(startDateAndTime);
+			endDate = dateF1.parse(endDateAndTime);
+			
+		} else if (date.equalsIgnoreCase("tomorrow")) {
 			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// √Î
 			thisDate.setTime(time * 1000);
+			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
+			String dateString = dateF2.format(thisDate);
+			String startDateAndTime = start + " " + dateString;
+			String endDateAndTime = end + " " + dateString;
+			startDate = dateF1.parse(startDateAndTime);
+			endDate = dateF1.parse(endDateAndTime);
 		} else {
 			String startS = start + " " + date;
 			String endS = end + " " + date;
@@ -117,11 +130,19 @@ public class Parser {
 		Date thisDate = new Date();
 		// need to be updated
 		if (date.equalsIgnoreCase("today")) {
-			// do nothing, to break the else case
-		}
-		if (date.equalsIgnoreCase("tomorrow")) {
+			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
+			String dateString = dateF2.format(thisDate);
+			String dateAndTime = deadline + " " + dateString;
+			thisDate = dateF1.parse(dateAndTime);
+		} else if (date.equalsIgnoreCase("tomorrow")) {
 			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// √Î
 			thisDate.setTime(time * 1000);
+			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
+			String dateString = dateF2.format(thisDate);
+			String dateAndTime = deadline + " " + dateString;
+			thisDate = dateF1.parse(dateAndTime);
 		} else {
 			String timeAndDate = deadline + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
