@@ -73,7 +73,7 @@ public class Yui_GUI extends Application{
 
        //set eventGrid
        final GridPane eventGrid = new GridPane();
-       eventGrid.setHgap(3);
+       eventGrid.setHgap(1);
        //eventGrid.setVgap(1);
 
        //event list background
@@ -90,7 +90,7 @@ public class Yui_GUI extends Application{
 
        final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
        final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
-   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating.png")));
+   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating2.png")));
 
 
        GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);

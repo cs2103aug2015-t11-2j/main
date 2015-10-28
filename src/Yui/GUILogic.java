@@ -45,12 +45,21 @@ public class GUILogic {
 	    //add events
 	    ArrayList<NumberedEvent> events = ToDoList.getEventTime();
 	    int entLength = events.size();
+	    GridPane eventBox = new GridPane();
+	    eventBox.setHgap(1);
 	    for(int i = 0; i < entLength; i++){
 	    	NumberedEvent thisEvent = events.get(i);
 	    	UIevent thisEntBox = new UIevent(thisEvent);
-	    	eventGrid.add(thisEntBox.getEntBox(), 0, Y + i);
+	    	if( i%2 == 0){
+	    		X = 0;
+	    	} else {
+	    		X = 1;
+	    	}
+	    	int y = i/2;
+	    	eventBox.add(thisEntBox.getEntBox(), X, y);
 	    }
-	    Y = Y + entLength + 1;
+	    eventGrid.add(eventBox, 0, Y);
+	    Y = Y + 1;
 	     
 	    //floating tasks icon
 	    eventGrid.add(floatingIcon, 0, Y);

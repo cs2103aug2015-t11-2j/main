@@ -20,14 +20,15 @@ public class UIevent {
 	private static Event events;
 	public Group ddlBackg = new Group();
 	private static SimpleDateFormat dateFormat1 = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+	private static SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
 		Date theDate = events.getEventTime().getStart();
 		String startString = dateFormat1.format(events.getEventTime().getStart()) + " -";
-		String endString = dateFormat2.format(events.getEventTime().getEnd());
+		String endString = dateFormat1.format(events.getEventTime().getEnd());
+		String dateString = dateFormat2.format(events.getEventTime().getEnd());
 		String eventName = events.getDetail();
 		int num = numberedEvent.getIndex();
 
@@ -41,18 +42,18 @@ public class UIevent {
 	    tNm.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tNm.setFill(Color.WHITE);
 	    seEvent.add(tNm, 1, 0);
-	    Text tS = new Text(" " + startString + " ");
-	    tS.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    tS.setFill(Color.WHITE);
-	    seEvent.add(tS, 2, 0);
-	    Text tE = new Text(endString);
-	    tE.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    tE.setFill(Color.WHITE);
-	    seEvent.add(tE, 3, 0);
-	    seEvent.setPrefSize(273, 20);
+	    Text tT = new Text(startString + " " + endString);
+	    tT.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    tT.setFill(Color.WHITE);
+	    seEvent.add(tT, 1, 1);
+	    Text tD = new Text(dateString);
+	    tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    tD.setFill(Color.WHITE);
+	    seEvent.add(tD, 1, 2);
+	    seEvent.setPrefSize(125, 59);
 
-	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("commonEvent.png"));
-	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent.png"));
+	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("eventBk.png"));
+	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent2.png"));
 	    ImageView ddlBk = new ImageView();
 	    if(isToday(theDate)){
 	    	ddlBk.setImage(deadlineBkNear);

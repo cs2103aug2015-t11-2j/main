@@ -35,18 +35,17 @@ public class UIdeadline {
 	    Text tN = new Text(" " + num + " ");
 	    tN.setFont(Font.loadFont(new File("font/UI.otf").toURI().toURL().toString(), 16));
 	    //tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    tN.setFill(Color.WHITE);
+	    tN.setFill(Color.GRAY);
 	    deadlineEvent.add(tN, 0, 0);
 	    Text t1 = new Text(eventName);
-	    //t1.setStyle("font-family: Agency FB; font-size: 16px; font-weight: 700;");
 	    //t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    t1.setFont(Font.loadFont(new File("font/UI.otf").toURI().toURL().toString(), 16));
-	    t1.setFill(Color.WHITE);
+	    t1.setFill(Color.GRAY);
 	    deadlineEvent.add(t1, 1, 0);
 	    Text tD = new Text(" " + ddlString + " ");
 	    //tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tD.setFont(Font.loadFont(new File("font/UI.otf").toURI().toURL().toString(), 16));
-	    tD.setFill(Color.WHITE);
+	    tD.setFill(Color.GRAY);
 	    deadlineEvent.add(tD, 1, 1);
 	    /*
 	    Text tT = new Text(timeString);
@@ -54,12 +53,15 @@ public class UIdeadline {
 	    tT.setFill(Color.WHITE);
 	    deadlineEvent.add(tT, 3, 0);
 	    */
-	    deadlineEvent.setPrefSize(125, 38);
+	    deadlineEvent.setPrefSize(125, 39);
 
-	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("graybox.png"));
+	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("cmEvent2.png"));
 	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent.png"));
 	    ImageView ddlBk = new ImageView();
 	    if(isToday(theDate)){
+	    	tN.setFill(Color.WHITE);
+	    	t1.setFill(Color.WHITE);
+	    	tD.setFill(Color.WHITE);
 	    	ddlBk.setImage(deadlineBkNear);
 	    } else {
 	    	ddlBk.setImage(deadlineBkCom);
