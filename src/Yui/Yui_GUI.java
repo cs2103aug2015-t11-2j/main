@@ -88,9 +88,9 @@ public class Yui_GUI extends Application{
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
 
-       final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
-       final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
-   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating2.png")));
+       final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadlineN.png")));
+       final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("eventN.png")));
+   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floatingN.png")));
 
 
        GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
