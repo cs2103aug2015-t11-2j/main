@@ -32,7 +32,7 @@ public class Yui_GUI extends Application{
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
 	private static Logger logger = Logger.getLogger("MotionCatcher");
-	private static String listBackgroundPath1 = "listBK2.png";
+	private static String listBackgroundPath1 = "listBKN.png";
 	private static String listBackgroundPath2 = "newBK.png";
 	public static String listBackgroundPath3 = "user.dir/myTheme.png";
 	public static Image listBkImage1;
@@ -57,24 +57,25 @@ public class Yui_GUI extends Application{
        GridPane grid = new GridPane();
        grid.setHgap(5);
        grid.setVgap(5);
-       grid.setPadding(new Insets(10, 5, 5, 25));
+       grid.setPadding(new Insets(15, 7.5, 7.5, 37.5));
 
        //set main grid of showing
        GridPane mainGrid = new GridPane();
        mainGrid.setHgap(10);
-       mainGrid.setPrefSize(490, 275);
+       mainGrid.setPrefSize(735, 420);
        grid.add(mainGrid, 0, 2);
 
        //set eventPane
        final ScrollPane eventPane = new ScrollPane();
-       eventPane.setPrefSize(255, 275);
+       eventPane.setPrefSize(382.5, 420);
        eventPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+       eventPane.setVbarPolicy(ScrollBarPolicy.NEVER);
        mainGrid.add(eventPane, 1, 0);
 
        //set eventGrid
        final GridPane eventGrid = new GridPane();
        eventGrid.setHgap(1);
-       //eventGrid.setVgap(1);
+       eventGrid.setVgap(2);
 
        //event list background
        listBkImage1 = new Image(getClass().getResourceAsStream(listBackgroundPath1));
@@ -88,15 +89,15 @@ public class Yui_GUI extends Application{
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
 
-       final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadline.png")));
-       final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("event.png")));
-   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floating2.png")));
+       final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadlineN.png")));
+       final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("eventN.png")));
+   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floatingN.png")));
 
 
        GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
 
        //set background
-       Image background = new Image(getClass().getResourceAsStream("uiground.png"));
+       Image background = new Image(getClass().getResourceAsStream("uigroundN.png"));
        ImageView bk = new ImageView(background);
        Group backg = new Group();
        backg.getChildren().addAll(bk,grid);
@@ -129,12 +130,12 @@ public class Yui_GUI extends Application{
        DragController.dragStage(grid, primaryStage);
 
        //set the scene
-       Scene scene = new Scene(backg, 600, 400);
+       Scene scene = new Scene(backg, 861, 556);
        primaryStage.setScene(scene);
 
        //add text box to show message
        final TextArea showBox = new TextArea();
-       showBox.setPrefSize(225, 275);
+       showBox.setPrefSize(337.5, 420);
        showBox.setStyle("overflow-x:hidden;");
        mainGrid.add(showBox, 0, 0);
        showBox.setEditable(false);

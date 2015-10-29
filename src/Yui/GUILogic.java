@@ -14,26 +14,21 @@ public class GUILogic {
 	private static int Y = 0;
 	
 	public static void showEvents(GridPane eventGrid, ImageView deadline, ImageView eventIcon, ImageView floatingIcon) throws IOException, ParseException{
+		Y = 0;
 		//deadline icon
-	    eventGrid.add(deadline, 0, 0);
+	    eventGrid.add(deadline, 0, Y);
 	    Y = Y + 1;
-	    
+	   
 	    //add deadlines
 	    ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
 	    int ddlLength = deadlines.size();
 	    GridPane deadlineBox = new GridPane();
-	    deadlineBox.setHgap(1);
+	    deadlineBox.setVgap(1);
 	    //Y = ddlLength;
 	    for(int i = 0; i < ddlLength; i++){
 	    	NumberedEvent thisEvent = deadlines.get(i);
 	    	UIdeadline thisDdlBox = new UIdeadline(thisEvent);
-	    	if( i%2 == 0){
-	    		X = 0;
-	    	} else {
-	    		X = 1;
-	    	}
-	    	int y = i/2;
-	    	deadlineBox.add(thisDdlBox.getDdlBox(), X, y);
+	    	deadlineBox.add(thisDdlBox.getDdlBox(), X, i);
 	    }
 	    eventGrid.add(deadlineBox, 0, Y);
 	    Y = Y + 1;
@@ -46,17 +41,11 @@ public class GUILogic {
 	    ArrayList<NumberedEvent> events = ToDoList.getEventTime();
 	    int entLength = events.size();
 	    GridPane eventBox = new GridPane();
-	    eventBox.setHgap(1);
+	    eventBox.setVgap(1);
 	    for(int i = 0; i < entLength; i++){
 	    	NumberedEvent thisEvent = events.get(i);
 	    	UIevent thisEntBox = new UIevent(thisEvent);
-	    	if( i%2 == 0){
-	    		X = 0;
-	    	} else {
-	    		X = 1;
-	    	}
-	    	int y = i/2;
-	    	eventBox.add(thisEntBox.getEntBox(), X, y);
+	    	eventBox.add(thisEntBox.getEntBox(), X, i);
 	    }
 	    eventGrid.add(eventBox, 0, Y);
 	    Y = Y + 1;
