@@ -69,12 +69,13 @@ public class Yui_GUI extends Application{
        final ScrollPane eventPane = new ScrollPane();
        eventPane.setPrefSize(382.5, 420);
        eventPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+       eventPane.setVbarPolicy(ScrollBarPolicy.NEVER);
        mainGrid.add(eventPane, 1, 0);
 
        //set eventGrid
        final GridPane eventGrid = new GridPane();
        eventGrid.setHgap(1);
-       //eventGrid.setVgap(1);
+       eventGrid.setVgap(2);
 
        //event list background
        listBkImage1 = new Image(getClass().getResourceAsStream(listBackgroundPath1));

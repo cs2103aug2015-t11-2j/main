@@ -24,6 +24,7 @@ public class UIdeadline {
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 	public GridPane deadlinePane = new GridPane();
 	private ImageView commentBk = new ImageView();
+	private ImageView nameBk = new ImageView();
 	
 
 	public UIdeadline(NumberedEvent numberedEvent) throws MalformedURLException{
@@ -44,11 +45,16 @@ public class UIdeadline {
 		
 		Image numberImage = new Image(getClass().getResourceAsStream("number.png"));
 		Image nameDateTimeImage = new Image(getClass().getResourceAsStream("NTD.png"));
+		Image dangerImage = new Image(getClass().getResourceAsStream("danger.png"));
 		Image uncommentImage = new Image(getClass().getResourceAsStream("uncomment.png"));
 		Image commentImage = new Image(getClass().getResourceAsStream("comment.png"));
 		
 		ImageView numberBk = new ImageView(numberImage);
-		ImageView nameBk = new ImageView(nameDateTimeImage);
+		if(isToday(theDate)){
+			nameBk = new ImageView(dangerImage);
+		} else {
+			nameBk = new ImageView(nameDateTimeImage);
+		}
 		ImageView timeBk = new ImageView(nameDateTimeImage);
 		ImageView dateBk = new ImageView(nameDateTimeImage);
 		if(!commentString.equals("")){
@@ -104,23 +110,6 @@ public class UIdeadline {
 	    deadlinePane.add(nameBackg, 2, 0);
 	    deadlinePane.add(dateBackg, 3, 0);
 	    deadlinePane.add(commentBackg, 4, 0);
-
-	    
-	    
-	    /*
-	    Image deadlineBkCom = new Image(getClass().getResourceAsStream("cmEvent2.png"));
-	    Image deadlineBkNear = new Image(getClass().getResourceAsStream("redEvent.png"));
-	    ImageView ddlBk = new ImageView();
-	    if(isToday(theDate)){
-	    	tN.setFill(Color.WHITE);
-	    	t1.setFill(Color.WHITE);
-	    	tD.setFill(Color.WHITE);
-	    	ddlBk.setImage(deadlineBkNear);
-	    } else {
-	    	ddlBk.setImage(deadlineBkCom);
-	    }*/
-
-	    //ddlBackg.getChildren().addAll(ddlBk,deadlineEvent);
 	}
 
 	private boolean isToday(Date theDate){

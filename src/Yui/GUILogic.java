@@ -14,11 +14,11 @@ public class GUILogic {
 	private static int Y = 0;
 	
 	public static void showEvents(GridPane eventGrid, ImageView deadline, ImageView eventIcon, ImageView floatingIcon) throws IOException, ParseException{
+		Y = 0;
 		//deadline icon
-		eventGrid.setVgap(2);
-	    eventGrid.add(deadline, 0, 0);
+	    eventGrid.add(deadline, 0, Y);
 	    Y = Y + 1;
-	    
+	   
 	    //add deadlines
 	    ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
 	    int ddlLength = deadlines.size();
