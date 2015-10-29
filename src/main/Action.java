@@ -40,9 +40,9 @@ public class Action {
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
 	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
 	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n priority\n mark\n help\n clearall\n exit";
-	private static final String ADD_HELP_MSG = "add";
-	private static final String THEME_HELP_MSG = null;
-	private static final String READ_HELP_MSG = null;
+	private static final String ADD_HELP_MSG = "You can add 3 types of event to your\n list, namely deadline event,\n event-time event and memo event\n For events with deadline, type in\n \"add (event name) by HH:MM\n DD/MM/YYYY\"\n For events with event time, type in\n \"add (event name) from HH:MM to\n HH:MM DD/MM/YYYY\"\n For events without a time, type in\n \"add (event name)\"";
+	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" and \"theme 2\"\n To use your own picture, manually add a picture of size 253*273 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
+	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about ";
 	private static final String OUTLINE_HELP_MSG = null;
 	private static final String DELETE_HELP_MSG = null;
 	private static final String SEARCH_HELP_MSG = null;
@@ -52,10 +52,10 @@ public class Action {
 	private static final String COMMENT_HELP_MSG = null;
 	private static final String PRIORITY_HELP_MSG = null;
 	private static final String MARK_HELP_MSG = null;
-	private static final String HELP_HELP_MSG = null;
+	private static final String HELP_HELP_MSG = "You can always refer to helplist for all\n the commands available\n Type in \"help\" you can see a list of all\n commands available\n Type in \"help\" and the command you\n want to know to learn more about it!";
 	private static final String CLEARALL_HELP_MSG = null;
 	private static final String EXIT_HELP_MSG = null;
-	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = null;
+	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = "The command you entered is not found\n Please check to ensure you entered the correct command word!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
