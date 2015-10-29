@@ -41,7 +41,7 @@ public class GUILogic {
 	    ArrayList<NumberedEvent> events = ToDoList.getEventTime();
 	    int entLength = events.size();
 	    GridPane eventBox = new GridPane();
-	    eventBox.setHgap(1);
+	    eventBox.setVgap(1);
 	    for(int i = 0; i < entLength; i++){
 	    	NumberedEvent thisEvent = events.get(i);
 	    	UIevent thisEntBox = new UIevent(thisEvent);

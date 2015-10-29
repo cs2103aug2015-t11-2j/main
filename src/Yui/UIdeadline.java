@@ -93,7 +93,7 @@ public class UIdeadline {
 	    //t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
 	    tNm.setFont(Font.loadFont(getClass().getResourceAsStream("UI.ttf"), 18));
 	    tNm.setFill(Color.WHITE);
-	    name.setPadding(new Insets(4, 1, 1, 2));
+	    name.setPadding(new Insets(4, 1, 1, 1));
 	    name.add(tNm, 0, 0);
 	    
 	    Text tD = new Text(dateString);
