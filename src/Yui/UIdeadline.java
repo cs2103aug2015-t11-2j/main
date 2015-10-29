@@ -4,7 +4,6 @@ package Yui;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.image.Image;

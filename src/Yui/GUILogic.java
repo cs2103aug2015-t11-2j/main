@@ -45,13 +45,7 @@ public class GUILogic {
 	    for(int i = 0; i < entLength; i++){
 	    	NumberedEvent thisEvent = events.get(i);
 	    	UIevent thisEntBox = new UIevent(thisEvent);
-	    	if( i%2 == 0){
-	    		X = 0;
-	    	} else {
-	    		X = 1;
-	    	}
-	    	int y = i/2;
-	    	eventBox.add(thisEntBox.getEntBox(), X, y);
+	    	eventBox.add(thisEntBox.getEntBox(), X, i);
 	    }
 	    eventGrid.add(eventBox, 0, Y);
 	    Y = Y + 1;
