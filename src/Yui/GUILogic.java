@@ -20,7 +20,6 @@ public class GUILogic {
 		eventGrid.add(deadline, 0, Y);
 		Y = Y + 1;
 
-		ToDoList.getFullList();
 		// add deadlines
 		ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
 		int ddlLength = deadlines.size();

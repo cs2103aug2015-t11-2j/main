@@ -114,12 +114,13 @@ public class ToDoList {
 		Action.readAll(s);
 	}
 
-	public static String initialize() throws IOException {
+	public static String initialize() throws IOException, ParseException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		s = new Storage("Yui");
 		// fullList = s.loadE();
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
+		getFullList();
 		return nowTime + WELCOME_MSG;
 	}
 
