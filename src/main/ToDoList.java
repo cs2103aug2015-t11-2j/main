@@ -46,7 +46,7 @@ public class ToDoList {
 				return Action.bground(parameter);
 			}
 			case "read": {
-				return Action.read(parameter);
+				return Action.read(s, parameter);
 			}
 			case "outline": {
 				return Action.outline(s, parameter);
