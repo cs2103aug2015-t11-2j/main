@@ -21,22 +21,24 @@ import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;
-	private static SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
-	private static SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH : mm");
+	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
 	public GridPane deadlinePane = new GridPane();
 	private ImageView commentBk = new ImageView();
 	private ImageView nameBk = new ImageView();
+	private static int NAME_MAX_LENGTH = 14;
+	private static int SINGLE_BIT_NUMBER = 9;
 	
+	private Deadline deadlineCal;
+	private Date theDate;
+	private String timeString;
+	private String dateString;
+	private String eventName;
+	private String commentString;
+	private int num;
 
 	public UIdeadline(NumberedEvent numberedEvent) throws MalformedURLException{
-		deadline = numberedEvent.getEvent();
-		Deadline deadlineCal = deadline.getDeadline();
-		Date theDate = deadlineCal.getDeadline();
-		String timeString = dateFormatTime.format(theDate);
-		String dateString = dateFormatDate.format(theDate);
-		String eventName = deadline.getDetail();
-		String commentString = deadline.getComment();
-		int num = numberedEvent.getIndex();
+		readEvent(numberedEvent);
 
 		GridPane number = new GridPane();
 		GridPane time = new GridPane();
@@ -82,6 +84,9 @@ public class UIdeadline {
 	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tN.setFill(Color.WHITE);
 	    number.setPadding(new Insets(4, 1, 1, 5));
+	    if(num > SINGLE_BIT_NUMBER){
+	    	number.setPadding(new Insets(4, 1, 1, 1));
+	    }
 	    number.add(tN, 0, 0);
 	    
 	    Text tT = new Text(timeString);
@@ -90,6 +95,9 @@ public class UIdeadline {
 	    time.setPadding(new Insets(4, 1, 1, 5));
 	    time.add(tT, 0, 0);
 	    
+	    if(eventName.length() > NAME_MAX_LENGTH){
+	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
+	    }
 	    Text tNm = new Text(" " + " " + eventName);
 	    if(ChineseJudge.isContainsChinese(eventName)){
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));
@@ -115,6 +123,17 @@ public class UIdeadline {
 	    deadlinePane.add(commentBackg, 4, 0);
 	}
 
+	private void readEvent(NumberedEvent numberedEvent){
+		deadline = numberedEvent.getEvent();
+		deadlineCal = deadline.getDeadline();
+		theDate = deadlineCal.getDeadline();
+		timeString = DATE_FORMATE_DATE.format(theDate);
+		dateString = DATE_FORMATE_TIME.format(theDate);
+		eventName = deadline.getDetail();
+		commentString = deadline.getComment();
+		num = numberedEvent.getIndex();
+	}
+	
 	public GridPane getDdlBox(){
 		return deadlinePane;
 	}

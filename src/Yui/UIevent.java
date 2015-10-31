@@ -18,13 +18,14 @@ import main.Event;
 import main.NumberedEvent;
 
 public class UIevent {
-
 	private static Event events;
 	private static SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
 	private static SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH : mm");
 	public GridPane eventPane = new GridPane();
 	private ImageView commentBk = new ImageView();
 	private ImageView nameBk = new ImageView();
+	private static int NAME_MAX_LENGTH = 14;
+	private static int SINGLE_BIT_NUMBER = 9;
 
 	public UIevent(NumberedEvent numberedEvent){
 		events = numberedEvent.getEvent();
@@ -80,6 +81,9 @@ public class UIevent {
 	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tN.setFill(Color.WHITE);
 	    number.setPadding(new Insets(4, 1, 1, 5));
+	    if(num > SINGLE_BIT_NUMBER){
+	    	number.setPadding(new Insets(4, 1, 1, 1));
+	    }
 	    number.add(tN, 0, 0);
 	    
 	    Text tT = new Text(timeString);
@@ -88,6 +92,9 @@ public class UIevent {
 	    time.setPadding(new Insets(4, 1, 1, 5));
 	    time.add(tT, 0, 0);
 	    
+	    if(eventName.length() > NAME_MAX_LENGTH){
+	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
+	    }
 	    Text tNm = new Text(" " + " " + eventName);
 	    if(ChineseJudge.isContainsChinese(eventName)){
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));

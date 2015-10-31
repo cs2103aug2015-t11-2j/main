@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import Fonts.ChineseJudge;
 import main.Event;
 import main.NumberedEvent;
@@ -18,6 +17,8 @@ public class UIfloating {
 	public GridPane memoPane = new GridPane();
 	private ImageView commentBk = new ImageView();
 	private ImageView nameBk = new ImageView();
+	private static int NAME_MAX_LENGTH = 17;
+	private static int SINGLE_BIT_NUMBER = 9;
 	
 	public UIfloating(NumberedEvent numberedEvent){
 		floating = numberedEvent.getEvent();
@@ -56,8 +57,14 @@ public class UIfloating {
 	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tN.setFill(Color.WHITE);
 	    number.setPadding(new Insets(4, 1, 1, 5));
+	    if(num > SINGLE_BIT_NUMBER){
+	    	number.setPadding(new Insets(4, 1, 1, 1));
+	    }
 	    number.add(tN, 0, 0);
 	    
+	    if(eventName.length() > NAME_MAX_LENGTH){
+	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
+	    }
 	    Text tNm = new Text(" " + " " + eventName);
 	    if(ChineseJudge.isContainsChinese(eventName)){
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));
