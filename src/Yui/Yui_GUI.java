@@ -196,11 +196,21 @@ public class Yui_GUI extends Application{
     			   }
     		   }
 
-    		   if(event.getCode().equals(KeyCode.UP)){
-    			   eventPane.setVvalue(eventPane.getVvalue() - 0.3f);
-    		   }
-    		   if(event.getCode().equals(KeyCode.DOWN)){
-    			   eventPane.setVvalue(eventPane.getVvalue() + 0.3f);
+    		   if(event.isAltDown()){
+    			   if(event.getCode().equals(KeyCode.UP)){
+    				   showBox.setScrollTop(showBox.getScrollTop() - 1.2f);
+    			   }
+    			   if(event.getCode().equals(KeyCode.DOWN)){
+    				   showBox.setScrollTop(showBox.getScrollTop() + 1.2f);
+    			   }
+    			   
+    		   } else {
+	    		   if(event.getCode().equals(KeyCode.UP)){
+	    			   eventPane.setVvalue(eventPane.getVvalue() - 0.3f);
+	    		   }
+	    		   if(event.getCode().equals(KeyCode.DOWN)){
+	    			   eventPane.setVvalue(eventPane.getVvalue() + 0.3f);
+	    		   }
     		   }
     	   }
        });

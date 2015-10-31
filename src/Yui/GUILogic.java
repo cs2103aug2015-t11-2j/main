@@ -78,7 +78,7 @@ public class GUILogic {
 	}
 	
 	public static boolean isShowMainGrid(){
-		return false;
-		//return true;
+		//return false;
+		return true;
 	}
 }
