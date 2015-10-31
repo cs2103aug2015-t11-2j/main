@@ -76,4 +76,9 @@ public class GUILogic {
 		eventGrid.add(floatingBox, 0, Y);
 		// }
 	}
+	
+	public static boolean isShowMainGrid(){
+		return false;
+		//return true;
+	}
 }

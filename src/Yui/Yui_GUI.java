@@ -21,6 +21,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -118,8 +120,13 @@ public class Yui_GUI extends Application{
        grid.add(exit, 4, 0);
 
        //set menu button
-       Image menu1 = new Image(getClass().getResourceAsStream("/Image/menu.png"));
-       grid.add(new ImageView(menu1), 4, 2);
+       Image menuTodolist = new Image(getClass().getResourceAsStream("/Image/menu.png"));
+       Image menuCalendar = new Image(getClass().getResourceAsStream("/Image/menu2.png"));
+       ImageView btnTodolist = new ImageView(menuTodolist);
+       ImageView btnCalendar = new ImageView(menuCalendar);
+       btnCalendar.setVisible(false);
+       grid.add(btnTodolist, 4, 2);
+       grid.add(btnCalendar, 4, 2);
 
        //set enter button
        Image enter = new Image(getClass().getResourceAsStream("/Image/ok.png"));
@@ -146,9 +153,16 @@ public class Yui_GUI extends Application{
        userCommandBox.requestFocus();
 
        //initialize GUI and Logic
-
        showBox.appendText(returnCommand + "\n");
-
+       
+       //add web grid
+       WebView webBox = new WebView();
+       final WebEngine myEngin = webBox.getEngine();
+       myEngin.load("https://nusmods.com");
+       webBox.setPrefSize(735,420);
+       webBox.setVisible(false);
+       grid.add(webBox, 0, 2);
+       
        //catch the motion of users
        userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
     	   @Override
@@ -171,8 +185,12 @@ public class Yui_GUI extends Application{
     				   } catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
-    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
+    				   }
+    				   mainGrid.setVisible(GUILogic.isShowMainGrid());
+    				   btnTodolist.setVisible(GUILogic.isShowMainGrid());
+    				   webBox.setVisible(!GUILogic.isShowMainGrid());
+    				   btnCalendar.setVisible(!GUILogic.isShowMainGrid());
+    				   showBox.appendText(returnCommand + "\n" + "\n");
     				   listBk.setImage(listBkImage);
     				   logger.log(Level.INFO, "end of processing");
     			   }
