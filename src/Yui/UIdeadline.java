@@ -4,6 +4,7 @@ package Yui;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import Fonts.ChineseJudge;
 import Image.ImageJudge;
@@ -50,7 +51,7 @@ public class UIdeadline {
 	private Group commentBackg = new Group();
 	private static int NAME_MAX_LENGTH = 14;
 	private static int SINGLE_BIT_NUMBER = 9;
-	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
 	private static SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
 	
 
@@ -155,7 +156,7 @@ public class UIdeadline {
 		Text tD = new Text(dateString);
 	    tD.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tD.setFill(Color.WHITE);
-	    date.setPadding(new Insets(4, 1, 1, 17));
+	    date.setPadding(new Insets(4, 1, 1, 5));
 	    date.add(tD, 0, 0);
 	}
 	
