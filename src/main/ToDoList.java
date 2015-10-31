@@ -35,7 +35,7 @@ public class ToDoList {
 		try {
 			logger.log(Level.INFO, "handle a command once");
 			switch (command) {
-			case "readAll": {
+			case "readall": {
 				Action.readAll(s);
 				return READ_MSG;
 			}

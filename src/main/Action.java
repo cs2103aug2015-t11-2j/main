@@ -117,7 +117,7 @@ public class Action {
 		String parameter = parameterArrayList.get(0);
 		if (fullList.size() == 0) {
 			return SEARCH_NOT_FOUND_MSG;
-		} else if (parameter.equals("")){
+		} else if (parameter.equals("")) {
 			return IMPROPER_SEARCH_KEY_MSG;
 		} else {
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
