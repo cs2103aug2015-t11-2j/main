@@ -75,6 +75,12 @@ public class ToDoList {
 			case "mark": {
 				return Action.mark(s, parameter);
 			}
+			case "nusmods":{
+				return Action.nusmods();
+			}
+			case "todolist":{
+				return Action.todolist();
+			}
 			case "help": {
 				return Action.help(parameter);
 			}

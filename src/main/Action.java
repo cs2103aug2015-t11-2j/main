@@ -64,10 +64,13 @@ public class Action {
 	private static final String EVENT_TODAY_DISPLAYED_MSG = "Events of today displayed on the right!";
 	private static final String NO_EVENT_TODAY_OR_TMR_MSG = "Have a rest! There is nothing to do today or tomorrow!";
 	private static final String EVENT_TODAY_AND_TMR_DISPLAYED_MSG = "Events of today and tomorrow displayed on the right!";
+	private static final String NUS_MOD_SUCESSFUL = "Show nusmods sucessfully!";
+	private static final String TODOLIST_SUCESSFUL = "Show TodoList sucessfully!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static boolean canUndo = false;
+	private static boolean isShowNusMods = false;
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
@@ -488,6 +491,20 @@ public class Action {
 		}
 	}
 
+	public static String nusmods(){
+		isShowNusMods = true;
+		return NUS_MOD_SUCESSFUL;
+	}
+	
+	public static String todolist(){
+		isShowNusMods = false;
+		return TODOLIST_SUCESSFUL;
+	}
+	
+	public static boolean getIsShow(){
+		return isShowNusMods;
+	}
+	
 	protected static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import main.Action;
 import main.NumberedEvent;
 import main.ToDoList;
 
@@ -78,7 +79,6 @@ public class GUILogic {
 	}
 	
 	public static boolean isShowMainGrid(){
-		//return false;
-		return true;
+		return !Action.getIsShow();
 	}
 }
