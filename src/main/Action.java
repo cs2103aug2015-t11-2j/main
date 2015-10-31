@@ -92,6 +92,7 @@ public class Action {
 	public static void readAll(Storage s) throws IOException, ParseException {
 		fullList = s.loadE();
 		Collections.sort(fullList);
+		s.saveE(fullList);
 	}
 
 	public static String bground(ArrayList<String> parameter) {
