@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import Yui.Yui_GUI;
@@ -78,6 +79,7 @@ public class Action {
 			fullList.add(newEvent);
 			s.saveE(fullList);
 			canUndo = true;
+			readAll(s);
 			return ADD_SUCCESS_MSG;
 		}
 	}
@@ -89,6 +91,7 @@ public class Action {
 
 	public static void readAll(Storage s) throws IOException, ParseException {
 		fullList = s.loadE();
+		Collections.sort(fullList);
 	}
 
 	public static String bground(ArrayList<String> parameter) {
