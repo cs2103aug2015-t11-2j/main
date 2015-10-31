@@ -99,7 +99,7 @@ public class Action {
 	}
 
 	public static String bground(ArrayList<String> parameter) {
-		if (!(parameter.get(0).equals("default") || parameter.get(0).equals("1"))) {
+		if (!(parameter.get(0).toLowerCase().equals("default") || parameter.get(0).equals("1"))) {
 			String theme = parameter.get(0);
 			if (theme.equals("2")) {
 				Yui_GUI.listBkImage = Yui_GUI.listBkImage2;
