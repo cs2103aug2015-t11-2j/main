@@ -11,6 +11,7 @@ import Yui.Yui_GUI;
 
 public class Action {
 
+	private static ArrayList<Event> fullList;
 	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
@@ -56,6 +57,8 @@ public class Action {
 	private static final String CLEARALL_HELP_MSG = null;
 	private static final String EXIT_HELP_MSG = null;
 	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = "The command you entered is not found\n Please check to ensure you entered the correct command word!";
+	private static final String SEARCH_FOUND_MSG = "The list of found results are on the right!";
+	private static final String IMPROPER_SEARCH_KEY_MSG = "Please enter a proper keyword!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -63,13 +66,13 @@ public class Action {
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
+		fullList = s.loadE();
 		Event newEvent = Parser.parseForEvent(parameter);
 		if (newEvent.getDetail().equals("")) {
 			return INVALID_ADD_PARAMETER_MSG;
 		} else {
-			list.add(newEvent);
-			s.saveE(list);
+			fullList.add(newEvent);
+			s.saveE(fullList);
 			canUndo = true;
 			return ADD_SUCCESS_MSG;
 		}
@@ -78,6 +81,10 @@ public class Action {
 	static void exit() {
 		ToDoList.shouldExit = true;
 		System.exit(0);
+	}
+
+	public static void readAll(Storage s) throws IOException, ParseException {
+		fullList = s.loadE();
 	}
 
 	public static String bground(ArrayList<String> parameter) {
@@ -107,38 +114,40 @@ public class Action {
 
 	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList)
 			throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
 		String parameter = parameterArrayList.get(0);
-		StringBuilder resultList = new StringBuilder();
-		if (list.size() == 0 || parameter == "") {
+		if (fullList.size() == 0) {
 			return SEARCH_NOT_FOUND_MSG;
+		} else if (parameter.equals("")){
+			return IMPROPER_SEARCH_KEY_MSG;
 		} else {
-			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
-			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
-			ArrayList<NumberedEvent> memoEvent = getFloatingList(s);
+			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
+			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
+			ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean isFound = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				if (dEvent.getEvent().getDetail().toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true;
-					resultList.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(dEvent.getEvent());
 				}
 			}
 			for (NumberedEvent eEvent : eventTimeEvent) {
 				if (eEvent.getEvent().getDetail().toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true;
-					resultList.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(eEvent.getEvent());
 				}
+
 			}
 			for (NumberedEvent mEvent : memoEvent) {
 				if (mEvent.getEvent().getDetail().toLowerCase().contains(parameter.toLowerCase())) {
 					isFound = true;
-					resultList.append(" m" + mEvent.getIndex() + ". " + mEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(mEvent.getEvent());
 				}
 			}
 			if (isFound) {
-				resultList.deleteCharAt(resultList.length() - 1);
-				resultList.deleteCharAt(0);
-				return resultList.toString();
+				return SEARCH_FOUND_MSG;
 			} else {
 				return SEARCH_NOT_FOUND_MSG; // no result found
 			}
@@ -166,8 +175,7 @@ public class Action {
 		}
 	}
 
-	public static ArrayList<NumberedEvent> getDeadlineList(Storage s) throws IOException, ParseException {
-		ArrayList<Event> fullList = s.loadE();
+	public static ArrayList<NumberedEvent> getDeadlineList() throws IOException, ParseException {
 		ArrayList<NumberedEvent> deadlineList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
@@ -179,8 +187,7 @@ public class Action {
 		return deadlineList;
 	}
 
-	public static ArrayList<NumberedEvent> getEventTimeList(Storage s) throws IOException, ParseException {
-		ArrayList<Event> fullList = s.loadE();
+	public static ArrayList<NumberedEvent> getEventTimeList() throws IOException, ParseException {
 		ArrayList<NumberedEvent> eventTimeList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
@@ -191,8 +198,7 @@ public class Action {
 		return eventTimeList;
 	}
 
-	public static ArrayList<NumberedEvent> getFloatingList(Storage s) throws IOException, ParseException {
-		ArrayList<Event> fullList = s.loadE();
+	public static ArrayList<NumberedEvent> getFloatingList() throws IOException, ParseException {
 		ArrayList<NumberedEvent> floatingList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
@@ -204,14 +210,14 @@ public class Action {
 		return floatingList;
 	}
 
-	public static String read(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String read(ArrayList<String> parameter) throws IOException, ParseException {
 		StringBuilder output = new StringBuilder();
 		if (parameter.size() == 0) {
 			return NO_INDEX_TO_READ_MSG;
 		} else if (parameter.get(0).equalsIgnoreCase("today")) {
 			boolean hasEvent = false;
-			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
-			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
+			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
+			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
 				if (isToday(eventDeadline)) {
@@ -233,8 +239,8 @@ public class Action {
 			output.deleteCharAt(output.length() - 1);
 		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr")) {
 			boolean hasEvent = false;
-			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList(s);
-			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList(s);
+			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
+			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
 				if (isTmr(eventDeadline)) {
@@ -256,7 +262,7 @@ public class Action {
 			output.deleteCharAt(output.length() - 1);
 		} else {
 			if (parameter.get(0).toLowerCase().contains("d")) {
-				ArrayList<NumberedEvent> list = getDeadlineList(s);
+				ArrayList<NumberedEvent> list = getDeadlineList();
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {
 					return READING_INDEX_OUTOFBOUND_MSG;
@@ -267,7 +273,7 @@ public class Action {
 					output.append(" Time: " + deadline_format.format(reading.getDeadline().getDeadline()));
 				}
 			} else if (parameter.get(0).toLowerCase().contains("e")) {
-				ArrayList<NumberedEvent> list = getEventTimeList(s);
+				ArrayList<NumberedEvent> list = getEventTimeList();
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {
 					return READING_INDEX_OUTOFBOUND_MSG;
@@ -275,11 +281,11 @@ public class Action {
 					Event reading = list.get(index - 1).getEvent();
 					output.append("Detail: " + reading.getDetail() + "\n");
 					output.append(" Comment: " + reading.getComment() + "\n");
-					output.append(" Time: " + eventStart_format.format(reading.getEventTime().getStart())
-							+ "-" + eventEnd_format.format(reading.getEventTime().getEnd()));
+					output.append(" Time: " + eventStart_format.format(reading.getEventTime().getStart()) + "-"
+							+ eventEnd_format.format(reading.getEventTime().getEnd()));
 				}
 			} else if (parameter.get(0).toLowerCase().contains("m")) {
-				ArrayList<NumberedEvent> list = getFloatingList(s);
+				ArrayList<NumberedEvent> list = getFloatingList();
 				int index = Integer.valueOf(parameter.get(0).substring(1));
 				if (index > list.size()) {
 					return READING_INDEX_OUTOFBOUND_MSG;
@@ -305,7 +311,7 @@ public class Action {
 			ArrayList<String> readTmr = new ArrayList<String>();
 			readToday.add("today");
 			readTmr.add("tmr");
-			return "Today:\n " + read(s, readToday) + "\n Tomorrow\n " + read(s, readTmr);
+			return "Today:\n " + read(readToday) + "\n Tomorrow\n " + read(readTmr);
 		}
 	}
 

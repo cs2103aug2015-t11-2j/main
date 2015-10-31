@@ -12,17 +12,19 @@ public class ToDoList {
 	private static Logger logger = Logger.getLogger("ToDoList");
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String SPACE = " ";
-	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ " + "\n"
-			+" -What would you like to do?\n";
+	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ "
+			+ "\n" + " -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
 	private static Storage s;
+	// private static ArrayList<Event> fullList;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+	private static final String READ_MSG = "All events are displayed!";
 	private static String nowTime;
 	protected static boolean shouldExit = false;
 
 	public static String implement(String userCommand) throws IOException, ParseException {
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
-		assert !userCommand.equals("");
+		assert!userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
 		return nowTime + SPACE + modify(s, command, parameter);
@@ -30,9 +32,13 @@ public class ToDoList {
 
 	private static String modify(Storage s, String command, ArrayList<String> parameter)
 			throws IOException, ParseException {
-		try{
+		try {
 			logger.log(Level.INFO, "handle a command once");
 			switch (command) {
+			case "readAll": {
+				Action.readAll(s);
+				return READ_MSG;
+			}
 			case "add": {
 				return Action.addToList(s, parameter);
 			}
@@ -40,7 +46,7 @@ public class ToDoList {
 				return Action.bground(parameter);
 			}
 			case "read": {
-				return Action.read(s, parameter);
+				return Action.read(parameter);
 			}
 			case "outline": {
 				return Action.outline(s, parameter);
@@ -83,7 +89,7 @@ public class ToDoList {
 				return ERROR_MSG;
 			}
 			}
-		} catch(IOException e) {
+		} catch (IOException e) {
 			logger.log(Level.WARNING, "IO error", e);
 			e.printStackTrace();
 			return null;
@@ -91,24 +97,27 @@ public class ToDoList {
 
 	}
 
-	//need to be updated
-	public static ArrayList<NumberedEvent> getDealine() throws IOException, ParseException{
-		return Action.getDeadlineList(s);
+	// need to be updated
+	public static ArrayList<NumberedEvent> getDealine() throws IOException, ParseException {
+		return Action.getDeadlineList();
 	}
-	
-	public static ArrayList<NumberedEvent> getEventTime() throws IOException, ParseException{
-		return Action.getEventTimeList(s);
+
+	public static ArrayList<NumberedEvent> getEventTime() throws IOException, ParseException {
+		return Action.getEventTimeList();
 	}
-	
-	public static ArrayList<NumberedEvent> getFloating() throws IOException, ParseException{
-		return Action.getFloatingList(s);
+
+	public static ArrayList<NumberedEvent> getFloating() throws IOException, ParseException {
+		return Action.getFloatingList();
 	}
-	
-	
-	
+
+	public static void getFullList() throws IOException, ParseException {
+		Action.readAll(s);
+	}
+
 	public static String initialize() throws IOException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		s = new Storage("Yui");
+		// fullList = s.loadE();
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
 		return nowTime + WELCOME_MSG;
