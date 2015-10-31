@@ -146,6 +146,7 @@ public class Yui_GUI extends Application{
        showBox.setStyle("overflow-x:hidden;");
        mainGrid.add(showBox, 0, 0);
        showBox.setEditable(false);
+       showBox.setWrapText(true);
        
        //add command box
        final TextField userCommandBox = new TextField();
