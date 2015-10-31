@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 	
 public class ImageJudge {
-	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
+	private static SimpleDateFormat FORMATE_COMPARE = new SimpleDateFormat("yyyyMMdd");
 		
 	public static boolean isToday(Date theDate){
 		Date today = new Date();
-		String theDateString = formatCompare.format(theDate);
-		String todayString = formatCompare.format(today);
+		String theDateString = FORMATE_COMPARE.format(theDate);
+		String todayString = FORMATE_COMPARE.format(today);
 		if(theDateString.equals(todayString)){
 			return true;
 		}

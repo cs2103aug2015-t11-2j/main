@@ -1,5 +1,6 @@
 package main;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event implements Comparable<Event> {
@@ -75,7 +76,8 @@ public class Event implements Comparable<Event> {
 	public EventTime getEventTime() {
 		return this.eventTime;
 	}
-
+	
+	@Override
 	public int compareTo(Event compareEvent) {
 		Date compareEventDate = new Date(0);
 		Date currentEventDate = new Date(0);
@@ -84,10 +86,10 @@ public class Event implements Comparable<Event> {
 		} else if (compareEvent.getEventTime() != null) {
 			compareEventDate = compareEvent.getEventTime().getStart();
 		}
-		if (compareEvent.getDeadline() != null) {
-			currentEventDate = compareEvent.getDeadline().getDeadline();
-		} else if (compareEvent.getEventTime() != null) {
-			currentEventDate = compareEvent.getEventTime().getStart();
+		if (this.getDeadline() != null) {
+			currentEventDate = this.getDeadline().getDeadline();
+		} else if (this.getEventTime() != null) {
+			currentEventDate = this.getEventTime().getStart();
 		}
 		return currentEventDate.compareTo(compareEventDate);
 	}
