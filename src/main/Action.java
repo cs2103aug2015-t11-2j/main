@@ -59,6 +59,8 @@ public class Action {
 	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = "The command you entered is not found\n Please check to ensure you entered the correct command word!";
 	private static final String SEARCH_FOUND_MSG = "The list of found results are on the right!";
 	private static final String IMPROPER_SEARCH_KEY_MSG = "Please enter a proper keyword!";
+	private static final String EVENT_TMR_DISPLAYED_MSG = "Events of tomorrow displayed on the right!";
+	private static final String EVENT_TODAY_DISPLAYED_MSG = "Events of today displayed on the right!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -215,52 +217,73 @@ public class Action {
 		if (parameter.size() == 0) {
 			return NO_INDEX_TO_READ_MSG;
 		} else if (parameter.get(0).equalsIgnoreCase("today")) {
-			boolean hasEvent = false;
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
+			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
 				if (isToday(eventDeadline)) {
 					hasEvent = true;
-					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(dEvent.getEvent());
 				}
 			}
 			for (NumberedEvent eEvent : eventTimeEvent) {
 				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
 				if (isToday(eventEventTime)) {
 					hasEvent = true;
-					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(eEvent.getEvent());
 				}
+
 			}
+			for (NumberedEvent mEvent : memoEvent) {
+				fullList.remove(mEvent.getEvent());
+			}
+
 			if (!hasEvent) {
 				return NO_EVENT_TODAY_MSG;
+			} else {
+				return EVENT_TODAY_DISPLAYED_MSG;
 			}
-			output.deleteCharAt(0);
-			output.deleteCharAt(output.length() - 1);
-		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr")) {
-			boolean hasEvent = false;
+
+		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr"))
+
+		{
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
+			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
 				if (isTmr(eventDeadline)) {
 					hasEvent = true;
-					output.append(" d" + dEvent.getIndex() + ". " + dEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(dEvent.getEvent());
 				}
 			}
 			for (NumberedEvent eEvent : eventTimeEvent) {
 				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
 				if (isTmr(eventEventTime)) {
 					hasEvent = true;
-					output.append(" e" + eEvent.getIndex() + ". " + eEvent.getEvent().getDetail() + "\n");
+				} else {
+					fullList.remove(eEvent.getEvent());
 				}
+
+			}
+			for (NumberedEvent mEvent : memoEvent) {
+				fullList.remove(mEvent.getEvent());
 			}
 			if (!hasEvent) {
 				return NO_EVENT_TMR_MSG;
+			}else {
+				return EVENT_TMR_DISPLAYED_MSG;
 			}
-			output.deleteCharAt(0);
-			output.deleteCharAt(output.length() - 1);
-		} else {
+
+		} else
+
+		{
 			if (parameter.get(0).toLowerCase().contains("d")) {
 				ArrayList<NumberedEvent> list = getDeadlineList();
 				int index = Integer.valueOf(parameter.get(0).substring(1));
@@ -301,6 +324,7 @@ public class Action {
 
 		}
 		return output.toString();
+
 	}
 
 	public static String outline(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
