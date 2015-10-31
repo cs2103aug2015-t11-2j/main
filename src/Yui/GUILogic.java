@@ -59,6 +59,7 @@ public class GUILogic {
 	    //if(floating != null){
 	    int fltLength = floating.size();
 	    GridPane floatingBox = new GridPane();
+	    floatingBox.setVgap(1);
 	    floatingBox.setHgap(1);
 	    for(int i = 0; i < fltLength; i++){
 	    	NumberedEvent thisEvent = floating.get(i);
