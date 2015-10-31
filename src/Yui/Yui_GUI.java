@@ -32,8 +32,8 @@ public class Yui_GUI extends Application{
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
 	private static Logger logger = Logger.getLogger("MotionCatcher");
-	private static String listBackgroundPath1 = "listBKN.png";
-	private static String listBackgroundPath2 = "newBK.png";
+	private static String listBackgroundPath1 = "/Image/listBKN.png";
+	private static String listBackgroundPath2 = "/Image/newBK.png";
 	public static String listBackgroundPath3 = "user.dir/myTheme.png";
 	public static Image listBkImage1;
 	public static Image listBkImage2;
@@ -48,7 +48,7 @@ public class Yui_GUI extends Application{
    public void start(final Stage primaryStage) throws IOException, ParseException {
        primaryStage.setTitle("Yui");
        primaryStage.initStyle(StageStyle.UNDECORATED);
-       primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
+       primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/icon.png")));
        primaryStage.show();
 
        returnCommand = ToDoList.initialize();
@@ -89,25 +89,25 @@ public class Yui_GUI extends Application{
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
 
-       final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("deadlineN.png")));
-       final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("eventN.png")));
-   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("floatingN.png")));
+       final ImageView deadlineIcon = new ImageView(new Image(getClass().getResourceAsStream("/Image/deadlineN.png")));
+       final ImageView eventIcon = new ImageView(new Image(getClass().getResourceAsStream("/Image/eventN.png")));
+   	   final ImageView floatingIcon = new ImageView(new Image(getClass().getResourceAsStream("/Image/floatingN.png")));
 
 
        GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
 
        //set background
-       Image background = new Image(getClass().getResourceAsStream("uigroundN.png"));
+       Image background = new Image(getClass().getResourceAsStream("/Image/uigroundN.png"));
        ImageView bk = new ImageView(background);
        Group backg = new Group();
        backg.getChildren().addAll(bk,grid);
 
        //set icon
-       Image iconYui = new Image(getClass().getResourceAsStream("logo.png"));
+       Image iconYui = new Image(getClass().getResourceAsStream("/Image/logo.png"));
        grid.add(new ImageView(iconYui), 0, 0);
 
        //set exit button
-       Image imageExit = new Image(getClass().getResourceAsStream("exit.png"));
+       Image imageExit = new Image(getClass().getResourceAsStream("/Image/exit.png"));
        ImageView exit = new ImageView(imageExit);
        exit.setOnMouseClicked(new EventHandler<MouseEvent>(){
     	   @Override
@@ -118,11 +118,11 @@ public class Yui_GUI extends Application{
        grid.add(exit, 4, 0);
 
        //set menu button
-       Image menu1 = new Image(getClass().getResourceAsStream("menu.png"));
+       Image menu1 = new Image(getClass().getResourceAsStream("/Image/menu.png"));
        grid.add(new ImageView(menu1), 4, 2);
 
        //set enter button
-       Image enter = new Image(getClass().getResourceAsStream("ok.png"));
+       Image enter = new Image(getClass().getResourceAsStream("/Image/ok.png"));
        ImageView enterKey = new ImageView(enter);
        grid.add(enterKey, 4, 3);
 

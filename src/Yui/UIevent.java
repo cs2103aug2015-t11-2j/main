@@ -4,6 +4,8 @@ package Yui;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import Fonts.ChineseJudge;
+import Image.ImageJudge;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -20,7 +22,6 @@ public class UIevent {
 	private static Event events;
 	private static SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
 	private static SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH : mm");
-	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 	public GridPane eventPane = new GridPane();
 	private ImageView commentBk = new ImageView();
 	private ImageView nameBk = new ImageView();
@@ -41,21 +42,21 @@ public class UIevent {
 		GridPane date = new GridPane();
 		GridPane comment = new GridPane();
 		
-		Image numberImage = new Image(getClass().getResourceAsStream("number.png"));
-		Image nameDateTimeImage = new Image(getClass().getResourceAsStream("NTD.png"));
-		Image dangerImage = new Image(getClass().getResourceAsStream("danger.png"));
-		Image uncommentImage = new Image(getClass().getResourceAsStream("uncomment.png"));
-		Image commentImage = new Image(getClass().getResourceAsStream("comment.png"));
+		Image numberImage = new Image(getClass().getResourceAsStream("/Image/number.png"));
+		Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
+		Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
+		Image uncommentImage = new Image(getClass().getResourceAsStream("/Image/uncomment.png"));
+		Image commentImage = new Image(getClass().getResourceAsStream("/Image/comment.png"));
 		
 		ImageView numberBk = new ImageView(numberImage);
-		if(isToday(theDate)){
+		if(ImageJudge.isToday(theDate)){
 			nameBk = new ImageView(dangerImage);
 		} else {
 			nameBk = new ImageView(nameDateTimeImage);
 		}
 		ImageView timeBk = new ImageView(nameDateTimeImage);
 		ImageView dateBk = new ImageView(nameDateTimeImage);
-		if(!commentString.equals("")){
+		if(ImageJudge.isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
 	    	commentBk = new ImageView(uncommentImage);
@@ -76,28 +77,29 @@ public class UIevent {
 		
 		eventPane.setHgap(1);
 	    Text tN = new Text(" " + num);
-	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("UI.ttf"), 18));
-	    //tN.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tN.setFill(Color.WHITE);
 	    number.setPadding(new Insets(4, 1, 1, 5));
 	    number.add(tN, 0, 0);
 	    
 	    Text tT = new Text(timeString);
-	    tT.setFont(Font.loadFont(getClass().getResourceAsStream("UI.ttf"), 18));
+	    tT.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tT.setFill(Color.WHITE);
 	    time.setPadding(new Insets(4, 1, 1, 5));
 	    time.add(tT, 0, 0);
 	    
 	    Text tNm = new Text(" " + " " + eventName);
-	    //t1.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    tNm.setFont(Font.loadFont(getClass().getResourceAsStream("UI.ttf"), 18));
+	    if(ChineseJudge.isContainsChinese(eventName)){
+	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));
+	    } else {
+	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
+	    }
 	    tNm.setFill(Color.WHITE);
 	    name.setPadding(new Insets(4, 1, 1, 1));
 	    name.add(tNm, 0, 0);
 	    
 	    Text tD = new Text(dateString);
-	    //tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
-	    tD.setFont(Font.loadFont(getClass().getResourceAsStream("UI.ttf"), 18));
+	    tD.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tD.setFill(Color.WHITE);
 	    date.setPadding(new Insets(4, 1, 1, 17));
 	    date.add(tD, 0, 0);
@@ -108,16 +110,6 @@ public class UIevent {
 	    eventPane.add(nameBackg, 2, 0);
 	    eventPane.add(dateBackg, 3, 0);
 	    eventPane.add(commentBackg, 4, 0);
-	}
-
-	private boolean isToday(Date theDate){
-		Date today = new Date();
-		String theDateString = formatCompare.format(theDate);
-		String todayString = formatCompare.format(today);
-		if(theDateString.equals(todayString)){
-			return true;
-		}
-		return false;
 	}
 
 	public GridPane getEntBox(){
