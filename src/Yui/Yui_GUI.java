@@ -62,7 +62,7 @@ public class Yui_GUI extends Application{
        grid.setPadding(new Insets(15, 7.5, 7.5, 37.5));
 
        //set main grid of showing
-       GridPane mainGrid = new GridPane();
+       final GridPane mainGrid = new GridPane();
        mainGrid.setHgap(10);
        mainGrid.setPrefSize(735, 420);
        grid.add(mainGrid, 0, 2);
@@ -122,8 +122,8 @@ public class Yui_GUI extends Application{
        //set menu button
        Image menuTodolist = new Image(getClass().getResourceAsStream("/Image/menu.png"));
        Image menuCalendar = new Image(getClass().getResourceAsStream("/Image/menu2.png"));
-       ImageView btnTodolist = new ImageView(menuTodolist);
-       ImageView btnCalendar = new ImageView(menuCalendar);
+       final ImageView btnTodolist = new ImageView(menuTodolist);
+       final ImageView btnCalendar = new ImageView(menuCalendar);
        btnCalendar.setVisible(false);
        grid.add(btnTodolist, 4, 2);
        grid.add(btnCalendar, 4, 2);
@@ -156,7 +156,7 @@ public class Yui_GUI extends Application{
        showBox.appendText(returnCommand + "\n");
        
        //add web grid
-       WebView webBox = new WebView();
+       final WebView webBox = new WebView();
        final WebEngine myEngin = webBox.getEngine();
        myEngin.load("https://nusmods.com");
        webBox.setPrefSize(735,420);
