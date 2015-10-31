@@ -21,14 +21,8 @@ import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;
-	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("dd/MM/yyyy");
-	private static SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
 	public GridPane deadlinePane = new GridPane();
-	private ImageView commentBk = new ImageView();
-	private ImageView nameBk = new ImageView();
-	private static int NAME_MAX_LENGTH = 14;
-	private static int SINGLE_BIT_NUMBER = 9;
-	
+	//Event data
 	private Deadline deadlineCal;
 	private Date theDate;
 	private String timeString;
@@ -36,50 +30,94 @@ public class UIdeadline {
 	private String eventName;
 	private String commentString;
 	private int num;
+	//Panes
+	private GridPane number;
+	private GridPane time;
+	private GridPane name;		
+	private GridPane date;
+	private GridPane comment;
+	//ImageView
+	private ImageView commentBk = new ImageView();
+	private ImageView nameBk = new ImageView();
+	private ImageView numberBk = new ImageView();
+	private ImageView timeBk = new ImageView();
+	private ImageView dateBk = new ImageView();
+	//Background
+	private Group numberBackg = new Group();
+	private Group timeBackg = new Group();
+	private Group nameBackg = new Group();
+	private Group dateBackg = new Group();
+	private Group commentBackg = new Group();
+	private static int NAME_MAX_LENGTH = 14;
+	private static int SINGLE_BIT_NUMBER = 9;
+	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
+	
 
 	public UIdeadline(NumberedEvent numberedEvent) throws MalformedURLException{
 		readEvent(numberedEvent);
+		buildGrids();
+		buildImageView();
+		setBackground();
+		deadlinePane.setHgap(1);
+		setNum();
+		setTime();
+		setName();
+		setDate();	
+	    
+	    addAllElements();
+	}
 
-		GridPane number = new GridPane();
-		GridPane time = new GridPane();
-		GridPane name = new GridPane();		
-		GridPane date = new GridPane();
-		GridPane comment = new GridPane();
-		
+	private void readEvent(NumberedEvent numberedEvent){
+		deadline = numberedEvent.getEvent();
+		deadlineCal = deadline.getDeadline();
+		theDate = deadlineCal.getDeadline();
+		timeString = DATE_FORMATE_TIME.format(theDate);
+		dateString = DATE_FORMATE_DATE.format(theDate);
+		eventName = deadline.getDetail();
+		commentString = deadline.getComment();
+		num = numberedEvent.getIndex();
+	}
+	
+	private void buildGrids(){
+		number = new GridPane();
+		time = new GridPane();
+		name = new GridPane();		
+		date = new GridPane();
+		comment = new GridPane();
+	}
+	
+	private void buildImageView(){
 		Image numberImage = new Image(getClass().getResourceAsStream("/Image/number.png"));
 		Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
 		Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
 		Image uncommentImage = new Image(getClass().getResourceAsStream("/Image/uncomment.png"));
 		Image commentImage = new Image(getClass().getResourceAsStream("/Image/comment.png"));
 		
-		ImageView numberBk = new ImageView(numberImage);
+		numberBk = new ImageView(numberImage);
 		if(ImageJudge.isToday(theDate)){
 			nameBk = new ImageView(dangerImage);
 		} else {
 			nameBk = new ImageView(nameDateTimeImage);
 		}
-		ImageView timeBk = new ImageView(nameDateTimeImage);
-		ImageView dateBk = new ImageView(nameDateTimeImage);
+		timeBk = new ImageView(nameDateTimeImage);
+		dateBk = new ImageView(nameDateTimeImage);
 		if(ImageJudge.isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
 	    	commentBk = new ImageView(uncommentImage);
 	    }
-		
-		
-		Group numberBackg = new Group();
-		Group timeBackg = new Group();
-		Group nameBackg = new Group();
-		Group dateBackg = new Group();
-		Group commentBackg = new Group();
-		
+	}
+	
+	private void setBackground(){
 		numberBackg.getChildren().addAll(numberBk,number);
 		timeBackg.getChildren().addAll(timeBk,time);
 		nameBackg.getChildren().addAll(nameBk,name);
 		dateBackg.getChildren().addAll(dateBk,date);
 		commentBackg.getChildren().addAll(commentBk,comment);
-		
-		deadlinePane.setHgap(1);
+	}
+	
+	private void setNum(){
 	    Text tN = new Text(" " + num);
 	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tN.setFill(Color.WHITE);
@@ -88,14 +126,18 @@ public class UIdeadline {
 	    	number.setPadding(new Insets(4, 1, 1, 1));
 	    }
 	    number.add(tN, 0, 0);
-	    
-	    Text tT = new Text(timeString);
+	}
+	
+	private void setTime(){
+		Text tT = new Text(timeString);
 	    tT.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tT.setFill(Color.WHITE);
 	    time.setPadding(new Insets(4, 1, 1, 5));
 	    time.add(tT, 0, 0);
-	    
-	    if(eventName.length() > NAME_MAX_LENGTH){
+	}
+	
+	private void setName(){
+		if(eventName.length() > NAME_MAX_LENGTH){
 	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
@@ -107,31 +149,23 @@ public class UIdeadline {
 	    tNm.setFill(Color.WHITE);
 	    name.setPadding(new Insets(4, 1, 1, 1));
 	    name.add(tNm, 0, 0);
-	    
-	    Text tD = new Text(dateString);
-	    //tD.setFont(Font.font ("Agency FB", FontWeight.BOLD, 16));
+	}
+	
+	private void setDate(){
+		Text tD = new Text(dateString);
 	    tD.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tD.setFill(Color.WHITE);
 	    date.setPadding(new Insets(4, 1, 1, 17));
 	    date.add(tD, 0, 0);
-
-	    deadlinePane.setPrefSize(380, 25);
+	}
+	
+	private void addAllElements(){
+		deadlinePane.setPrefSize(380, 25);
 	    deadlinePane.add(numberBackg, 0, 0);
 	    deadlinePane.add(timeBackg, 1, 0);
 	    deadlinePane.add(nameBackg, 2, 0);
 	    deadlinePane.add(dateBackg, 3, 0);
 	    deadlinePane.add(commentBackg, 4, 0);
-	}
-
-	private void readEvent(NumberedEvent numberedEvent){
-		deadline = numberedEvent.getEvent();
-		deadlineCal = deadline.getDeadline();
-		theDate = deadlineCal.getDeadline();
-		timeString = DATE_FORMATE_DATE.format(theDate);
-		dateString = DATE_FORMATE_TIME.format(theDate);
-		eventName = deadline.getDetail();
-		commentString = deadline.getComment();
-		num = numberedEvent.getIndex();
 	}
 	
 	public GridPane getDdlBox(){

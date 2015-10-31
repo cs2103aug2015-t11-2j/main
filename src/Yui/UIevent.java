@@ -3,7 +3,6 @@ package Yui;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import Fonts.ChineseJudge;
 import Image.ImageJudge;
 import javafx.geometry.Insets;
@@ -19,64 +18,101 @@ import main.NumberedEvent;
 
 public class UIevent {
 	private static Event events;
-	private static SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
-	private static SimpleDateFormat dateFormatTime = new SimpleDateFormat("HH : mm");
 	public GridPane eventPane = new GridPane();
+	//Event data
+	private Date theDate;
+	private String timeString;
+	private String dateString;
+	private String eventName;
+	private String commentString;
+	private int num;
+	//Panes
+	private GridPane number;
+	private GridPane time;
+	private GridPane name;		
+	private GridPane date;
+	private GridPane comment;
+	//ImageView
 	private ImageView commentBk = new ImageView();
 	private ImageView nameBk = new ImageView();
+	private ImageView numberBk = new ImageView();
+	private ImageView timeBk = new ImageView();
+	private ImageView dateBk = new ImageView();
+	//Background
+	private Group numberBackg = new Group();
+	private Group timeBackg = new Group();
+	private Group nameBackg = new Group();
+	private Group dateBackg = new Group();
+	private Group commentBackg = new Group();
 	private static int NAME_MAX_LENGTH = 14;
 	private static int SINGLE_BIT_NUMBER = 9;
+	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
 
 	public UIevent(NumberedEvent numberedEvent){
-		events = numberedEvent.getEvent();
-		Date theDate = events.getEventTime().getStart();
-		String timeString = dateFormatTime.format(events.getEventTime().getStart()) + " -"
-		 					+ dateFormatTime.format(events.getEventTime().getEnd());
-		String dateString = dateFormatDate.format(events.getEventTime().getEnd());
-		String eventName = events.getDetail();
-		String commentString = events.getComment();
-		int num = numberedEvent.getIndex();
+		readEvent(numberedEvent);
+		buildGrids();
+		buildImageView();
+		setBackground();
+		eventPane.setHgap(1);
+		setNum();
+		setTime();
+		setName();
+		setDate();	
+	    
+	    addAllElements();
+	}
 
-		GridPane number = new GridPane();
-		GridPane time = new GridPane();
-		GridPane name = new GridPane();		
-		GridPane date = new GridPane();
-		GridPane comment = new GridPane();
-		
+	private void readEvent(NumberedEvent numberedEvent){
+		events = numberedEvent.getEvent();
+		theDate = events.getEventTime().getStart();
+		timeString = DATE_FORMATE_TIME.format(events.getEventTime().getStart()) + " -"
+					+ DATE_FORMATE_TIME.format(events.getEventTime().getEnd());
+		dateString = DATE_FORMATE_DATE.format(theDate);
+		eventName = events.getDetail();
+		commentString = events.getComment();
+		num = numberedEvent.getIndex();
+	}
+	
+	private void buildGrids(){
+		number = new GridPane();
+		time = new GridPane();
+		name = new GridPane();		
+		date = new GridPane();
+		comment = new GridPane();
+	}
+	
+	private void buildImageView(){
 		Image numberImage = new Image(getClass().getResourceAsStream("/Image/number.png"));
 		Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
 		Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
 		Image uncommentImage = new Image(getClass().getResourceAsStream("/Image/uncomment.png"));
 		Image commentImage = new Image(getClass().getResourceAsStream("/Image/comment.png"));
 		
-		ImageView numberBk = new ImageView(numberImage);
+		numberBk = new ImageView(numberImage);
 		if(ImageJudge.isToday(theDate)){
 			nameBk = new ImageView(dangerImage);
 		} else {
 			nameBk = new ImageView(nameDateTimeImage);
 		}
-		ImageView timeBk = new ImageView(nameDateTimeImage);
-		ImageView dateBk = new ImageView(nameDateTimeImage);
+		timeBk = new ImageView(nameDateTimeImage);
+		dateBk = new ImageView(nameDateTimeImage);
 		if(ImageJudge.isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
 	    	commentBk = new ImageView(uncommentImage);
 	    }
-		
-		
-		Group numberBackg = new Group();
-		Group timeBackg = new Group();
-		Group nameBackg = new Group();
-		Group dateBackg = new Group();
-		Group commentBackg = new Group();
-		
+	}
+	
+	private void setBackground(){
 		numberBackg.getChildren().addAll(numberBk,number);
 		timeBackg.getChildren().addAll(timeBk,time);
 		nameBackg.getChildren().addAll(nameBk,name);
 		dateBackg.getChildren().addAll(dateBk,date);
 		commentBackg.getChildren().addAll(commentBk,comment);
-		
-		eventPane.setHgap(1);
+	}
+	
+	private void setNum(){
 	    Text tN = new Text(" " + num);
 	    tN.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tN.setFill(Color.WHITE);
@@ -85,14 +121,18 @@ public class UIevent {
 	    	number.setPadding(new Insets(4, 1, 1, 1));
 	    }
 	    number.add(tN, 0, 0);
-	    
-	    Text tT = new Text(timeString);
+	}
+	
+	private void setTime(){
+		Text tT = new Text(timeString);
 	    tT.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tT.setFill(Color.WHITE);
 	    time.setPadding(new Insets(4, 1, 1, 5));
 	    time.add(tT, 0, 0);
-	    
-	    if(eventName.length() > NAME_MAX_LENGTH){
+	}
+	
+	private void setName(){
+		if(eventName.length() > NAME_MAX_LENGTH){
 	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
@@ -104,21 +144,25 @@ public class UIevent {
 	    tNm.setFill(Color.WHITE);
 	    name.setPadding(new Insets(4, 1, 1, 1));
 	    name.add(tNm, 0, 0);
-	    
-	    Text tD = new Text(dateString);
+	}
+	
+	private void setDate(){
+		Text tD = new Text(dateString);
 	    tD.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
 	    tD.setFill(Color.WHITE);
 	    date.setPadding(new Insets(4, 1, 1, 17));
 	    date.add(tD, 0, 0);
-
-	    eventPane.setPrefSize(380, 25);
-	    eventPane.add(numberBackg, 0, 0);
-	    eventPane.add(timeBackg, 1, 0);
-	    eventPane.add(nameBackg, 2, 0);
-	    eventPane.add(dateBackg, 3, 0);
-	    eventPane.add(commentBackg, 4, 0);
 	}
-
+	
+	private void addAllElements(){
+		eventPane.setPrefSize(380, 25);
+		eventPane.add(numberBackg, 0, 0);
+		eventPane.add(timeBackg, 1, 0);
+		eventPane.add(nameBackg, 2, 0);
+		eventPane.add(dateBackg, 3, 0);
+		eventPane.add(commentBackg, 4, 0);
+	}
+	
 	public GridPane getEntBox(){
 		return eventPane;
 	}
