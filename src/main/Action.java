@@ -75,6 +75,9 @@ public class Action {
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		fullList = s.loadE();
+		if (Parser.parseForEvent(parameter) == null) {
+			return INVALID_ADD_PARAMETER_MSG;
+		}
 		Event newEvent = Parser.parseForEvent(parameter);
 		if (newEvent.getDetail().equals("")) {
 			return INVALID_ADD_PARAMETER_MSG;
@@ -503,21 +506,24 @@ public class Action {
 		for (NumberedEvent temp : deadlineEvent) {
 			if (!temp.getEvent().getPriority().equals("")) {
 				if (thisTime.after(temp.getEvent().getDeadline().getDeadline())) {
-					int noOfIteration = (int) ((thisTime.getTime()-temp.getEvent().getDeadline().getDeadline().getTime())/86400000);
 					String paraFull = temp.getEvent().getPriority();
 					int para1 = Integer.valueOf(paraFull.substring(0, paraFull.indexOf(" ")));
 					int para2 = Integer.valueOf(paraFull.substring(paraFull.indexOf(" ") + 1));
-					Date newDate = new Date(temp.getEvent().getDeadline().getDeadline().getTime() + noOfIteration * para1 * 86400000);
+					int noOfIteration = (int) ((thisTime.getTime()
+							- temp.getEvent().getDeadline().getDeadline().getTime()) / (86400000 * para2) + 1);
+
+					Date newDate = new Date(
+							temp.getEvent().getDeadline().getDeadline().getTime() + noOfIteration * para1 * 86400000);
 					int indexInFullList = Parser.indexInFullList(fullList, "d" + temp.getIndex());
 					if (para2 <= 1) {
 						fullList.remove(indexInFullList);
 						return;
 					} else {
-						para2-=noOfIteration;
+						para2 -= noOfIteration;
 
 						Event newEvent = temp.getEvent();
 						newEvent.deadline.deadline = newDate;
-						newEvent.priority = para1+" "+para2;
+						newEvent.priority = para1 + " " + para2;
 						fullList.remove(indexInFullList);
 						fullList.add(newEvent);
 						s.saveE(fullList);
@@ -529,23 +535,26 @@ public class Action {
 		for (NumberedEvent temp2 : eventTimeEvent) {
 			if (!temp2.getEvent().getPriority().equals("")) {
 				if (thisTime.after(temp2.getEvent().getEventTime().getEnd())) {
-					int noOfIteration = (int) ((thisTime.getTime()-temp2.getEvent().getEventTime().getEnd().getTime())/86400000);
 					String paraFull = temp2.getEvent().getPriority();
 					int para1 = Integer.valueOf(paraFull.substring(0, paraFull.indexOf(" ")));
 					int para2 = Integer.valueOf(paraFull.substring(paraFull.indexOf(" ") + 1));
-					Date newDateStart = new Date(temp2.getEvent().getEventTime().getStart().getTime() + noOfIteration * para1 * 86400000);
-					Date newDateEnd = new Date(temp2.getEvent().getEventTime().getEnd().getTime() + noOfIteration * para1 * 86400000);
+					int noOfIteration = (int) ((thisTime.getTime() - temp2.getEvent().getEventTime().getEnd().getTime())
+							/ (86400000 * para2) + 1);
+					Date newDateStart = new Date(
+							temp2.getEvent().getEventTime().getStart().getTime() + noOfIteration * para1 * 86400000);
+					Date newDateEnd = new Date(
+							temp2.getEvent().getEventTime().getEnd().getTime() + noOfIteration * para1 * 86400000);
 					int indexInFullList = Parser.indexInFullList(fullList, "e" + temp2.getIndex());
 					if (para2 <= 1) {
 						fullList.remove(indexInFullList);
 						return;
 					} else {
-						para2-=noOfIteration;
+						para2 -= noOfIteration;
 
 						Event newEvent = temp2.getEvent();
 						newEvent.eventTime.start = newDateStart;
 						newEvent.eventTime.end = newDateEnd;
-						newEvent.priority = para1+" "+para2;
+						newEvent.priority = para1 + " " + para2;
 						fullList.remove(indexInFullList);
 						fullList.add(newEvent);
 						s.saveE(fullList);
@@ -574,12 +583,10 @@ public class Action {
 					break;
 				}
 			}
-			// temp.remove(markedEvent);
 			markedEvent.status = status;
 			temp.add(markedEvent);
 			s.saveE(temp);
 			readAll(s);
-			// s.saveE(fullList);
 			canUndo = true;
 			return MARK_SUCCESSFUL_MSG;
 		} else {
