@@ -199,16 +199,16 @@ public class Yui_GUI extends Application{
 
     		   if(event.isAltDown()){
     			   if(event.getCode().equals(KeyCode.UP)){
-    				   showBox.setScrollTop(showBox.getScrollTop() - 2.4f);
+    				   showBox.setScrollTop(showBox.getScrollTop() - 5f);
     			   }
     			   if(event.getCode().equals(KeyCode.DOWN)){
-    				   showBox.setScrollTop(showBox.getScrollTop() + 2.4f);
+    				   showBox.setScrollTop(showBox.getScrollTop() + 5f);
     			   }
     			   if(event.getCode().equals(KeyCode.LEFT)){
-    				   showBox.setScrollLeft(showBox.getScrollLeft() - 2.4f);
+    				   showBox.setScrollLeft(showBox.getScrollLeft() - 5f);
     			   }
     			   if(event.getCode().equals(KeyCode.RIGHT)){
-    				   showBox.setScrollLeft(showBox.getScrollLeft() + 2.4f);
+    				   showBox.setScrollLeft(showBox.getScrollLeft() + 5f);
     			   }
     		   } else {
 	    		   if(event.getCode().equals(KeyCode.UP)){
