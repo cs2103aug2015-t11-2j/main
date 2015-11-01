@@ -588,12 +588,10 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(markedEvent)) {
-					temp.remove(i);
+					temp.get(i).status = status;
 					break;
 				}
 			}
-			markedEvent.status = status;
-			temp.add(markedEvent);
 			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
