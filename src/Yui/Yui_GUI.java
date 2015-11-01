@@ -34,8 +34,8 @@ public class Yui_GUI extends Application{
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
 	private static Logger logger = Logger.getLogger("MotionCatcher");
-	private static String listBackgroundPath1 = "/Image/listBKN.png";
-	private static String listBackgroundPath2 = "/Image/newBK.png";
+	private static String listBackgroundPath1 = "/Image/theme1.png";
+	private static String listBackgroundPath2 = "/Image/theme2.png";
 	public static String listBackgroundPath3 = "user.dir/myTheme.png";
 	public static Image listBkImage1;
 	public static Image listBkImage2;
