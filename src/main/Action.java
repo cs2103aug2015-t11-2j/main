@@ -440,7 +440,6 @@ public class Action {
 	}
 
 	protected static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
 		String comment = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
@@ -448,8 +447,17 @@ public class Action {
 		} else if (indexInFullList == -1) {
 			return COMMENT_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
-			list.get(indexInFullList).comment = comment;
-			s.saveE(list);
+			Event commentEvent = fullList.get(indexInFullList);
+			ArrayList<Event> temp = s.loadE();
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(commentEvent)){
+					temp.remove(i);
+					break;
+				}
+			}
+			commentEvent.comment = comment;
+			temp.add(commentEvent);
+			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
 			return COMMENT_SUCCESSFUL_MSG;
@@ -459,7 +467,6 @@ public class Action {
 	}
 
 	protected static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
@@ -467,8 +474,17 @@ public class Action {
 		} else if (indexInFullList == -1) {
 			return PRIORITY_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
-			list.get(indexInFullList).priority = priority;
-			s.saveE(list);
+			Event priorityEvent = fullList.get(indexInFullList);
+			ArrayList<Event> temp = s.loadE();
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(priorityEvent)){
+					temp.remove(i);
+					break;
+				}
+			}
+			priorityEvent.priority = priority;
+			temp.add(priorityEvent);
+			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
 			return PRIORITY_SUCCESSFUL_MSG;
