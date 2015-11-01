@@ -45,19 +45,19 @@ public class Action {
 	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n help\n clearall\n exit";
 	private static final String ADD_HELP_MSG = "You can add 3 types of event to your list, namely deadline event, event-time event and memo event\n For events with deadline, type in \"add (event name) by HH:MM DD/MM/YYYY\"\n For events with event time, type in \"add (event name) from HH:MM to HH:MM DD/MM/YYYY\"\n For events without a time, type in \"add (event name)\"";
 	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" (\"theme default\") and \"theme 2\"\n To use your own picture, manually add a picture of size 383*418 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
-	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about ";
-	private static final String OUTLINE_HELP_MSG = null;
-	private static final String DELETE_HELP_MSG = null;
-	private static final String SEARCH_HELP_MSG = null;
-	private static final String UPDATE_HELP_MSG = null;
-	private static final String UNDO_HELP_MSG = null;
-	private static final String REDO_HELP_MSG = null;
-	private static final String COMMENT_HELP_MSG = null;
-	private static final String PRIORITY_HELP_MSG = null;
-	private static final String MARK_HELP_MSG = null;
-	private static final String HELP_HELP_MSG = "You can always refer to helplist for all\n the commands available\n Type in \"help\" you can see a list of all\n commands available\n Type in \"help\" and the command you\n want to know to learn more about it!";
-	private static final String CLEARALL_HELP_MSG = null;
-	private static final String EXIT_HELP_MSG = null;
+	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about each one by typing in \"read\", event type (d, e, m) and index.\n For example, \"read d1\" can give you information on first deadline event.\n You can also use \"read\" to check all the events on today or tomorrow, simply type \"read today\" or \"read tomorrow(tmr)\"";
+	private static final String OUTLINE_HELP_MSG = "You can type \"outline\" to view all the events of today and tomorrow";
+	private static final String DELETE_HELP_MSG = "With reference to the right hand side panel, you can delete an event by typing in \"delete\", event type (d, e, m) and index.\n For example, \"delete d1\" will remove the first deadline event";
+	private static final String SEARCH_HELP_MSG = "You can use the simple search to quickly locate an event. Type in \"search\" and your keyword. The events containing your keyword (ignore case) will be displayed on the right";
+	private static final String UPDATE_HELP_MSG = "You can update the detail of an event by typing in \"update\", event type (d, e, m) and index, new event detail.\n For example, typing \"update m1 go to school\" will replace the event name of first event in memo to \"go to school\"";
+	private static final String UNDO_HELP_MSG = "Type in \"undo\" to revert your previous changes. Keep in mind you can only undo the latest operation";
+	private static final String REDO_HELP_MSG = "Type in \"redo\" to revert your undo operation";
+	private static final String COMMENT_HELP_MSG = "You can set comment for events by typing in \"comment\", event type (d, e, m) and index, comment information.\n For example, typing \"comment e1 ASAP\" will set a comment for the first event in event-time event. You will see an icon highlighted for events with comments and you can read the comments by reading that event";
+	private static final String PRIORITY_HELP_MSG = "You can set an event as recurring task by typing in \"recur\", event type (d, e, m) and index, the number of days for one iteration, the number of iterations desired.\n For example, typing \"recur d1 7 10\" will set the first deadline event as recurring event, which happens every 7 days (each week) and happens for 10 times (including the intial one)\n However keep in mind, you cannot recur a memo event as we do not know when you do it the first time!";
+	private static final String MARK_HELP_MSG = "You can mark an event as done by typing in \"mark\", event type (d, e, m) and index, \"done\".\n An event will not be seen once you mark it as done. If you made a mistake, undo at once! Otherwise you can manually find it inside your data file. You only need to remove the word \"done\" to see it again";
+	private static final String HELP_HELP_MSG = "You can always refer to helplist for all the commands available\n Type in \"help\" you can see a list of all commands available\n Type in \"help\" and the command you want to know to learn more about it!";
+	private static final String CLEARALL_HELP_MSG = "You can clear all the tasks in the list by typing in \"clearall\".\n Undo at once if you made a mistake! Otherwise you will permanently lose your list";
+	private static final String EXIT_HELP_MSG = "You can exit the app by typing in \"exit\"";
 	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = "The command you entered is not found\n Please check to ensure you entered the correct command word!";
 	private static final String SEARCH_FOUND_MSG = "The list of found results are on the right!";
 	private static final String IMPROPER_SEARCH_KEY_MSG = "Please enter a proper keyword!";
@@ -648,8 +648,8 @@ public class Action {
 			return REDO_HELP_MSG;
 		} else if (parameter.equals("comment")) {
 			return COMMENT_HELP_MSG;
-		} else if (parameter.equals("priority")) {
-			return PRIORITY_HELP_MSG;
+		} else if (parameter.equals("recur")) {
+			return PRIORITY_HELP_MSG; // used for recur
 		} else if (parameter.equals("mark")) {
 			return MARK_HELP_MSG;
 		} else if (parameter.equals("help")) {
