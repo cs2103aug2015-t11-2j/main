@@ -27,8 +27,9 @@ public class ToDoList {
 		assert!userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
+		String returnCommand = nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE + modify(s, command, parameter);
 		Action.setRecur(s);
-		return nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE + modify(s, command, parameter);
+		return returnCommand;
 	}
 
 	private static String modify(Storage s, String command, ArrayList<String> parameter)
