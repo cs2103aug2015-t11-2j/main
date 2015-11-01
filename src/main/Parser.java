@@ -119,12 +119,14 @@ public class Parser {
 			String endDateAndTime = end + " " + dateString;
 			startDate = dateF1.parse(startDateAndTime);
 			endDate = dateF1.parse(endDateAndTime);
-		} else {
+		} else if (start.indexOf(':') != -1){
 			String startS = start + " " + date;
 			String endS = end + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			startDate = dateF.parse(startS);
 			endDate = dateF.parse(endS);
+		} else {
+			return null;
 		}
 
 		return new EventTime(startDate, endDate);
