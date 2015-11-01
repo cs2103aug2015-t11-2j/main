@@ -27,6 +27,7 @@ public class ToDoList {
 		assert!userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
+		Action.setRecur(s);
 		return nowTime + SPACE + modify(s, command, parameter);
 	}
 
@@ -69,9 +70,6 @@ public class ToDoList {
 			case "comment": {
 				return Action.comment(s, parameter);
 			}
-			case "priority": {
-				return Action.priority(s, parameter);
-			}
 			case "mark": {
 				return Action.mark(s, parameter);
 			}
@@ -80,6 +78,9 @@ public class ToDoList {
 			}
 			case "todolist":{
 				return Action.todolist();
+			}
+			case "recur":{
+				return Action.recur(s, parameter);
 			}
 			case "help": {
 				return Action.help(parameter);

@@ -28,8 +28,8 @@ public class Action {
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
 	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
 	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
-	private static final String PRIORITY_OUT_OF_BOUND_MSG = "Cannot set priority. Index entered is larger than current event amount!";
-	private static final String PRIORITY_SUCCESSFUL_MSG = "Priority set successfully!";
+	private static final String PRIORITY_OUT_OF_BOUND_MSG = "Cannot set recur. Index entered is larger than current event amount!";
+	private static final String PRIORITY_SUCCESSFUL_MSG = "Recur set successfully!";
 	private static final String MARK_OUT_OF_BOUND_MSG = "Cannot mark. Index entered is larger than current event amount!";
 	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
 	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
@@ -42,7 +42,7 @@ public class Action {
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
 	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
 	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n priority\n mark\n help\n clearall\n exit";
-	private static final String ADD_HELP_MSG = "You can add 3 types of event to your\n list, namely deadline event,\n event-time event and memo event\n For events with deadline, type in\n \"add (event name) by HH:MM\n DD/MM/YYYY\"\n For events with event time, type in\n \"add (event name) from HH:MM to\n HH:MM DD/MM/YYYY\"\n For events without a time, type in\n \"add (event name)\"";
+	private static final String ADD_HELP_MSG = "You can add 3 types of event to your\n list, namely deadline event, event-time event and memo event\n For events with deadline, type in \"add (event name) by HH:MM DD/MM/YYYY\"\n For events with event time, type in \"add (event name) from HH:MM to HH:MM DD/MM/YYYY\"\n For events without a time, type in \"add (event name)\"";
 	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" and \"theme 2\"\n To use your own picture, manually add a picture of size 253*273 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
 	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about ";
 	private static final String OUTLINE_HELP_MSG = null;
@@ -425,7 +425,7 @@ public class Action {
 			Event deletedEvent = fullList.get(indexInFullList);
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
-				if (temp.get(i).equals(deletedEvent)){
+				if (temp.get(i).equals(deletedEvent)) {
 					temp.remove(i);
 					break;
 				}
@@ -441,7 +441,8 @@ public class Action {
 
 	protected static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		String comment = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList,
+				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -450,7 +451,7 @@ public class Action {
 			Event commentEvent = fullList.get(indexInFullList);
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
-				if (temp.get(i).equals(commentEvent)){
+				if (temp.get(i).equals(commentEvent)) {
 					temp.remove(i);
 					break;
 				}
@@ -466,9 +467,10 @@ public class Action {
 		}
 	}
 
-	protected static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	protected static String recur(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList,
+				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -477,7 +479,7 @@ public class Action {
 			Event priorityEvent = fullList.get(indexInFullList);
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
-				if (temp.get(i).equals(priorityEvent)){
+				if (temp.get(i).equals(priorityEvent)) {
 					temp.remove(i);
 					break;
 				}
@@ -493,9 +495,72 @@ public class Action {
 		}
 	}
 
+	protected static void setRecur(Storage s) throws IOException, ParseException {
+		fullList = s.loadE();
+		Date thisTime = new Date();
+		ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
+		ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
+		for (NumberedEvent temp : deadlineEvent) {
+			if (!temp.getEvent().getPriority().equals("")) {
+				if (thisTime.after(temp.getEvent().getDeadline().getDeadline())) {
+					int noOfIteration = (int) ((thisTime.getTime()-temp.getEvent().getDeadline().getDeadline().getTime())/86400000);
+					String paraFull = temp.getEvent().getPriority();
+					int para1 = Integer.valueOf(paraFull.substring(0, paraFull.indexOf(" ")));
+					int para2 = Integer.valueOf(paraFull.substring(paraFull.indexOf(" ") + 1));
+					Date newDate = new Date(temp.getEvent().getDeadline().getDeadline().getTime() + noOfIteration * para1 * 86400000);
+					int indexInFullList = Parser.indexInFullList(fullList, "d" + temp.getIndex());
+					if (para2 <= 1) {
+						fullList.remove(indexInFullList);
+						return;
+					} else {
+						para2-=noOfIteration;
+
+						Event newEvent = temp.getEvent();
+						newEvent.deadline.deadline = newDate;
+						newEvent.priority = para1+" "+para2;
+						fullList.remove(indexInFullList);
+						fullList.add(newEvent);
+						s.saveE(fullList);
+						readAll(s);
+					}
+				}
+			}
+		}
+		for (NumberedEvent temp2 : eventTimeEvent) {
+			if (!temp2.getEvent().getPriority().equals("")) {
+				if (thisTime.after(temp2.getEvent().getEventTime().getEnd())) {
+					int noOfIteration = (int) ((thisTime.getTime()-temp2.getEvent().getEventTime().getEnd().getTime())/86400000);
+					String paraFull = temp2.getEvent().getPriority();
+					int para1 = Integer.valueOf(paraFull.substring(0, paraFull.indexOf(" ")));
+					int para2 = Integer.valueOf(paraFull.substring(paraFull.indexOf(" ") + 1));
+					Date newDateStart = new Date(temp2.getEvent().getEventTime().getStart().getTime() + noOfIteration * para1 * 86400000);
+					Date newDateEnd = new Date(temp2.getEvent().getEventTime().getEnd().getTime() + noOfIteration * para1 * 86400000);
+					int indexInFullList = Parser.indexInFullList(fullList, "e" + temp2.getIndex());
+					if (para2 <= 1) {
+						fullList.remove(indexInFullList);
+						return;
+					} else {
+						para2-=noOfIteration;
+
+						Event newEvent = temp2.getEvent();
+						newEvent.eventTime.start = newDateStart;
+						newEvent.eventTime.end = newDateEnd;
+						newEvent.priority = para1+" "+para2;
+						fullList.remove(indexInFullList);
+						fullList.add(newEvent);
+						s.saveE(fullList);
+						readAll(s);
+					}
+				}
+			}
+		}
+
+	}
+
 	protected static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		String status = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList,
+				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -504,17 +569,17 @@ public class Action {
 			Event markedEvent = fullList.get(indexInFullList);
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
-				if (temp.get(i).equals(markedEvent)){
+				if (temp.get(i).equals(markedEvent)) {
 					temp.remove(i);
 					break;
 				}
 			}
-//			temp.remove(markedEvent);
+			// temp.remove(markedEvent);
 			markedEvent.status = status;
 			temp.add(markedEvent);
 			s.saveE(temp);
 			readAll(s);
-//			s.saveE(fullList);
+			// s.saveE(fullList);
 			canUndo = true;
 			return MARK_SUCCESSFUL_MSG;
 		} else {
@@ -522,20 +587,20 @@ public class Action {
 		}
 	}
 
-	public static String nusmods(){
+	public static String nusmods() {
 		isShowNusMods = true;
 		return NUS_MOD_SUCESSFUL;
 	}
-	
-	public static String todolist(){
+
+	public static String todolist() {
 		isShowNusMods = false;
 		return TODOLIST_SUCESSFUL;
 	}
-	
-	public static boolean getIsShow(){
+
+	public static boolean getIsShow() {
 		return isShowNusMods;
 	}
-	
+
 	protected static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;
