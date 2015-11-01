@@ -457,12 +457,10 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(commentEvent)) {
-					temp.remove(i);
+					temp.get(i).comment = comment;
 					break;
 				}
 			}
-			commentEvent.comment = comment;
-			temp.add(commentEvent);
 			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
