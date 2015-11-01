@@ -13,7 +13,7 @@ public class ToDoList {
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String SPACE = " ";
 	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ "
-			+ "\n" + " -What would you like to do?\n";
+			+ "\n" + " The events of today is shown on the right " + "\n" + " -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
 	private static Storage s;
 	// private static ArrayList<Event> fullList;
@@ -128,6 +128,9 @@ public class ToDoList {
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
 		getFullList();
+		ArrayList<String> todayParameter = new ArrayList<String>();
+		todayParameter.add("today");
+		Action.read(s, todayParameter);
 		return nowTime + WELCOME_MSG;
 	}
 

@@ -234,7 +234,7 @@ public class Action {
 			readAll(s);
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+//			ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
@@ -253,9 +253,9 @@ public class Action {
 				}
 
 			}
-			for (NumberedEvent mEvent : memoEvent) {
-				fullList.remove(mEvent.getEvent());
-			}
+//			for (NumberedEvent mEvent : memoEvent) {
+//				fullList.remove(mEvent.getEvent());
+//			}
 
 			if (!hasEvent) {
 				return NO_EVENT_TODAY_MSG;
@@ -269,7 +269,7 @@ public class Action {
 			readAll(s);
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+//			ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
@@ -288,9 +288,9 @@ public class Action {
 				}
 
 			}
-			for (NumberedEvent mEvent : memoEvent) {
-				fullList.remove(mEvent.getEvent());
-			}
+//			for (NumberedEvent mEvent : memoEvent) {
+//				fullList.remove(mEvent.getEvent());
+//			}
 			if (!hasEvent) {
 				return NO_EVENT_TMR_MSG;
 			} else {
@@ -356,7 +356,7 @@ public class Action {
 			readAll(s);
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+//			ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
@@ -375,9 +375,9 @@ public class Action {
 				}
 
 			}
-			for (NumberedEvent mEvent : memoEvent) {
-				fullList.remove(mEvent.getEvent());
-			}
+//			for (NumberedEvent mEvent : memoEvent) {
+//				fullList.remove(mEvent.getEvent());
+//			}
 
 			if (!hasEvent) {
 				return NO_EVENT_TODAY_OR_TMR_MSG;
