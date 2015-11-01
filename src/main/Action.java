@@ -494,12 +494,10 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(priorityEvent)) {
-					temp.remove(i);
+					temp.get(i).priority = priority;
 					break;
 				}
 			}
-			priorityEvent.priority = priority;
-			temp.add(priorityEvent);
 			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
