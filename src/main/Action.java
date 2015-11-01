@@ -416,15 +416,21 @@ public class Action {
 	}
 
 	protected static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
 		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
 			return DELETE_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
-			list.remove(indexInFullList);
-			s.saveE(list);
+			Event deletedEvent = fullList.get(indexInFullList);
+			ArrayList<Event> temp = s.loadE();
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(deletedEvent)){
+					temp.remove(i);
+					break;
+				}
+			}
+			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
 			return DELETE_SUCCESSFUL_MSG;
