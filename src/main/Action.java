@@ -500,7 +500,7 @@ public class Action {
 	}
 
 	protected static void setRecur(Storage s) throws IOException, ParseException {
-		fullList = s.loadE();
+//		fullList = s.loadE();
 		Date thisTime = new Date();
 		ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 		ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
