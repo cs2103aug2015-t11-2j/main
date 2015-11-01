@@ -44,14 +44,6 @@ public class Event implements Comparable<Event> {
 		this.eventTime = eventTime;
 	}
 
-	/*
-	 * void setNumber(int numberInt){ this.number = String.valueOf(numberInt); }
-	 * 
-	 * void addComment(String comment){ this.comment = comment; } void
-	 * setStatus(String status){ this.status = status; } void setPriority(String
-	 * priority){ this.priority = priority; }
-	 */
-
 	public String getDetail() {
 		return this.detail;
 	}
@@ -75,7 +67,7 @@ public class Event implements Comparable<Event> {
 	public EventTime getEventTime() {
 		return this.eventTime;
 	}
-	
+
 	@Override
 	public int compareTo(Event compareEvent) {
 		Date compareEventDate = new Date(0);
@@ -91,6 +83,31 @@ public class Event implements Comparable<Event> {
 			currentEventDate = this.getEventTime().getStart();
 		}
 		return currentEventDate.compareTo(compareEventDate);
+	}
+
+	public boolean equals(Event event2) {
+		if (this.getDeadline() != null){
+			if (event2.getDeadline()==null){
+				return false;
+			} else {
+				return (this.getDetail().equals(event2.getDetail()) && this.getComment().equals(event2.getComment())
+						&& this.getPriority().equals(event2.getPriority()) && this.getStatus().equals(event2.getStatus())
+						&& this.getDeadline().getDeadline().compareTo(event2.getDeadline().getDeadline())==0 );
+			}
+		} else if (this.getEventTime() != null){
+			if (event2.getEventTime()==null){
+				return false;
+			} else {
+				return (this.getDetail().equals(event2.getDetail()) && this.getComment().equals(event2.getComment())
+						&& this.getPriority().equals(event2.getPriority()) && this.getStatus().equals(event2.getStatus())
+						&& this.getEventTime().getStart().compareTo(event2.getEventTime().getStart())==0
+						&& this.getEventTime().getEnd().compareTo(event2.getEventTime().getEnd())==0);
+			}
+		} else {
+		return (this.getDetail().equals(event2.getDetail()) && this.getComment().equals(event2.getComment())
+				&& this.getPriority().equals(event2.getPriority()) && this.getStatus().equals(event2.getStatus()));
+				//&& this.compareTo(event2) == 0);
+		}
 	}
 
 }
