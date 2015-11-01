@@ -67,6 +67,7 @@ public class Action {
 	private static final String EVENT_TODAY_AND_TMR_DISPLAYED_MSG = "Events of today and tomorrow displayed on the right!";
 	private static final String NUS_MOD_SUCESSFUL = "Show nusmods sucessfully!";
 	private static final String TODOLIST_SUCESSFUL = "Show TodoList sucessfully!";
+	private static final String INVALID_RECUR_MSG = "Please enter the correct values for recur!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -234,7 +235,7 @@ public class Action {
 			readAll(s);
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-//			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+			// ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
@@ -253,9 +254,9 @@ public class Action {
 				}
 
 			}
-//			for (NumberedEvent mEvent : memoEvent) {
-//				fullList.remove(mEvent.getEvent());
-//			}
+			// for (NumberedEvent mEvent : memoEvent) {
+			// fullList.remove(mEvent.getEvent());
+			// }
 
 			if (!hasEvent) {
 				return NO_EVENT_TODAY_MSG;
@@ -269,7 +270,7 @@ public class Action {
 			readAll(s);
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-//			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+			// ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
@@ -288,9 +289,9 @@ public class Action {
 				}
 
 			}
-//			for (NumberedEvent mEvent : memoEvent) {
-//				fullList.remove(mEvent.getEvent());
-//			}
+			// for (NumberedEvent mEvent : memoEvent) {
+			// fullList.remove(mEvent.getEvent());
+			// }
 			if (!hasEvent) {
 				return NO_EVENT_TMR_MSG;
 			} else {
@@ -356,7 +357,7 @@ public class Action {
 			readAll(s);
 			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-//			ArrayList<NumberedEvent> memoEvent = getFloatingList();
+			// ArrayList<NumberedEvent> memoEvent = getFloatingList();
 			Boolean hasEvent = false;
 			for (NumberedEvent dEvent : deadlineEvent) {
 				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
@@ -375,9 +376,9 @@ public class Action {
 				}
 
 			}
-//			for (NumberedEvent mEvent : memoEvent) {
-//				fullList.remove(mEvent.getEvent());
-//			}
+			// for (NumberedEvent mEvent : memoEvent) {
+			// fullList.remove(mEvent.getEvent());
+			// }
 
 			if (!hasEvent) {
 				return NO_EVENT_TODAY_OR_TMR_MSG;
@@ -472,7 +473,13 @@ public class Action {
 	}
 
 	protected static String recur(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		if (parameter.get(0).equals("") || !parameter.get(0).contains(" ")){
+			return INVALID_RECUR_MSG;
+		}
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
+		if (priority.equals("")) {
+			return INVALID_RECUR_MSG;
+		}
 		int indexInFullList = Parser.indexInFullList(fullList,
 				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
@@ -480,6 +487,11 @@ public class Action {
 		} else if (indexInFullList == -1) {
 			return PRIORITY_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
+			String validity1 = priority.substring(0, priority.indexOf(" "));
+			String validity2 = priority.substring(priority.indexOf(" ")+1);
+			if (!validity1.matches("[0-9]+")||!validity2.matches("[0-9]+")){
+				return INVALID_RECUR_MSG;
+			}
 			Event priorityEvent = fullList.get(indexInFullList);
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
@@ -500,7 +512,7 @@ public class Action {
 	}
 
 	protected static void setRecur(Storage s) throws IOException, ParseException {
-//		fullList = s.loadE();
+		// fullList = s.loadE();
 		Date thisTime = new Date();
 		ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
 		ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
