@@ -28,7 +28,7 @@ public class ToDoList {
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
 		Action.setRecur(s);
-		return nowTime + SPACE + modify(s, command, parameter);
+		return nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE + modify(s, command, parameter);
 	}
 
 	private static String modify(Storage s, String command, ArrayList<String> parameter)
@@ -73,13 +73,13 @@ public class ToDoList {
 			case "mark": {
 				return Action.mark(s, parameter);
 			}
-			case "nusmods":{
+			case "nusmods": {
 				return Action.nusmods();
 			}
-			case "todolist":{
+			case "todolist": {
 				return Action.todolist();
 			}
-			case "recur":{
+			case "recur": {
 				return Action.recur(s, parameter);
 			}
 			case "help": {
