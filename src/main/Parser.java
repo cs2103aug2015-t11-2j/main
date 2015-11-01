@@ -6,12 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Parser {
-	
+
 	// Two command types - Add/Other
 	enum COMMAND_TYPE {
 		ADD, OTHER
 	};
-		
+
 	public static String getAction(String userCommand) {
 		String action = Splitter.getFirstWord(userCommand).toLowerCase();
 		return action;
@@ -20,13 +20,14 @@ public class Parser {
 	public static ArrayList<String> getParameter(String userCommand) {
 		String action = getAction(userCommand);
 		ArrayList<String> parameter = new ArrayList<String>();
-		
+
 		COMMAND_TYPE commandType = determineCommandType(action);
-		
-		switch(commandType){
+
+		switch (commandType) {
 		case ADD:
 			String unsplitParameter = Splitter.removeFirstWord(userCommand);
-			if (unsplitParameter.contains("from")) { // event with specific time interval
+			if (unsplitParameter.contains("from")) { // event with specific time
+														// interval
 				parameter = Splitter.splitEvent(parameter, unsplitParameter);
 			}
 
@@ -36,23 +37,26 @@ public class Parser {
 				parameter.add(Splitter.removeFirstWord(userCommand));
 			}
 			return parameter;
-		
+
 		case OTHER:
-			parameter.add(Splitter.removeFirstWord(userCommand)); // not an "add" event
+			parameter.add(Splitter.removeFirstWord(userCommand)); // not an
+																	// "add"
+																	// event
 			return parameter;
 		default:
 			return null;
 		}
 	}
 
-	public static int getUpdateIndex(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		return indexInFullList(s, (parameter.get(0).substring(0, parameter.get(0).indexOf(" "))));
+	public static int getUpdateIndex(ArrayList<Event> fullList, ArrayList<String> parameter) throws IOException, ParseException {
+		return indexInFullList(fullList, (parameter.get(0).substring(0, parameter.get(0).indexOf(" "))));
 	}
 
-	public static Event getUpdateEvent(Storage s, ArrayList<String> parameter) throws ParseException, IOException {
+	public static Event getUpdateEvent(ArrayList<Event> fullList, ArrayList<String> parameter) throws ParseException, IOException {
 		String updateParameter = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		ArrayList<String> eventParameter = new ArrayList<String>();
-		if (updateParameter.contains("from")) { // event with specific time interval
+		if (updateParameter.contains("from")) { // event with specific time
+												// interval
 			eventParameter = Splitter.splitEvent(eventParameter, updateParameter);
 		}
 
@@ -62,7 +66,7 @@ public class Parser {
 			eventParameter.add(updateParameter);
 		}
 		Event updatedEvent = parseForEvent(eventParameter);
-		updatedEvent.comment = s.loadE().get(getUpdateIndex(s, parameter)).getComment();
+		updatedEvent.comment = fullList.get(getUpdateIndex(fullList, parameter)).getComment();
 		return updatedEvent;
 	}
 
@@ -76,8 +80,8 @@ public class Parser {
 		}
 		return null;
 	}
-	
-	//Determines command type (add or other)
+
+	// Determines command type (add or other)
 	private static COMMAND_TYPE determineCommandType(String commandTypeString) {
 		if (commandTypeString == null)
 			throw new Error("command type string cannot be null!");
@@ -88,7 +92,7 @@ public class Parser {
 			return COMMAND_TYPE.OTHER;
 		}
 	}
-	
+
 	// parse exception if string stored not in tommorrow, today and not of
 	// dd/mm/yyyy format
 	private static EventTime parseForEventTime(String start, String end, String date) throws ParseException {
@@ -104,7 +108,7 @@ public class Parser {
 			String endDateAndTime = end + " " + dateString;
 			startDate = dateF1.parse(startDateAndTime);
 			endDate = dateF1.parse(endDateAndTime);
-			
+
 		} else if (date.equalsIgnoreCase("tomorrow")) {
 			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// √Î
 			thisDate.setTime(time * 1000);
@@ -151,13 +155,13 @@ public class Parser {
 		return new Deadline(thisDate);// parseForCalendarTime(deadline,cal));
 	}
 
-	protected static int indexInFullList(Storage s, String typeAndIndex) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
+	protected static int indexInFullList(ArrayList<Event> fullList, String typeAndIndex)
+			throws IOException, ParseException {
 		if (typeAndIndex.toLowerCase().contains("d")) {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getDeadline() != null && !list.get(i).status.equalsIgnoreCase("done")) {
+			for (int i = 0; i < fullList.size(); i++) {
+				if (fullList.get(i).getDeadline() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -170,8 +174,8 @@ public class Parser {
 		} else if (typeAndIndex.toLowerCase().contains("e")) {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getEventTime() != null && !list.get(i).status.equalsIgnoreCase("done")) {
+			for (int i = 0; i < fullList.size(); i++) {
+				if (fullList.get(i).getEventTime() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -184,9 +188,9 @@ public class Parser {
 		} else if (typeAndIndex.toLowerCase().contains("m")) {
 			int index = Integer.valueOf(typeAndIndex.substring(1));
 			int count = 0;
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getEventTime() == null && list.get(i).getDeadline() == null
-						&& !list.get(i).status.equalsIgnoreCase("done")) {
+			for (int i = 0; i < fullList.size(); i++) {
+				if (fullList.get(i).getEventTime() == null && fullList.get(i).getDeadline() == null
+						&& !fullList.get(i).status.equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;

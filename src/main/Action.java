@@ -95,7 +95,6 @@ public class Action {
 	public static void readAll(Storage s) throws IOException, ParseException {
 		fullList = s.loadE();
 		Collections.sort(fullList);
-		s.saveE(fullList);
 	}
 
 	public static String bground(ArrayList<String> parameter) {
@@ -409,7 +408,7 @@ public class Action {
 
 	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
-		list.set(Parser.getUpdateIndex(s, parameter), Parser.getUpdateEvent(s, parameter));
+		list.set(Parser.getUpdateIndex(fullList, parameter), Parser.getUpdateEvent(fullList, parameter));
 		s.saveE(list);
 		canUndo = true;
 		readAll(s);
@@ -418,7 +417,7 @@ public class Action {
 
 	protected static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
-		int indexInFullList = Parser.indexInFullList(s, parameter.get(0));
+		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -437,7 +436,7 @@ public class Action {
 	protected static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String comment = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -456,7 +455,7 @@ public class Action {
 	protected static String priority(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ArrayList<Event> list = s.loadE();
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -473,17 +472,27 @@ public class Action {
 	}
 
 	protected static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
 		String status = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(s, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
 			return MARK_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
-			list.get(indexInFullList).status = status;
-			s.saveE(list);
+			Event markedEvent = fullList.get(indexInFullList);
+			ArrayList<Event> temp = s.loadE();
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(markedEvent)){
+					temp.remove(i);
+					break;
+				}
+			}
+//			temp.remove(markedEvent);
+			markedEvent.status = status;
+			temp.add(markedEvent);
+			s.saveE(temp);
 			readAll(s);
+//			s.saveE(fullList);
 			canUndo = true;
 			return MARK_SUCCESSFUL_MSG;
 		} else {
