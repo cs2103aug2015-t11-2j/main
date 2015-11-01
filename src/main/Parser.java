@@ -146,8 +146,8 @@ public class Parser {
 			String dateString = dateF2.format(thisDate);
 			String dateAndTime = deadline + " " + dateString;
 			thisDate = dateF1.parse(dateAndTime);
-		} else if (date.equalsIgnoreCase("tomorrow")) {
-			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// √Î
+		} else if (date.equalsIgnoreCase("tomorrow")||date.equalsIgnoreCase("tmr")) {
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// seconds
 			thisDate.setTime(time * 1000);
 			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
