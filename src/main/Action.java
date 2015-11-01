@@ -22,7 +22,8 @@ public class Action {
 	private static final String UNABLE_UNDO_MSG = "Cannot undo! Have some operations first!";
 	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
-	private static final String INVALID_ADD_PARAMETER_MSG = "Cannot add empty event!";
+	private static final String INVALID_ADD_PARAMETER_MSG = "Invalid Event!";
+	private static final String EMPTY_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
 	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m)!";
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
@@ -80,7 +81,7 @@ public class Action {
 		}
 		Event newEvent = Parser.parseForEvent(parameter);
 		if (newEvent.getDetail().equals("")) {
-			return INVALID_ADD_PARAMETER_MSG;
+			return EMPTY_ADD_PARAMETER_MSG;
 		} else {
 			fullList.add(newEvent);
 			s.saveE(fullList);

@@ -48,11 +48,13 @@ public class Parser {
 		}
 	}
 
-	public static int getUpdateIndex(ArrayList<Event> fullList, ArrayList<String> parameter) throws IOException, ParseException {
+	public static int getUpdateIndex(ArrayList<Event> fullList, ArrayList<String> parameter)
+			throws IOException, ParseException {
 		return indexInFullList(fullList, (parameter.get(0).substring(0, parameter.get(0).indexOf(" "))));
 	}
 
-	public static Event getUpdateEvent(ArrayList<Event> fullList, ArrayList<String> parameter) throws ParseException, IOException {
+	public static Event getUpdateEvent(ArrayList<Event> fullList, ArrayList<String> parameter)
+			throws ParseException, IOException {
 		String updateParameter = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		ArrayList<String> eventParameter = new ArrayList<String>();
 		if (updateParameter.contains("from")) { // event with specific time
@@ -71,6 +73,9 @@ public class Parser {
 	}
 
 	public static Event parseForEvent(ArrayList<String> parameter) throws ParseException {
+		if (parameter == null){
+			return null;
+		}
 		if (parameter.size() == 1) {
 			return new Event(parameter.get(0));
 		} else if (parameter.size() == 3) {
@@ -119,7 +124,7 @@ public class Parser {
 			String endDateAndTime = end + " " + dateString;
 			startDate = dateF1.parse(startDateAndTime);
 			endDate = dateF1.parse(endDateAndTime);
-		} else if (start.indexOf(':') != -1){
+		} else if (start.indexOf(':') != -1) {
 			String startS = start + " " + date;
 			String endS = end + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -149,10 +154,12 @@ public class Parser {
 			String dateString = dateF2.format(thisDate);
 			String dateAndTime = deadline + " " + dateString;
 			thisDate = dateF1.parse(dateAndTime);
-		} else {
+		} else if (deadline.indexOf(':') != -1) {
 			String timeAndDate = deadline + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			thisDate = dateF.parse(timeAndDate);
+		} else {
+			return null;
 		}
 		return new Deadline(thisDate);// parseForCalendarTime(deadline,cal));
 	}
