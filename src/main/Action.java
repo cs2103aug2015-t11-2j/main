@@ -38,7 +38,6 @@ public class Action {
 	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
 	private static final String INVALID_THEME = "It is an invalid theme!";
 	private static final String NO_MY_THEME = "There is no user's theme! \n Please add in uer.dir. \n And name it as myTheme.png";
-	private static final String UNRECOGNIZED_OUTLINE_MSG = "You cannot enter a value after outline command!";
 	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
@@ -354,47 +353,43 @@ public class Action {
 	}
 
 	public static String outline(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		if (!parameter.get(0).equals("")) {
-			return UNRECOGNIZED_OUTLINE_MSG;
-		} else {
-			ArrayList<String> readToday = new ArrayList<String>();
-			ArrayList<String> readTmr = new ArrayList<String>();
-			readToday.add("today");
-			readTmr.add("tmr");
-			readAll(s);
 
-			readAll(s);
-			ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
-			ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
-			// ArrayList<NumberedEvent> memoEvent = getFloatingList();
-			Boolean hasEvent = false;
-			for (NumberedEvent dEvent : deadlineEvent) {
-				Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
-				if (isToday(eventDeadline) || isTmr(eventDeadline)) {
-					hasEvent = true;
-				} else {
-					fullList.remove(dEvent.getEvent());
-				}
-			}
-			for (NumberedEvent eEvent : eventTimeEvent) {
-				Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
-				if (isToday(eventEventTime) || isTmr(eventEventTime)) {
-					hasEvent = true;
-				} else {
-					fullList.remove(eEvent.getEvent());
-				}
+		ArrayList<String> readToday = new ArrayList<String>();
+		ArrayList<String> readTmr = new ArrayList<String>();
+		readToday.add("today");
+		readTmr.add("tmr");
+		readAll(s);
 
-			}
-			// for (NumberedEvent mEvent : memoEvent) {
-			// fullList.remove(mEvent.getEvent());
-			// }
-
-			if (!hasEvent) {
-				return NO_EVENT_TODAY_OR_TMR_MSG;
+		readAll(s);
+		ArrayList<NumberedEvent> deadlineEvent = getDeadlineList();
+		ArrayList<NumberedEvent> eventTimeEvent = getEventTimeList();
+		// ArrayList<NumberedEvent> memoEvent = getFloatingList();
+		Boolean hasEvent = false;
+		for (NumberedEvent dEvent : deadlineEvent) {
+			Date eventDeadline = dEvent.getEvent().getDeadline().getDeadline();
+			if (isToday(eventDeadline) || isTmr(eventDeadline)) {
+				hasEvent = true;
 			} else {
-				return EVENT_TODAY_AND_TMR_DISPLAYED_MSG;
+				fullList.remove(dEvent.getEvent());
+			}
+		}
+		for (NumberedEvent eEvent : eventTimeEvent) {
+			Date eventEventTime = eEvent.getEvent().getEventTime().getStart();
+			if (isToday(eventEventTime) || isTmr(eventEventTime)) {
+				hasEvent = true;
+			} else {
+				fullList.remove(eEvent.getEvent());
 			}
 
+		}
+		// for (NumberedEvent mEvent : memoEvent) {
+		// fullList.remove(mEvent.getEvent());
+		// }
+
+		if (!hasEvent) {
+			return NO_EVENT_TODAY_OR_TMR_MSG;
+		} else {
+			return EVENT_TODAY_AND_TMR_DISPLAYED_MSG;
 		}
 
 	}

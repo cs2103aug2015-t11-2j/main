@@ -20,6 +20,7 @@ public class ToDoList {
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static final String READ_MSG = "All events are displayed!";
 	private static final String READMARK_MSG = "All marked events are displayed!";
+	private static final String PARA_EXCEPTION_MSG = "Unrecognized parameter!";
 	private static String nowTime;
 	protected static boolean shouldExit = false;
 
@@ -28,7 +29,8 @@ public class ToDoList {
 		assert!userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
-		String returnCommand = nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE + modify(s, command, parameter);
+		String returnCommand = nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE
+				+ modify(s, command, parameter);
 		Action.setRecur(s);
 		return returnCommand;
 	}
@@ -39,6 +41,9 @@ public class ToDoList {
 			logger.log(Level.INFO, "handle a command once");
 			switch (command) {
 			case "readall": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				Action.readAll(s);
 				return READ_MSG;
 			}
@@ -64,9 +69,15 @@ public class ToDoList {
 				return Action.update(s, parameter);
 			}
 			case "undo": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				return Action.undo(s);
 			}
 			case "redo": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				return Action.redo(s);
 			}
 			case "comment": {
@@ -76,19 +87,28 @@ public class ToDoList {
 				return Action.mark(s, parameter);
 			}
 			case "nusmods": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				return Action.nusmods();
 			}
 			case "todolist": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				return Action.todolist();
 			}
 			case "recur": {
 				return Action.recur(s, parameter);
 			}
-			case "readmark":{
+			case "readmark": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				Action.readMark(s);
 				return READMARK_MSG;
 			}
-			case "unmark":{
+			case "unmark": {
 				return Action.unmark(s, parameter);
 			}
 			case "help": {
@@ -98,6 +118,9 @@ public class ToDoList {
 				return Action.clearAll(s, parameter);
 			}
 			case "exit": {
+				if (!parameter.get(0).equals("")) {
+					return PARA_EXCEPTION_MSG;
+				}
 				Action.exit();
 				return EXIT_MSG;
 			}
