@@ -35,8 +35,8 @@ public class Yui_GUI extends Application{
 	private static final String EXIT_PATH = "/Image/exit.png";
 	private static final String MENU_STATE1_PATH = "/Image/menu.png";
 	private static final String MENU_STATE2_PATH = "/Image/menu2.png";
-	private static String listBackgroundPath1 = "/Image/theme1.png";
-	private static String listBackgroundPath2 = "/Image/theme2.png";
+	private static final String LIST_BACK_PATH1 = "/Image/theme1.png";
+	private static final String LIST_BACK_PATH2 = "/Image/theme2.png";
 	private static Stage myStage;
 	private static GridPane backgroundGrid = new GridPane();
 	private static ImageView enterKey = new ImageView();
@@ -140,8 +140,8 @@ public class Yui_GUI extends Application{
    }
    
    private void setEventGridBackground(ScrollPane eventPane) throws MalformedURLException{
-	   listBkImage1 = new Image(getClass().getResourceAsStream(listBackgroundPath1));
-       listBkImage2 = new Image(getClass().getResourceAsStream(listBackgroundPath2));
+	   listBkImage1 = new Image(getClass().getResourceAsStream(LIST_BACK_PATH1));
+       listBkImage2 = new Image(getClass().getResourceAsStream(LIST_BACK_PATH2));
        if(new File(listBackgroundPath3).exists()){
     	   listBkImage3 = new Image(new File(listBackgroundPath3).toURI().toURL().toString());
        }
