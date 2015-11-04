@@ -25,7 +25,7 @@ public class Action {
 	private static final String INVALID_ADD_PARAMETER_MSG = "Invalid Event!";
 	private static final String EMPTY_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
-	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m)!";
+	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m) followed by the index!";
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
 	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
 	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
@@ -54,7 +54,7 @@ public class Action {
 	private static final String REDO_HELP_MSG = "Type in \"redo\" to revert your undo operation";
 	private static final String COMMENT_HELP_MSG = "You can set comment for events by typing in \"comment\", event type (d, e, m) and index, comment information.\n For example, typing \"comment e1 ASAP\" will set a comment for the first event in event-time event. You will see an icon highlighted for events with comments and you can read the comments by reading that event";
 	private static final String PRIORITY_HELP_MSG = "You can set an event as recurring task by typing in \"recur\", event type (d, e, m) and index, the number of days for one iteration, the number of iterations desired.\n For example, typing \"recur d1 7 10\" will set the first deadline event as recurring event, which happens every 7 days (each week) and happens for 10 times (including the intial one)\n However keep in mind, you cannot recur a memo event as we do not know when you do it the first time!";
-	private static final String MARK_HELP_MSG = "You can mark an event as done by typing in \"mark\", event type (d, e, m) and index, \"done\".\n An event will not be seen once you mark it as done. If you made a mistake, undo at once! Otherwise you can manually find it inside your data file. You only need to remove the word \"done\" to see it again";
+	private static final String MARK_HELP_MSG = "You can mark an event as done by typing in \"mark\", event type (d, e, m) and index.\n An event will not be seen once you mark it as done. If you made a mistake, undo at once! Otherwise you can manually find it inside your data file. You only need to remove the word \"done\" to see it again";
 	private static final String HELP_HELP_MSG = "You can always refer to helplist for all the commands available\n Type in \"help\" you can see a list of all commands available\n Type in \"help\" and the command you want to know to learn more about it!";
 	private static final String CLEARALL_HELP_MSG = "You can clear all the tasks in the list by typing in \"clearall\".\n Undo at once if you made a mistake! Otherwise you will permanently lose your list";
 	private static final String EXIT_HELP_MSG = "You can exit the app by typing in \"exit\"";
@@ -470,7 +470,7 @@ public class Action {
 	}
 
 	protected static String recur(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		if (parameter.get(0).equals("") || !parameter.get(0).contains(" ")){
+		if (parameter.get(0).equals("") || !parameter.get(0).contains(" ")) {
 			return INVALID_RECUR_MSG;
 		}
 		String priority = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
@@ -485,8 +485,8 @@ public class Action {
 			return PRIORITY_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
 			String validity1 = priority.substring(0, priority.indexOf(" "));
-			String validity2 = priority.substring(priority.indexOf(" ")+1);
-			if (!validity1.matches("[0-9]+")||!validity2.matches("[0-9]+")){
+			String validity2 = priority.substring(priority.indexOf(" ") + 1);
+			if (!validity1.matches("[0-9]+") || !validity2.matches("[0-9]+")) {
 				return INVALID_RECUR_MSG;
 			}
 			Event priorityEvent = fullList.get(indexInFullList);
@@ -575,9 +575,7 @@ public class Action {
 	}
 
 	protected static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		String status = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
-		int indexInFullList = Parser.indexInFullList(fullList,
-				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
 		} else if (indexInFullList == -1) {
@@ -587,7 +585,7 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(markedEvent)) {
-					temp.get(i).status = status;
+					temp.get(i).status = "done";
 					break;
 				}
 			}

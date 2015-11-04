@@ -73,7 +73,7 @@ public class Parser {
 	}
 
 	public static Event parseForEvent(ArrayList<String> parameter) throws ParseException {
-		if (parameter == null){
+		if (parameter == null) {
 			return null;
 		}
 		if (parameter.size() == 1) {
@@ -146,7 +146,7 @@ public class Parser {
 			String dateString = dateF2.format(thisDate);
 			String dateAndTime = deadline + " " + dateString;
 			thisDate = dateF1.parse(dateAndTime);
-		} else if (date.equalsIgnoreCase("tomorrow")||date.equalsIgnoreCase("tmr")) {
+		} else if (date.equalsIgnoreCase("tomorrow") || date.equalsIgnoreCase("tmr")) {
 			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// seconds
 			thisDate.setTime(time * 1000);
 			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -166,8 +166,17 @@ public class Parser {
 
 	protected static int indexInFullList(ArrayList<Event> fullList, String typeAndIndex)
 			throws IOException, ParseException {
-		if (typeAndIndex.toLowerCase().contains("d")) {
-			int index = Integer.valueOf(typeAndIndex.substring(1));
+		if (typeAndIndex.contains(" ")) {
+			return -2;
+		}
+		String indexString = typeAndIndex.substring(1);
+		int index = 0;
+		try {
+			index = Integer.parseInt(indexString);
+		} catch (NumberFormatException e) {
+			return -2;
+		}
+		if (typeAndIndex.toLowerCase().charAt(0) == 'd') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
 				if (fullList.get(i).getDeadline() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
@@ -180,8 +189,7 @@ public class Parser {
 			if (count < index) {
 				return -1;
 			}
-		} else if (typeAndIndex.toLowerCase().contains("e")) {
-			int index = Integer.valueOf(typeAndIndex.substring(1));
+		} else if (typeAndIndex.toLowerCase().charAt(0) == 'e') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
 				if (fullList.get(i).getEventTime() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
@@ -194,8 +202,7 @@ public class Parser {
 			if (count < index) {
 				return -1;
 			}
-		} else if (typeAndIndex.toLowerCase().contains("m")) {
-			int index = Integer.valueOf(typeAndIndex.substring(1));
+		} else if (typeAndIndex.toLowerCase().charAt(0) == 'm') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
 				if (fullList.get(i).getEventTime() == null && fullList.get(i).getDeadline() == null
@@ -214,9 +221,4 @@ public class Parser {
 		}
 		return -3;
 	}
-	/*
-	 * private static Calendar parseForCalendarTime(String time, Calendar cal)
-	 * throws ParseException { SimpleDateFormat timeF = new
-	 * SimpleDateFormat("HH:mm"); cal.setTime(timeF.parse(time)); return cal; }
-	 */
 }
