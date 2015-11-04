@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,8 +16,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
@@ -29,38 +25,44 @@ import javafx.stage.StageStyle;
 import main.ToDoList;
 
 public class Yui_GUI extends Application{
+	private static final String OK_PATH = "/Image/ok.png";
+	private static final String DEADLINE_ICON_PATH = "/Image/deadlineN.png";
+	private static final String EVENT_ICON_PATH = "/Image/eventN.png";
+	private static final String FLOAT_ICON_PATH = "/Image/floatingN.png";
+	private static final String BACKGROUND_PATH = "/Image/uigroundN.png";
+	private static final String LOGO_PATH = "/Image/logo.png";
+	public static final String ICON_PATH = "/Image/icon.png";
+	private static final String EXIT_PATH = "/Image/exit.png";
+	private static final String MENU_STATE1_PATH = "/Image/menu.png";
+	private static final String MENU_STATE2_PATH = "/Image/menu2.png";
+	private static String listBackgroundPath1 = "/Image/theme1.png";
+	private static String listBackgroundPath2 = "/Image/theme2.png";
+	private static Stage myStage;
+	private static GridPane backgroundGrid = new GridPane();
+	private static ImageView enterKey = new ImageView();
+	private static Group backg = new Group();
+	private static TextField userCommandBox = new TextField();
 	protected static String userCommand;
 	protected static String returnCommand;
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
-	private static Logger logger = Logger.getLogger("MotionCatcher");
-	private static String listBackgroundPath1 = "/Image/theme1.png";
-	private static String listBackgroundPath2 = "/Image/theme2.png";
+	protected static GridPane mainGrid = new GridPane();
+	protected static ScrollPane eventPane = new ScrollPane();
+	protected static GridPane eventGrid = new GridPane();
+	protected static ImageView listBk = new ImageView();
+	protected static ImageView deadlineIcon = new ImageView();
+	protected static ImageView eventIcon = new ImageView();
+	protected static ImageView floatingIcon = new ImageView();
+	protected static TextArea showBox = new TextArea();
+	protected static WebView webBox = new WebView();
+	protected static ImageView btnTodolist = new ImageView();
+	protected static ImageView btnCalendar = new ImageView();
 	public static String listBackgroundPath3 = "user.dir/myTheme.png";
 	public static Image listBkImage1;
 	public static Image listBkImage2;
 	public static Image listBkImage3;
 	public static Image listBkImage;
-	private static Stage myStage;
-	private static GridPane backgroundGrid = new GridPane();
-	private static GridPane mainGrid = new GridPane();
-	private static ScrollPane eventPane = new ScrollPane();
-	private static GridPane eventGrid = new GridPane();
-	private static ImageView listBk = new ImageView();
-	private static ImageView deadlineIcon = new ImageView();
-	private static ImageView eventIcon = new ImageView();
-	private static ImageView floatingIcon = new ImageView();
-	private static final String DEADLINE_ICON_PATH = "/Image/deadlineN.png";
-	private static final String EVENT_ICON_PATH = "/Image/eventN.png";
-	private static final String FLOAT_ICON_PATH = "/Image/floatingN.png";
-	private static Group backg = new Group();
-	private static final String BACKGROUND_PATH = "/Image/uigroundN.png";
-	private static final String LOGO_PATH = "/Image/logo.png";
-	public static final String ICON_PATH = "/Image/icon.png";
-	private static final String EXIT_PATH = "/Image/exit.png";
 	
-	
-
    public static void main(String[] args) {
        launch(args);
     }
@@ -82,113 +84,20 @@ public class Yui_GUI extends Application{
        setBackground(BACKGROUND_PATH);
        setLogo(LOGO_PATH, backgroundGrid);
        setExitButton(EXIT_PATH, backgroundGrid);
-
-
-       //set menu button
-       Image menuTodolist = new Image(getClass().getResourceAsStream("/Image/menu.png"));
-       Image menuCalendar = new Image(getClass().getResourceAsStream("/Image/menu2.png"));
-       final ImageView btnTodolist = new ImageView(menuTodolist);
-       final ImageView btnCalendar = new ImageView(menuCalendar);
-       btnCalendar.setVisible(false);
-       backgroundGrid.add(btnTodolist, 4, 2);
-       backgroundGrid.add(btnCalendar, 4, 2);
-
-       //set enter button
-       Image enter = new Image(getClass().getResourceAsStream("/Image/ok.png"));
-       ImageView enterKey = new ImageView(enter);
-       backgroundGrid.add(enterKey, 4, 3);
+       setMenuIcon(MENU_STATE1_PATH, MENU_STATE2_PATH, backgroundGrid);
+       setOKButton(OK_PATH, backgroundGrid);
 
        //Control the dragging of stage
        DragController.dragStage(backgroundGrid, myStage);
-
-       //set the scene
-       Scene scene = new Scene(backg, 861, 556);
-       myStage.setScene(scene);
-
-       //add text box to show message
-       final TextArea showBox = new TextArea();
-       showBox.setPrefSize(337.5, 420);
-       showBox.setStyle("overflow-x:hidden;");
-       mainGrid.add(showBox, 0, 0);
-       showBox.setEditable(false);
-       showBox.setWrapText(true);
        
-       //add command box
-       final TextField userCommandBox = new TextField();
-       backgroundGrid.add(userCommandBox, 0, 3);
-       userCommandBox.requestFocus();
-
-       //initialize GUI and Logic
+       setScene();
+       setShowBox(mainGrid);
+       setCommandBox(backgroundGrid);
+       setWebGrid(backgroundGrid);
+       
+       HotKey(myStage);
        showBox.appendText(returnCommand + "\n");
-       
-       //add web grid
-       final WebView webBox = new WebView();
-       final WebEngine myEngin = webBox.getEngine();
-       myEngin.load("https://nusmods.com");
-       webBox.setPrefSize(735,420);
-       webBox.setVisible(false);
-       backgroundGrid.add(webBox, 0, 2);
-       
-       UI_HotKey.listenHotKey(myStage);
-       TrayController.createTrayIcon(myStage);
-       
-       //catch the motion of users
-       userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
-    	   @Override
-    	   public void handle(KeyEvent event) {
-    		   if(event.getCode().equals(KeyCode.ENTER)){
-    			   Yui_GUI.userCommand = userCommandBox.getText();
-    			   //link with logic
-    			   System.out.print(Yui_GUI.userCommand);
-    			   userCommandBox.clear();
-    			   //link with logic
-    			   if(!Yui_GUI.userCommand.equals("")){
-    				   try {
-    					   logger.log(Level.INFO, "get the output");
-    					   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
-    					   eventGrid.getChildren().clear();
-    					   GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
-    				   } catch (IOException e) {
-    					   logger.log(Level.WARNING, "output error", e);
-    					   e.printStackTrace();
-    				   } catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-    				   }
-    				   mainGrid.setVisible(GUILogic.isShowMainGrid());
-    				   btnTodolist.setVisible(GUILogic.isShowMainGrid());
-    				   webBox.setVisible(!GUILogic.isShowMainGrid());
-    				   btnCalendar.setVisible(!GUILogic.isShowMainGrid());
-    				   showBox.appendText(returnCommand + "\n" + "\n");
-    				   listBk.setImage(listBkImage);
-    				   logger.log(Level.INFO, "end of processing");
-    			   }
-    		   }
-
-    		   if(event.isAltDown()){
-    			   if(event.getCode().equals(KeyCode.UP)){
-    				   showBox.setScrollTop(showBox.getScrollTop() - 5f);
-    			   }
-    			   if(event.getCode().equals(KeyCode.DOWN)){
-    				   showBox.setScrollTop(showBox.getScrollTop() + 5f);
-    			   }
-    			   if(event.getCode().equals(KeyCode.LEFT)){
-    				   showBox.setScrollLeft(showBox.getScrollLeft() - 5f);
-    			   }
-    			   if(event.getCode().equals(KeyCode.RIGHT)){
-    				   showBox.setScrollLeft(showBox.getScrollLeft() + 5f);
-    			   }
-    		   } else {
-	    		   if(event.getCode().equals(KeyCode.UP)){
-	    			   eventPane.setVvalue(eventPane.getVvalue() - 0.3f);
-	    		   }
-	    		   if(event.getCode().equals(KeyCode.DOWN)){
-	    			   eventPane.setVvalue(eventPane.getVvalue() + 0.3f);
-	    		   }
-    		   }
-    	   }
-       });
-       MotionCatcher.mouseCatcher(enterKey, userCommandBox, showBox);
+       MotionCatch();
    }
    
    private void initializeMsg() throws IOException, ParseException{
@@ -267,9 +176,62 @@ public class Yui_GUI extends Application{
     	   @Override
     	   public void handle(MouseEvent event) {
     		   System.exit(0);
+    		   //Event.fireEvent(myStage, new WindowEvent(myStage, WindowEvent.WINDOW_CLOSE_REQUEST ));
     		   }
     	   });
        backgroundGrid.add(exit, 4, 0);
+   }
+   
+   private void setMenuIcon(String memuState1, String memuState2, GridPane backgroundGrid){
+	   Image menuTodolist = new Image(getClass().getResourceAsStream(memuState1));
+       Image menuCalendar = new Image(getClass().getResourceAsStream(memuState2));
+       btnTodolist = new ImageView(menuTodolist);
+       btnCalendar = new ImageView(menuCalendar);
+       btnCalendar.setVisible(false);
+       backgroundGrid.add(btnTodolist, 4, 2);
+       backgroundGrid.add(btnCalendar, 4, 2);
+   }
+   
+   private void setOKButton(String okPath, GridPane backgroundGrid){
+	   Image enter = new Image(getClass().getResourceAsStream(okPath));
+       enterKey = new ImageView(enter);
+       backgroundGrid.add(enterKey, 4, 3);
+   }
+   
+   private void setScene(){
+	   Scene scene = new Scene(backg, 861, 556);
+       myStage.setScene(scene);
+   }
+   
+   private void setShowBox(GridPane mainGrid){
+       showBox.setPrefSize(337.5, 420);
+       showBox.setStyle("overflow-x:hidden;");
+       mainGrid.add(showBox, 0, 0);
+       showBox.setEditable(false);
+       showBox.setWrapText(true);
+   }
+   
+   private void setCommandBox(GridPane backgroundGrid){
+	   backgroundGrid.add(userCommandBox, 0, 3);
+       userCommandBox.requestFocus();
+   }
+   
+   private void setWebGrid(GridPane backgroundGrid){
+	   final WebEngine myEngin = webBox.getEngine();
+       myEngin.load("https://nusmods.com");
+       webBox.setPrefSize(735,420);
+       webBox.setVisible(false);
+       backgroundGrid.add(webBox, 0, 2);
+   }
+   
+   private void HotKey(Stage myStage){
+	   UI_HotKey.listenHotKey(myStage);
+       TrayController.createTrayIcon(myStage);
+   }
+   
+   private void MotionCatch(){
+	   MotionCatcher.keyboardCatcher(userCommandBox, showBox);
+       MotionCatcher.mouseCatcher(enterKey, userCommandBox, showBox);
    }
 }
 
