@@ -1,5 +1,6 @@
 package Yui;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -52,7 +53,9 @@ public class Yui_GUI extends Application{
        primaryStage.initStyle(StageStyle.UNDECORATED);
        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/icon.png")));
        primaryStage.show();
-
+       primaryStage.setX(450);
+       primaryStage.setY(250);
+       
        returnCommand = ToDoList.initialize();
 
        //Set main grid
@@ -164,6 +167,9 @@ public class Yui_GUI extends Application{
        webBox.setVisible(false);
        grid.add(webBox, 0, 2);
        
+       UI_HotKey.listenHotKey(primaryStage);
+       TrayController.createTrayIcon(primaryStage);
+       
        //catch the motion of users
        userCommandBox.setOnKeyPressed(new EventHandler<KeyEvent>(){
     	   @Override
@@ -223,3 +229,4 @@ public class Yui_GUI extends Application{
        MotionCatcher.mouseCatcher(enterKey, userCommandBox, showBox);
    }
 }
+
