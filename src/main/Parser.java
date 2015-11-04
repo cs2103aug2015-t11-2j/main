@@ -114,7 +114,7 @@ public class Parser {
 			startDate = dateF1.parse(startDateAndTime);
 			endDate = dateF1.parse(endDateAndTime);
 
-		} else if (date.equalsIgnoreCase("tomorrow")) {
+		} else if (date.equalsIgnoreCase("tomorrow") || date.equalsIgnoreCase("tmr")) {
 			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// √Î
 			thisDate.setTime(time * 1000);
 			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
