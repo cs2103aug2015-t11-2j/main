@@ -2,6 +2,8 @@ package main;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,7 +72,8 @@ public class Action {
 	private static final String INVALID_RECUR_MSG = "Please enter the correct values for recur!";
 	private static final String READMARK_HELP_MSG = "Type in \"readmark\" and you can see the list of marked event";
 	private static final String UNMARK_HELP_MSG = "After you have get the list of marked event, you can \"unmark\" it to let it appear in your normal list again. Note that unmarking an event which is not marked previously will make no changes";
-	private static final String UNMARK_OUT_OF_BOUND_MSG = null;
+	private static final String UNMARK_OUT_OF_BOUND_MSG = "Cannot unmark. Index entered is larger than current event amount!";
+	private static final String SETPATH_SUCCESSFUL_MSG = "New path set successful!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -708,6 +711,12 @@ public class Action {
 		} else {
 			return null;
 		}
+	}
+
+	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException {
+		Path path = Paths.get(parameter.get(0));
+		s = new Storage("Yui", path);
+		return SETPATH_SUCCESSFUL_MSG;
 	}
 
 }

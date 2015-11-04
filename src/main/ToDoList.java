@@ -117,6 +117,9 @@ public class ToDoList {
 			case "clearall": {
 				return Action.clearAll(s, parameter);
 			}
+			case "setpath": {
+				return Action.setpath(s, parameter);
+			}
 			case "exit": {
 				if (!parameter.get(0).equals("")) {
 					return PARA_EXCEPTION_MSG;
