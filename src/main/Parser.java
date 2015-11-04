@@ -221,4 +221,62 @@ public class Parser {
 		}
 		return -3;
 	}
+
+	protected static int indexInDoneList(ArrayList<Event> fullList, String typeAndIndex)
+			throws IOException, ParseException {
+		if (typeAndIndex.contains(" ")) {
+			return -2;
+		}
+		String indexString = typeAndIndex.substring(1);
+		int index = 0;
+		try {
+			index = Integer.parseInt(indexString);
+		} catch (NumberFormatException e) {
+			return -2;
+		}
+		if (typeAndIndex.toLowerCase().charAt(0) == 'd') {
+			int count = 0;
+			for (int i = 0; i < fullList.size(); i++) {
+				if (fullList.get(i).getDeadline() != null && fullList.get(i).status.equalsIgnoreCase("done")) {
+					count++;
+					if (count == index) {
+						return i;
+					}
+				}
+			}
+			if (count < index) {
+				return -1;
+			}
+		} else if (typeAndIndex.toLowerCase().charAt(0) == 'e') {
+			int count = 0;
+			for (int i = 0; i < fullList.size(); i++) {
+				if (fullList.get(i).getEventTime() != null && fullList.get(i).status.equalsIgnoreCase("done")) {
+					count++;
+					if (count == index) {
+						return i;
+					}
+				}
+			}
+			if (count < index) {
+				return -1;
+			}
+		} else if (typeAndIndex.toLowerCase().charAt(0) == 'm') {
+			int count = 0;
+			for (int i = 0; i < fullList.size(); i++) {
+				if (fullList.get(i).getEventTime() == null && fullList.get(i).getDeadline() == null
+						&& fullList.get(i).status.equalsIgnoreCase("done")) {
+					count++;
+					if (count == index) {
+						return i;
+					}
+				}
+			}
+			if (count < index) {
+				return -1;
+			}
+		} else {
+			return -2;
+		}
+		return -3;
+	}
 }

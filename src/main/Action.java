@@ -33,6 +33,7 @@ public class Action {
 	private static final String PRIORITY_SUCCESSFUL_MSG = "Recur set successfully!";
 	private static final String MARK_OUT_OF_BOUND_MSG = "Cannot mark. Index entered is larger than current event amount!";
 	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
+	private static final String UNMARK_SUCCESSFUL_MSG = "Event unmarked successfully!";
 	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
 	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
 	private static final String INVALID_THEME = "It is an invalid theme!";
@@ -54,7 +55,7 @@ public class Action {
 	private static final String REDO_HELP_MSG = "Type in \"redo\" to revert your undo operation";
 	private static final String COMMENT_HELP_MSG = "You can set comment for events by typing in \"comment\", event type (d, e, m) and index, comment information.\n For example, typing \"comment e1 ASAP\" will set a comment for the first event in event-time event. You will see an icon highlighted for events with comments and you can read the comments by reading that event";
 	private static final String PRIORITY_HELP_MSG = "You can set an event as recurring task by typing in \"recur\", event type (d, e, m) and index, the number of days for one iteration, the number of iterations desired.\n For example, typing \"recur d1 7 10\" will set the first deadline event as recurring event, which happens every 7 days (each week) and happens for 10 times (including the intial one)\n However keep in mind, you cannot recur a memo event as we do not know when you do it the first time!";
-	private static final String MARK_HELP_MSG = "You can mark an event as done by typing in \"mark\", event type (d, e, m) and index.\n An event will not be seen once you mark it as done. If you made a mistake, undo at once! Otherwise you can manually find it inside your data file. You only need to remove the word \"done\" to see it again";
+	private static final String MARK_HELP_MSG = "You can mark an event as done by typing in \"mark\", event type (d, e, m) and index.\n An event will not be seen once you mark it as done. If you made a mistake, undo or type in \"readmark\" to find the list of marked event. You can then use \"unmark\" and the index to unmark an event";
 	private static final String HELP_HELP_MSG = "You can always refer to helplist for all the commands available\n Type in \"help\" you can see a list of all commands available\n Type in \"help\" and the command you want to know to learn more about it!";
 	private static final String CLEARALL_HELP_MSG = "You can clear all the tasks in the list by typing in \"clearall\".\n Undo at once if you made a mistake! Otherwise you will permanently lose your list";
 	private static final String EXIT_HELP_MSG = "You can exit the app by typing in \"exit\"";
@@ -68,6 +69,9 @@ public class Action {
 	private static final String NUS_MOD_SUCESSFUL = "Show nusmods sucessfully!";
 	private static final String TODOLIST_SUCESSFUL = "Show TodoList sucessfully!";
 	private static final String INVALID_RECUR_MSG = "Please enter the correct values for recur!";
+	private static final String READMARK_HELP_MSG = "Type in \"readmark\" and you can see the list of marked event";
+	private static final String UNMARK_HELP_MSG = "After you have get the list of marked event, you can \"unmark\" it to let it appear in your normal list again. Note that unmarking an event which is not marked previously will make no changes";
+	private static final String UNMARK_OUT_OF_BOUND_MSG = null;
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -99,6 +103,13 @@ public class Action {
 
 	public static void readAll(Storage s) throws IOException, ParseException {
 		fullList = s.loadE();
+		ArrayList<Event> temp = new ArrayList<Event>();
+		for (int i = 0; i < fullList.size(); i++) {
+			if (!fullList.get(i).getStatus().equalsIgnoreCase("done")) {
+				temp.add(fullList.get(i));
+			}
+		}
+		fullList = temp;
 		Collections.sort(fullList);
 	}
 
@@ -196,9 +207,8 @@ public class Action {
 		ArrayList<NumberedEvent> deadlineList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
-			if (fullList.get(i).getDeadline() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
+			if (fullList.get(i).getDeadline() != null) {
 				deadlineList.add(new NumberedEvent(++indexCount, fullList.get(i)));
-
 			}
 		}
 		return deadlineList;
@@ -208,7 +218,7 @@ public class Action {
 		ArrayList<NumberedEvent> eventTimeList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
-			if (fullList.get(i).getEventTime() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
+			if (fullList.get(i).getEventTime() != null) {
 				eventTimeList.add(new NumberedEvent(++indexCount, fullList.get(i)));
 			}
 		}
@@ -219,8 +229,7 @@ public class Action {
 		ArrayList<NumberedEvent> floatingList = new ArrayList<NumberedEvent>();
 		int indexCount = 0;
 		for (int i = 0; i < fullList.size(); i++) {
-			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)
-					&& !fullList.get(i).status.equalsIgnoreCase("done")) {
+			if ((fullList.get(i).getDeadline() == null) && (fullList.get(i).getEventTime() == null)) {
 				floatingList.add(new NumberedEvent(++indexCount, fullList.get(i)));
 			}
 		}
@@ -655,6 +664,10 @@ public class Action {
 			return PRIORITY_HELP_MSG; // used for recur
 		} else if (parameter.equals("mark")) {
 			return MARK_HELP_MSG;
+		} else if (parameter.equals("readmark")) {
+			return READMARK_HELP_MSG;
+		} else if (parameter.equals("unmark")) {
+			return UNMARK_HELP_MSG;
 		} else if (parameter.equals("help")) {
 			return HELP_HELP_MSG;
 		} else if (parameter.equals("clearall")) {
@@ -663,6 +676,42 @@ public class Action {
 			return EXIT_HELP_MSG;
 		} else {
 			return COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG;
+		}
+	}
+
+	public static void readMark(Storage s) throws IOException, ParseException {
+		fullList = s.loadE();
+		ArrayList<Event> temp = new ArrayList<Event>();
+		for (int i = 0; i < fullList.size(); i++) {
+			if (fullList.get(i).getStatus().equalsIgnoreCase("done")) {
+				temp.add(fullList.get(i));
+			}
+		}
+		fullList = temp;
+		Collections.sort(fullList);
+	}
+
+	public static String unmark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		int indexInFullList = Parser.indexInDoneList(fullList, parameter.get(0));
+		if (indexInFullList == -2) {
+			return INVALID_LIST_TYPE_MSG;
+		} else if (indexInFullList == -1) {
+			return UNMARK_OUT_OF_BOUND_MSG;
+		} else if (indexInFullList >= 0) {
+			Event markedEvent = fullList.get(indexInFullList);
+			ArrayList<Event> temp = s.loadE();
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(markedEvent)) {
+					temp.get(i).status = "";
+					break;
+				}
+			}
+			s.saveE(temp);
+			readAll(s);
+			canUndo = true;
+			return UNMARK_SUCCESSFUL_MSG;
+		} else {
+			return null;
 		}
 	}
 

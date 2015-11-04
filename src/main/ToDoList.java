@@ -19,6 +19,7 @@ public class ToDoList {
 	// private static ArrayList<Event> fullList;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static final String READ_MSG = "All events are displayed!";
+	private static final String READMARK_MSG = "All marked events are displayed!";
 	private static String nowTime;
 	protected static boolean shouldExit = false;
 
@@ -82,6 +83,13 @@ public class ToDoList {
 			}
 			case "recur": {
 				return Action.recur(s, parameter);
+			}
+			case "readmark":{
+				Action.readMark(s);
+				return READMARK_MSG;
+			}
+			case "unmark":{
+				return Action.unmark(s, parameter);
 			}
 			case "help": {
 				return Action.help(parameter);
