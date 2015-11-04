@@ -35,12 +35,8 @@ public class UI_HotKey {
 	}
 	
 	//set Hot Key
-<<<<<<< HEAD
 	public static void listenHotKey(Stage myStage){
 		JudgeSystem();
-=======
-	public static void listenHotKey(final Stage myStage){
->>>>>>> origin/master
 		JIntellitype.setLibraryLocation(libPath); 
 		JIntellitype.getInstance().registerHotKey(SHOW_WINDOWS, JIntellitype.MOD_CONTROL, 'Y'); 
 		JIntellitype.getInstance().registerHotKey(HIDE_WINDOWS, JIntellitype.MOD_CONTROL, 'H');
