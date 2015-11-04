@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 public class UI_HotKey {
 	private static final int SHOW_WINDOWS = 1;
 	private static final int HIDE_WINDOWS = 2;
-	private static final String LIB_PATH_32 = "lib/JIntellitype.dll";
-	private static final String LIB_PATH_64 = "lib/JIntellitype64.dll";
+	private static final String LIB_PATH_32 = "/lib/JIntellitype.dll";
+	private static final String LIB_PATH_64 = "/lib/JIntellitype64.dll";
 	private static String libPath;
 	
 	private static void JudgeSystem(){
