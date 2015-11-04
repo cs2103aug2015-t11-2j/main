@@ -1,5 +1,7 @@
 package Yui;
 
+import java.io.File;
+
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 
@@ -9,9 +11,10 @@ import javafx.stage.Stage;
 public class UI_HotKey {
 	private static final int SHOW_WINDOWS = 1;
 	private static final int HIDE_WINDOWS = 2;
-	private static final String LIB_PATH_32 = "/lib/JIntellitype.dll";
-	private static final String LIB_PATH_64 = "/lib/JIntellitype64.dll";
-	private static String libPath;
+	private static final File LIB_PATH_32 = new File("src/Lib/JIntellitype.dll");
+	//static File try1 = new File(Yui_GUI.class.getResourceAsStream("/Lib/JIntellitype.dll")); 
+	private static final File LIB_PATH_64 = new File("src/Lib/JIntellitype64.dll");
+	private static File libPath;
 	
 	private static void JudgeSystem(){
 		String arch = System.getProperty("os.arch");
@@ -23,15 +26,13 @@ public class UI_HotKey {
 	}
 	
 	public static void initialize(){
-		JIntellitype.setLibraryLocation(libPath);  
-		  
+		JIntellitype.setLibraryLocation(libPath);
 		if (JIntellitype.checkInstanceAlreadyRunning("Yui")) {  
 		    System.exit(1);  
 		}  
 		if (!JIntellitype.isJIntellitypeSupported()) {  
 		    System.exit(1);  
 		}
-		
 	}
 	
 	//set Hot Key
