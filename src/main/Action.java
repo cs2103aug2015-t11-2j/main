@@ -412,9 +412,8 @@ public class Action {
 	}
 
 	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ArrayList<Event> list = s.loadE();
-		list.set(Parser.getUpdateIndex(fullList, parameter), Parser.getUpdateEvent(fullList, parameter));
-		s.saveE(list);
+		fullList.set(Parser.getUpdateIndex(fullList, parameter), Parser.getUpdateEvent(fullList, parameter));
+		s.saveE(fullList);
 		canUndo = true;
 		readAll(s);
 		return UPDATE_SUCCESS_MSG;
