@@ -9,7 +9,18 @@ import javafx.stage.Stage;
 public class UI_HotKey {
 	private static final int SHOW_WINDOWS = 1;
 	private static final int HIDE_WINDOWS = 2;
-	private static final String libPath = "lib/JIntellitype.dll";
+	private static final String LIB_PATH_32 = "lib/JIntellitype.dll";
+	private static final String LIB_PATH_64 = "lib/JIntellitype64.dll";
+	private static String libPath;
+	
+	private static void JudgeSystem(){
+		String arch = System.getProperty("os.arch");
+			if(arch.contains("x64")){
+				libPath = LIB_PATH_64;
+			} else {
+				libPath = LIB_PATH_32;
+			}
+	}
 	
 	public static void initialize(){
 		JIntellitype.setLibraryLocation(libPath);  
@@ -25,14 +36,15 @@ public class UI_HotKey {
 	
 	//set Hot Key
 	public static void listenHotKey(Stage myStage){
+		JudgeSystem();
 		JIntellitype.setLibraryLocation(libPath); 
-		JIntellitype.getInstance().registerHotKey(SHOW_WINDOWS, JIntellitype.MOD_CONTROL, 'S'); 
+		JIntellitype.getInstance().registerHotKey(SHOW_WINDOWS, JIntellitype.MOD_CONTROL, 'Y'); 
 		JIntellitype.getInstance().registerHotKey(HIDE_WINDOWS, JIntellitype.MOD_CONTROL, 'H');
 		
 	    JIntellitype.getInstance().addHotKeyListener(new HotkeyListener() {
 	    	@Override
-			public void onHotKey(int aIdentifier) {
-				if (aIdentifier == SHOW_WINDOWS) {
+			public void onHotKey(int hotKeyID) {
+				if (hotKeyID == SHOW_WINDOWS) {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -41,7 +53,7 @@ public class UI_HotKey {
 						}
 					});
 
-				} else if (aIdentifier == HIDE_WINDOWS) {
+				} else if (hotKeyID == HIDE_WINDOWS) {
 					Platform.setImplicitExit(false);
 					Platform.runLater(new Runnable() {
 						@Override

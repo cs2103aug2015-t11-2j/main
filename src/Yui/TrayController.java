@@ -29,8 +29,8 @@ public class TrayController {
 
 		if (SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
-			java.awt.Image image = Toolkit.getDefaultToolkit().getImage(TrayController.class.getResource("/Image/icon.png"));
-			stage.getIcons().add(new Image("/Image/icon.png"));
+			java.awt.Image image = Toolkit.getDefaultToolkit().getImage(TrayController.class.getResource(Yui_GUI.ICON_PATH));
+			stage.getIcons().add(new Image(Yui_GUI.ICON_PATH));
 
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
