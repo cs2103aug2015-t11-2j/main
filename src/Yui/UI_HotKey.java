@@ -15,10 +15,10 @@ public class UI_HotKey {
 	
 	private static void JudgeSystem(){
 		String arch = System.getProperty("os.arch");
-			if(arch.contains("x64")){
-				libPath = LIB_PATH_64;
-			} else {
+			if(arch.contains("x86")){
 				libPath = LIB_PATH_32;
+			} else {
+				libPath = LIB_PATH_64;
 			}
 	}
 	

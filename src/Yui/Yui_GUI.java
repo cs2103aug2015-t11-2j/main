@@ -57,6 +57,7 @@ public class Yui_GUI extends Application{
 	private static final String BACKGROUND_PATH = "/Image/uigroundN.png";
 	private static final String LOGO_PATH = "/Image/logo.png";
 	public static final String ICON_PATH = "/Image/icon.png";
+	private static final String EXIT_PATH = "/Image/exit.png";
 	
 	
 
@@ -80,17 +81,8 @@ public class Yui_GUI extends Application{
 
        setBackground(BACKGROUND_PATH);
        setLogo(LOGO_PATH, backgroundGrid);
+       setExitButton(EXIT_PATH, backgroundGrid);
 
-       //set exit button
-       Image imageExit = new Image(getClass().getResourceAsStream("/Image/exit.png"));
-       ImageView exit = new ImageView(imageExit);
-       exit.setOnMouseClicked(new EventHandler<MouseEvent>(){
-    	   @Override
-    	   public void handle(MouseEvent event) {
-    		   System.exit(0);
-    		   }
-    	   });
-       backgroundGrid.add(exit, 4, 0);
 
        //set menu button
        Image menuTodolist = new Image(getClass().getResourceAsStream("/Image/menu.png"));
@@ -266,6 +258,18 @@ public class Yui_GUI extends Application{
    private void setLogo(String logoPath, GridPane backgroundGrid){
 	   Image logoYui = new Image(getClass().getResourceAsStream(logoPath));
        backgroundGrid.add(new ImageView(logoYui), 0, 0);
+   }
+   
+   private void setExitButton(String exitPath, GridPane backgroundGrid){
+	   Image imageExit = new Image(getClass().getResourceAsStream(exitPath));
+       ImageView exit = new ImageView(imageExit);
+       exit.setOnMouseClicked(new EventHandler<MouseEvent>(){
+    	   @Override
+    	   public void handle(MouseEvent event) {
+    		   System.exit(0);
+    		   }
+    	   });
+       backgroundGrid.add(exit, 4, 0);
    }
 }
 
