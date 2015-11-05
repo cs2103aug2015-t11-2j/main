@@ -224,7 +224,7 @@ public class Yui_GUI extends Application{
        backgroundGrid.add(webBox, 0, 2);
    }
    
-   private void HotKey(Stage myStage){
+   private void HotKey(Stage myStage) throws IOException{
 	   UI_HotKey.listenHotKey(myStage);
        TrayController.createTrayIcon(myStage);
    }
