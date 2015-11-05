@@ -74,6 +74,7 @@ public class Action {
 	private static final String UNMARK_HELP_MSG = "After you have get the list of marked event, you can \"unmark\" it to let it appear in your normal list again. Note that unmarking an event which is not marked previously will make no changes";
 	private static final String UNMARK_OUT_OF_BOUND_MSG = "Cannot unmark. Index entered is larger than current event amount!";
 	private static final String SETPATH_SUCCESSFUL_MSG = "New path set successful!";
+	private static final String UPDATE_OUT_OF_BOUND_MSG = "Cannot undate. Index entered is larger than current event amount!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -419,11 +420,28 @@ public class Action {
 	}
 
 	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		fullList.set(Parser.getUpdateIndex(fullList, parameter), Parser.getUpdateEvent(fullList, parameter));
-		s.saveE(fullList);
-		canUndo = true;
-		readAll(s);
-		return UPDATE_SUCCESS_MSG;
+		int indexInFullList = Parser.indexInFullList(fullList,
+				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
+		if (indexInFullList == -2) {
+			return INVALID_LIST_TYPE_MSG;
+		} else if (indexInFullList == -1) {
+			return UPDATE_OUT_OF_BOUND_MSG;
+		} else if (indexInFullList >= 0) {
+			Event updatedEvent = fullList.get(indexInFullList);
+			ArrayList<Event> temp = s.loadE();
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(updatedEvent)) {
+					temp.set(i, Parser.getUpdateEvent(fullList, parameter));
+					break;
+				}
+			}
+			s.saveE(temp);
+			readAll(s);
+			canUndo = true;
+			return UPDATE_SUCCESS_MSG;
+		} else {
+			return null;
+		}
 	}
 
 	protected static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
