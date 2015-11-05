@@ -68,6 +68,9 @@ public class Parser {
 			eventParameter.add(updateParameter);
 		}
 		Event updatedEvent = parseForEvent(eventParameter);
+		if (updatedEvent == null){
+			return null;
+		}
 		updatedEvent.comment = fullList.get(getUpdateIndex(fullList, parameter)).getComment();
 		return updatedEvent;
 	}

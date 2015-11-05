@@ -24,7 +24,7 @@ public class Action {
 	private static final String UNABLE_UNDO_MSG = "Cannot undo! Have some operations first!";
 	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
-	private static final String INVALID_ADD_PARAMETER_MSG = "Invalid Event!";
+	private static final String INVALID_EVENT_PARAMETER_MSG = "Invalid Event!";
 	private static final String EMPTY_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
 	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m) followed by the index!";
@@ -85,10 +85,12 @@ public class Action {
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		fullList = s.loadE();
 		if (Parser.parseForEvent(parameter) == null) {
-			return INVALID_ADD_PARAMETER_MSG;
+			readAll(s);
+			return INVALID_EVENT_PARAMETER_MSG;
 		}
 		Event newEvent = Parser.parseForEvent(parameter);
 		if (newEvent.getDetail().equals("")) {
+			readAll(s);
 			return EMPTY_ADD_PARAMETER_MSG;
 		} else {
 			fullList.add(newEvent);
@@ -420,6 +422,9 @@ public class Action {
 	}
 
 	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		if (parameter == null) {
+			return INVALID_EVENT_PARAMETER_MSG;
+		}
 		int indexInFullList = Parser.indexInFullList(fullList,
 				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
 		if (indexInFullList == -2) {
@@ -427,6 +432,9 @@ public class Action {
 		} else if (indexInFullList == -1) {
 			return UPDATE_OUT_OF_BOUND_MSG;
 		} else if (indexInFullList >= 0) {
+			if (Parser.getUpdateEvent(fullList, parameter) == null) {
+				return INVALID_EVENT_PARAMETER_MSG;
+			}
 			Event updatedEvent = fullList.get(indexInFullList);
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
