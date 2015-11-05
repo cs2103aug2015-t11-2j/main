@@ -2,7 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+//import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -740,8 +740,8 @@ public class Action {
 	}
 
 	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException {
-		Path path = Paths.get(parameter.get(0));
-		s = new Storage("Yui", path);
+		s.mainDir = Paths.get(parameter.get(0));
+		s.tempDir = Paths.get(parameter.get(0) + "\\temp\\");
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 
