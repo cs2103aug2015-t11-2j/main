@@ -39,7 +39,7 @@ public class Action {
 	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
 	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
 	private static final String INVALID_THEME = "It is an invalid theme!";
-	private static final String NO_MY_THEME = "There is no user's theme! \n Please add in uer.dir. \n And name it as myTheme.png";
+	private static final String NO_MY_THEME = "There is no user's theme! \n Please add in user.dir and name it as myTheme.png";
 	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
