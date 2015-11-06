@@ -9,6 +9,7 @@ import java.io.InputStream;
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 
+import Lib.LoadLib;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -17,15 +18,18 @@ public class UI_HotKey {
 	private static final int HIDE_WINDOWS = 2;
 	private static final String LIB_PATH_32 = "JIntellitype";
 	//static File try1 = new File(Yui_GUI.class.getResourceAsStream("/Lib/JIntellitype.dll")); 
-	private static final String LIB_PATH_64 = "JIntellitype64.dll";
+	private static final String LIB_PATH_64 = "JIntellitype64";
 	private static String libPath;
+	private static InputStream in;
 	
 	private static void JudgeSystem(){
 		String arch = System.getProperty("os.arch");
 			if(arch.contains("x86")){
 				libPath = LIB_PATH_32;
+				in = LoadLib.getLib32();
 			} else {
 				libPath = LIB_PATH_64;
+				in = LoadLib.getLib64();
 			}
 	}
 	
@@ -83,16 +87,15 @@ public class UI_HotKey {
 	       
 	    //String nativeTempDir = System.getProperty("java.io.tmpdir");   
 	       
-	    InputStream in = null;   
+	    //InputStream in = null;   
 	    BufferedInputStream reader = null;   
 	    FileOutputStream writer = null;   
 	       
-	    File extractedLibFile = new File("user.dir"+File.separator+libFullName);   
+	    File extractedLibFile = new File("user.dir/" + libFullName);   
 	    if(!extractedLibFile.exists()){   
-	        try {   
-	            in = Yui_GUI.class.getResourceAsStream("/Lib/" + libFullName);   
-	            if(in==null)   
-	                in =  Yui_GUI.class.getResourceAsStream(libFullName);   
+	        try {     
+	           // if(in==null)   
+	             //   in =  Yui_GUI.class.getResourceAsStream(libFullName);   
 	            //Yui_GUI.class.getResource(libFullName);   
 	            reader = new BufferedInputStream(in);   
 	            writer = new FileOutputStream(extractedLibFile);   
@@ -111,7 +114,7 @@ public class UI_HotKey {
 	            if(writer!=null)   
 	                writer.close();   
 	        }   
-	    }   
+	    }
 	    JIntellitype.setLibraryLocation(extractedLibFile);   
 	}
 	
