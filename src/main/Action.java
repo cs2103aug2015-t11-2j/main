@@ -631,17 +631,17 @@ public class Action {
 		}
 	}
 
-	public static String nusmods() {
+	protected static String nusmods() {
 		isShowNusMods = true;
 		return NUS_MOD_SUCESSFUL;
 	}
 
-	public static String todolist() {
+	protected static String todolist() {
 		isShowNusMods = false;
 		return TODOLIST_SUCESSFUL;
 	}
 
-	public static boolean getIsShow() {
+	protected static boolean getIsShow() {
 		return isShowNusMods;
 	}
 

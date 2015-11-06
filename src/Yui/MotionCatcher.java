@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import main.ToDoList;
 
 public class MotionCatcher {
 	private static Logger logger = Logger.getLogger("MotionCatcher");
@@ -21,32 +20,7 @@ public class MotionCatcher {
 	    	   @Override
 	    	   public void handle(KeyEvent event) {
 	    		   if(event.getCode().equals(KeyCode.ENTER)){
-	    			   Yui_GUI.userCommand = userCommandBox.getText();
-	    			   //link with logic
-	    			   System.out.print(Yui_GUI.userCommand);
-	    			   userCommandBox.clear();
-	    			   //link with logic
-	    			   if(!Yui_GUI.userCommand.equals("")){
-	    				   try {
-	    					   logger.log(Level.INFO, "get the output");
-	    					   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
-	    					   Yui_GUI.eventGrid.getChildren().clear();
-	    					   GUILogic.showEvents(Yui_GUI.eventGrid,Yui_GUI.deadlineIcon, Yui_GUI.eventIcon, Yui_GUI.floatingIcon);
-	    				   } catch (IOException e) {
-	    					   logger.log(Level.WARNING, "output error", e);
-	    					   e.printStackTrace();
-	    				   } catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-	    				   }
-	    				   Yui_GUI.mainGrid.setVisible(GUILogic.isShowMainGrid());
-	    				   Yui_GUI.btnTodolist.setVisible(GUILogic.isShowMainGrid());
-	    				   Yui_GUI.webBox.setVisible(!GUILogic.isShowMainGrid());
-	    				   Yui_GUI.btnCalendar.setVisible(!GUILogic.isShowMainGrid());
-	    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
-	    				   Yui_GUI.listBk.setImage(Yui_GUI.listBkImage);
-	    				   logger.log(Level.INFO, "end of processing");
-	    			   }
+	    			   handleEvent(userCommandBox, showBox);
 	    		   }
 
 	    		   if(event.isAltDown()){
@@ -78,32 +52,53 @@ public class MotionCatcher {
 		enterKey.setOnMouseClicked(new EventHandler<MouseEvent>(){
 	    	   @Override
 	    	   public void handle(MouseEvent event) {
-	    		   Yui_GUI.userCommand = userCommandBox.getText();
-	    		   //link with logic
-	    		   System.out.print(Yui_GUI.userCommand);
-	    		   userCommandBox.clear();
-	    		   //link with logic
-	    		   if(!Yui_GUI.userCommand.equals("")){
-					   try {
-						   logger.log(Level.INFO, "get the output");
-    					   Yui_GUI.returnCommand = ToDoList.implement(Yui_GUI.userCommand);
-    					   Yui_GUI.eventGrid.getChildren().clear();
-    					   GUILogic.showEvents(Yui_GUI.eventGrid,Yui_GUI.deadlineIcon, Yui_GUI.eventIcon, Yui_GUI.floatingIcon);
-					   } catch (IOException e) {
-						   e.printStackTrace();
-					   } catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					   Yui_GUI.mainGrid.setVisible(GUILogic.isShowMainGrid());
-    				   Yui_GUI.btnTodolist.setVisible(GUILogic.isShowMainGrid());
-    				   Yui_GUI.webBox.setVisible(!GUILogic.isShowMainGrid());
-    				   Yui_GUI.btnCalendar.setVisible(!GUILogic.isShowMainGrid());
-    				   showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
-    				   Yui_GUI.listBk.setImage(Yui_GUI.listBkImage);
-    				   logger.log(Level.INFO, "end of processing");
-				   	}
+	    		   handleEvent(userCommandBox, showBox);
 	    	   }
 	       });
+	}
+	
+	private static void handleEvent(final TextField userCommandBox, final TextArea showBox){
+		passCommands(userCommandBox);
+		   //link with logic
+		if(!Yui_GUI.userCommand.equals("")){
+		   refresh(showBox);
+		}
+	}
+	
+	private static void passCommands(TextField userCommandBox){
+		Yui_GUI.userCommand = userCommandBox.getText();
+		System.out.print(Yui_GUI.userCommand);
+		userCommandBox.clear();
+	}
+	
+	private static void refresh(TextArea showBox){
+		refreshWithTry(showBox);
+		refreshEveryTime(showBox);
+	}
+	
+	private static void refreshWithTry(TextArea showBox){
+		try {
+			   logger.log(Level.INFO, "get the output");
+			   UIBuffer.getFeedback(Yui_GUI.userCommand);
+			   Yui_GUI.returnCommand =  UIBuffer.returnedCommand();
+			   Yui_GUI.eventGrid.getChildren().clear();
+			   GUILogic.showEvents(Yui_GUI.eventGrid,Yui_GUI.deadlineIcon, Yui_GUI.eventIcon, Yui_GUI.floatingIcon);
+		   } catch (IOException e) {
+			   logger.log(Level.WARNING, "output error", e);
+			   e.printStackTrace();
+		   } catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		   }
+	}
+	
+	private static void refreshEveryTime(TextArea showBox){
+		Yui_GUI.mainGrid.setVisible(GUILogic.isShowMainGrid());
+		Yui_GUI.btnTodolist.setVisible(GUILogic.isShowMainGrid());
+		Yui_GUI.webBox.setVisible(!GUILogic.isShowMainGrid());
+		Yui_GUI.btnCalendar.setVisible(!GUILogic.isShowMainGrid());
+		showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
+		Yui_GUI.listBk.setImage(Yui_GUI.listBkImage);
+		logger.log(Level.INFO, "end of processing");
 	}
 }
