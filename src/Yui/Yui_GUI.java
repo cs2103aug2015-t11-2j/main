@@ -22,7 +22,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.ToDoList;
 
 public class Yui_GUI extends Application{
 	private static final String OK_PATH = "/Image/ok.png";
@@ -101,7 +100,8 @@ public class Yui_GUI extends Application{
    }
    
    private void initializeMsg() throws IOException, ParseException{
-	   returnCommand = ToDoList.initialize();
+	   UIBuffer.initializeCommand(userCommand);
+	   returnCommand = UIBuffer.returnedCommand();
    }
    
    private void setMyStage(Stage primaryStage, String iconString){
@@ -224,7 +224,7 @@ public class Yui_GUI extends Application{
        backgroundGrid.add(webBox, 0, 2);
    }
    
-   private void HotKey(Stage myStage){
+   private void HotKey(Stage myStage) throws IOException{
 	   UI_HotKey.listenHotKey(myStage);
        TrayController.createTrayIcon(myStage);
    }

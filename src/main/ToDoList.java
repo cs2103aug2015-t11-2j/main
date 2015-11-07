@@ -155,6 +155,10 @@ public class ToDoList {
 	public static void getFullList() throws IOException, ParseException {
 		Action.readAll(s);
 	}
+	
+	public static boolean getIsShow(){
+		return Action.getIsShow();
+	}
 
 	public static String initialize() throws IOException, ParseException {
 		logger.log(Level.INFO, "initialize the ToDoList");

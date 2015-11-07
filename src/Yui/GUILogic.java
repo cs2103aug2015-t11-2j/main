@@ -1,14 +1,13 @@
 package Yui;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import main.Action;
 import main.NumberedEvent;
-import main.ToDoList;
 
 public class GUILogic {
 	private static int X = 0;
@@ -16,13 +15,35 @@ public class GUILogic {
 
 	public static void showEvents(GridPane eventGrid, ImageView deadline, ImageView eventIcon, ImageView floatingIcon)
 			throws IOException, ParseException {
-		Y = 0;
+		initialize();
 		// deadline icon
-		eventGrid.add(deadline, 0, Y);
+		addIcon(eventGrid, deadline);
+		addDeadlineBox(eventGrid);
+		// event icon
+		addIcon(eventGrid, eventIcon);
+		addEventBox(eventGrid);
+		// floating tasks icon
+		addIcon(eventGrid, floatingIcon);
+		addFloatingBox(eventGrid);
+	}
+	
+	public static boolean isShowMainGrid(){
+		UIBuffer.getIsShowMainGrid();
+		return UIBuffer.isShowMainGrid();
+	}
+	
+	private static void initialize() throws IOException, ParseException{
+		UIBuffer.getList();
+		Y = 0;
+	}
+	
+	private static void addIcon(GridPane taskGrid, ImageView Icon){
+		taskGrid.add(Icon, 0, Y);
 		Y = Y + 1;
-
-		// add deadlines
-		ArrayList<NumberedEvent> deadlines = ToDoList.getDealine();
+	}
+	
+	private static void addDeadlineBox(GridPane taskGrid) throws MalformedURLException{
+		ArrayList<NumberedEvent> deadlines = UIBuffer.DeadlineList();
 		int ddlLength = deadlines.size();
 		GridPane deadlineBox = new GridPane();
 		deadlineBox.setVgap(1);
@@ -32,15 +53,12 @@ public class GUILogic {
 			UIdeadline thisDdlBox = new UIdeadline(thisEvent);
 			deadlineBox.add(thisDdlBox.getDdlBox(), X, i);
 		}
-		eventGrid.add(deadlineBox, 0, Y);
+		taskGrid.add(deadlineBox, 0, Y);
 		Y = Y + 1;
-
-		// event icon
-		eventGrid.add(eventIcon, 0, Y);
-		Y = Y + 1;
-
-		// add events
-		ArrayList<NumberedEvent> events = ToDoList.getEventTime();
+	}
+	
+	private static void addEventBox(GridPane taskGrid) throws MalformedURLException{
+		ArrayList<NumberedEvent> events = UIBuffer.EventList();
 		int entLength = events.size();
 		GridPane eventBox = new GridPane();
 		eventBox.setVgap(1);
@@ -49,16 +67,12 @@ public class GUILogic {
 			UIevent thisEntBox = new UIevent(thisEvent);
 			eventBox.add(thisEntBox.getEntBox(), X, i);
 		}
-		eventGrid.add(eventBox, 0, Y);
+		taskGrid.add(eventBox, 0, Y);
 		Y = Y + 1;
-
-		// floating tasks icon
-		eventGrid.add(floatingIcon, 0, Y);
-		Y = Y + 1;
-
-		// add floating
-		ArrayList<NumberedEvent> floating = ToDoList.getFloating();
-		// if(floating != null){
+	}
+	
+	private static void addFloatingBox(GridPane taskGrid) throws MalformedURLException{
+		ArrayList<NumberedEvent> floating = UIBuffer.FloatingList();
 		int fltLength = floating.size();
 		GridPane floatingBox = new GridPane();
 		floatingBox.setVgap(1);
@@ -74,11 +88,6 @@ public class GUILogic {
 			int y = i / 2;
 			floatingBox.add(thisEntBox.getFltBox(), X, y);
 		}
-		eventGrid.add(floatingBox, 0, Y);
-		// }
-	}
-	
-	public static boolean isShowMainGrid(){
-		return !Action.getIsShow();
+		taskGrid.add(floatingBox, 0, Y);
 	}
 }
