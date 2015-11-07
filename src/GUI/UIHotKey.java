@@ -129,5 +129,6 @@ public class UIHotKey {
 	        }   
 	    }
 	    JIntellitype.setLibraryLocation(extractedLibFile);   
-	}	
+	}
+	
 }
