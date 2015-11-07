@@ -18,7 +18,7 @@ public class ToDoList {
 	private static Logger logger = Logger.getLogger("ToDoList");
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String SPACE = " ";
-	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ "
+	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(^v^)/ "
 			+ "\n" + " The events of today is shown on the right " + "\n" + " -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
 	protected static Storage s;
@@ -35,13 +35,15 @@ public class ToDoList {
 		assert!userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
+		ArrayList<String> sentence = Parser.getParameter("so hard to debug this!!!!");
+		
 		String returnCommand = nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE
-				+ modify(s, command, parameter);
+				+ modify(s, command, parameter, sentence);
 		Action.setRecur(s);
 		return returnCommand;
 	}
 
-	private static String modify(Storage s, String command, ArrayList<String> parameter)
+	private static String modify(Storage s, String command, ArrayList<String> parameter, ArrayList<String> sentence)
 			throws IOException, ParseException {
 		try {
 			logger.log(Level.INFO, "handle a command once");
@@ -54,7 +56,7 @@ public class ToDoList {
 				return READ_MSG;
 			}
 			case "add": {
-				return Action.addToList(s, parameter);
+				return Action.addToList(s, parameter, sentence);
 			}
 			case "theme": {
 				return Action.bground(s,parameter);

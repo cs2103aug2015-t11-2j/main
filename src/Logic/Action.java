@@ -87,13 +87,21 @@ public class Action {
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 	protected static String configedTheme;
 
-	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	static String addToList(Storage s, ArrayList<String> parameter, ArrayList<String> sentence)
+			throws IOException, ParseException {
 		fullList = s.loadE();
-		if (Parser.parseForEvent(parameter) == null) {
-			readAll(s);
-			return INVALID_EVENT_PARAMETER_MSG;
-		}
-		Event newEvent = Parser.parseForEvent(parameter);
+
+//		if (Parser.parseForEvent(parameter) == null) {
+//			readAll(s);
+//			return INVALID_EVENT_PARAMETER_MSG;
+//		}
+// null case will fail parse exception check, so no need to do here
+		Event newEvent = new Event();
+		try {
+			newEvent = Parser.parseForEvent(parameter);
+		}catch (ParseException e) {
+			newEvent = Parser.parseForEvent(sentence);
+		}	
 		if (newEvent.getDetail().equals("")) {
 			readAll(s);
 			return EMPTY_ADD_PARAMETER_MSG;
@@ -664,7 +672,7 @@ public class Action {
 		} else {
 			ArrayList<String> temp = new ArrayList<String>();
 			temp.add("temp");
-			addToList(s, temp);
+			addToList(s, temp, temp);
 			s.reset();
 			s = new Storage("Yui");
 			canUndo = true;
@@ -759,5 +767,5 @@ public class Action {
 		ToDoList.s.saveConfig(config);
 		return SETPATH_SUCCESSFUL_MSG;
 	}
-
 }
+	
