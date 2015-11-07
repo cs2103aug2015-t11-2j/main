@@ -98,7 +98,7 @@ public class MotionCatcher {
 		Yui_GUI.webBox.setVisible(!GUILogic.isShowMainGrid());
 		Yui_GUI.btnCalendar.setVisible(!GUILogic.isShowMainGrid());
 		showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
-		Yui_GUI.listBk.setImage(Yui_GUI.listBkImage);
+		GUILogic.refreshTheme();
 		logger.log(Level.INFO, "end of processing");
 	}
 }

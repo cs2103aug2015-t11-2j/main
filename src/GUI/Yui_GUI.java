@@ -94,7 +94,7 @@ public class Yui_GUI extends Application{
        setCommandBox(backgroundGrid);
        setWebGrid(backgroundGrid);
        
-       HotKey(myStage);
+       //HotKey(myStage);
        showBox.appendText(returnCommand + "\n");
        MotionCatch();
    }
@@ -145,8 +145,7 @@ public class Yui_GUI extends Application{
        if(new File(listBackgroundPath3).exists()){
     	   listBkImage3 = new Image(new File(listBackgroundPath3).toURI().toURL().toString());
        }
-       listBkImage = listBkImage1;
-       listBk = new ImageView(listBkImage);
+       GUILogic.refreshTheme();
        Group listAllBack = new Group();
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);

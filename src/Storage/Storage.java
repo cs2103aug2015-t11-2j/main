@@ -21,35 +21,35 @@ import Tasks.Event;
  */
 public class Storage {
 	// edit be4 use, these 2 are for default setting
-	private static final Path DEFAULT_MAIN_DIRECTORY = Paths.get("user.dir");
+	private static Path DEFAULT_MAIN_DIRECTORY = Paths.get("user.dir");
 	// .get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
-	private static final Path DEFAULT_TEMP_DIRECTORY = Paths.get("temp.dir");
+	private static Path DEFAULT_TEMP_DIRECTORY = Paths.get("temp.dir");
 	private static final Path CONFIG_DIRECTPRY = Paths.get("config");
 
 	// public non-static, so you can get it using s.mainDir (for Storage s)
 	public Path mainDir;
 	public Path tempDir;
-	public Path configDir;
-
+	private final Path CONFIG_DIR = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");;
+	
 	// constructor, existing file will not be overwritten
 	// must use to initiate the directory use default directory
 	public Storage(String fileName) throws IOException {
 		mainDir = Paths.get(DEFAULT_MAIN_DIRECTORY + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + File.separator + fileName);
-		configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
+		//configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
 		createFile(mainDir);
 		createFile(tempDir);
-		createFile(configDir);
+		//createFile(configDir);
 	}
 
 	// use specified folder directory, create sub-folder to store temp file inside
 	public Storage(String fileName, Path folderDir) throws IOException {
-		mainDir = Paths.get(folderDir.toString() + File.separator + fileName);
-		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + "\\temp\\" + fileName);
-		configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
+		mainDir = Paths.get(folderDir.toString());
+		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + File.separator + fileName);
+		//configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
 		createFile(mainDir);
 		createFile(tempDir);
-		createFile(configDir);
+		//createFile(configDir);
 	}
 
 	// public method, non-static
@@ -61,6 +61,42 @@ public class Storage {
 	}
 	public void saveE(ArrayList<Event> arr) throws IOException {
 		save(Converter.eventToString(arr));
+	}
+	
+	public void saveConfig(ArrayList<String> config){
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(CONFIG_DIR.toString()));
+
+			for (String line : config) {
+				bw.write(line);
+				bw.newLine();
+			}
+			bw.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("invalid save directory, unable to create save file in that location");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void initConfig(ArrayList<String> config){
+		config.add(mainDir.toString());
+		config.add("1");
+		saveConfig(config);
+	}
+	
+	public ArrayList<String> loadConfig() throws IOException{
+		createFile(CONFIG_DIR);
+		List<String> preCopy = Files.readAllLines(CONFIG_DIR, Charset.forName("GBK"));
+		ArrayList<String> copy = new ArrayList<String>();
+		for (String line : preCopy) {
+			copy.add(line);
+		}
+		if(copy.size() == 0){
+			initConfig(copy);
+		}
+		return copy;
 	}
 	
 	// switch main directory to the new one and save
@@ -99,7 +135,6 @@ public class Storage {
 	public ArrayList<Event> loadAsE(Path dir) throws IOException, ParseException {
 		return Converter.stringToEvent(loadAs(dir));
 	}
-	
 	
 	// private method
 

@@ -1,5 +1,6 @@
 package GUI;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -30,6 +31,24 @@ public class GUILogic {
 	public static boolean isShowMainGrid(){
 		UIBuffer.getIsShowMainGrid();
 		return UIBuffer.isShowMainGrid();
+	}
+	
+	public static void refreshTheme(){
+		UIBuffer.getTheme();
+		String thisTheme = UIBuffer.theme();
+		if(thisTheme.equals("1")){
+			Yui_GUI.listBkImage = Yui_GUI.listBkImage1;
+		}
+		if(thisTheme.equals("2")){
+			Yui_GUI.listBkImage = Yui_GUI.listBkImage2;
+		}
+		if(thisTheme.equals("my theme")){
+			File myTheme = new File(Yui_GUI.listBackgroundPath3);
+			if (myTheme.exists()) {
+				Yui_GUI.listBkImage = Yui_GUI.listBkImage3;
+			}
+		}
+		Yui_GUI.listBk.setImage(Yui_GUI.listBkImage);
 	}
 	
 	private static void initialize() throws IOException, ParseException{

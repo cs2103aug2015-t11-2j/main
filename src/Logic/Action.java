@@ -85,6 +85,7 @@ public class Action {
 	private static boolean canUndo = false;
 	private static boolean isShowNusMods = false;
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
+	protected static String configedTheme;
 
 	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		fullList = s.loadE();
@@ -122,16 +123,18 @@ public class Action {
 		Collections.sort(fullList);
 	}
 
-	public static String bground(ArrayList<String> parameter) {
+	public static String bground(Storage s, ArrayList<String> parameter) throws IOException {
 		if (!(parameter.get(0).toLowerCase().equals("default") || parameter.get(0).equals("1"))) {
 			String theme = parameter.get(0);
 			if (theme.equals("2")) {
-				Yui_GUI.listBkImage = Yui_GUI.listBkImage2;
+				configedTheme = theme;
+				saveConfigedTheme(s);
 				return CHANGR_BK_SUCCESSFUL;
 			} else if (theme.equals("my theme")) {
+				configedTheme = theme;
 				File myTheme = new File(Yui_GUI.listBackgroundPath3);
 				if (myTheme.exists()) {
-					Yui_GUI.listBkImage = Yui_GUI.listBkImage3;
+					saveConfigedTheme(s);
 					return CHANGR_BK_SUCCESSFUL;
 				} else {
 					return NO_MY_THEME;
@@ -141,12 +144,18 @@ public class Action {
 			}
 
 		} else {
-			// Yui_GUI.listBackgroundPath = "listBK2.png";
-			Yui_GUI.listBkImage = Yui_GUI.listBkImage1;
+			configedTheme = "1";
+			saveConfigedTheme(s);
 			return CHANGR_BK_DEFAULT;
 		}
 	}
 
+	private static void saveConfigedTheme(Storage s) throws IOException{
+		ArrayList<String> config = s.loadConfig();
+		config.set(1, configedTheme);
+		s.saveConfig(config);
+	}
+	
 	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList)
 			throws IOException, ParseException {
 		String parameter = parameterArrayList.get(0);
@@ -744,8 +753,10 @@ public class Action {
 	}
 
 	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException {
-		s.mainDir = Paths.get(parameter.get(0));
-		s.tempDir = Paths.get(parameter.get(0) + "\\temp\\");
+		ToDoList.s = new Storage("Yui",Paths.get(parameter.get(0)));
+		ArrayList<String> config = ToDoList.s.loadConfig();
+		config.set(0, Paths.get(parameter.get(0)).toString());
+		ToDoList.s.saveConfig(config);
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 

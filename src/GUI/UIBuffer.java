@@ -13,6 +13,7 @@ public class UIBuffer {
 	private static ArrayList<NumberedEvent> FloatingList;
 	private static String returnedCommand;
 	private static boolean isShowMainGrid;
+	private static String theme;
 	
 	private static void getDealineList() throws IOException, ParseException{
 		DeadLineList = ToDoList.getDealine();
@@ -24,6 +25,10 @@ public class UIBuffer {
 	
 	private static void getFloatingList() throws IOException, ParseException{
 		FloatingList = ToDoList.getFloating();
+	}
+	
+	protected static void getTheme(){
+		theme = ToDoList.getTheme();
 	}
 	
 	public static void getList() throws IOException, ParseException{
@@ -62,5 +67,9 @@ public class UIBuffer {
 	
 	protected static boolean isShowMainGrid(){
 		return isShowMainGrid;
+	}
+	
+	public static String theme(){
+		return theme;
 	}
 }

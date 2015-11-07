@@ -1,6 +1,8 @@
 package Logic;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class ToDoList {
 	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(£þv£þ)/ "
 			+ "\n" + " The events of today is shown on the right " + "\n" + " -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
-	private static Storage s;
+	protected static Storage s;
 	// private static ArrayList<Event> fullList;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static final String READ_MSG = "All events are displayed!";
@@ -55,7 +57,7 @@ public class ToDoList {
 				return Action.addToList(s, parameter);
 			}
 			case "theme": {
-				return Action.bground(parameter);
+				return Action.bground(s,parameter);
 			}
 			case "read": {
 				return Action.read(s, parameter);
@@ -163,10 +165,14 @@ public class ToDoList {
 	public static boolean getIsShow(){
 		return Action.getIsShow();
 	}
+	
+	public static String getTheme(){
+		return Action.configedTheme;
+	}
 
 	public static String initialize() throws IOException, ParseException {
 		logger.log(Level.INFO, "initialize the ToDoList");
-		s = new Storage("Yui");
+		loadConfigInLogic();
 		// fullList = s.loadE();
 		shouldExit = false;
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
@@ -177,4 +183,15 @@ public class ToDoList {
 		return nowTime + WELCOME_MSG;
 	}
 
+	private static void loadConfigInLogic() throws IOException{
+		s = new Storage("Yui");
+		ArrayList<String> config = s.loadConfig();
+		Path mySavePath = Paths.get(config.get(0));
+		//Path myTempPath = Paths.get(config.get(0) + "\\temp\\");
+		s = new Storage("Yui",mySavePath);
+		//s.mainDir = mySavePath;
+		//s.tempDir = myTempPath;
+		Action.configedTheme = config.get(1);
+	}
+	
 }
