@@ -15,8 +15,6 @@ import Yui.Yui_GUI;
 public class Action {
 
 	private static ArrayList<Event> fullList;
-	private static final String ERROR_STORAGE_INVALID_SAVE_FILE_MSG = "Save file has been tampered, corrupted or program lack permission to save and load properly, please double check before using to prevent lost of data or improper behavior";
-	private static final String ERROR_PARSER_ADD_MSG = "Encountering problems deciphering your command. Please refrain from using 'before', 'from' in your event or use the correct date/time format specified in the -help menu.";
 	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
@@ -83,31 +81,20 @@ public class Action {
 	private static boolean isShowNusMods = false;
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 
-	static String addToList(Storage s, ArrayList<String> parameter) {
-		//consider deleting try/catch and use GlobalExceptionHandler for everything
-		try {
-			fullList = s.loadE();
-		} catch (Exception e) {
-			return ERROR_STORAGE_INVALID_SAVE_FILE_MSG;
+	static String addToList(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+		fullList = s.loadE();
+		if (Parser.parseForEvent(parameter) == null) {
+			return INVALID_ADD_PARAMETER_MSG;
 		}
-
-		try {
-			if (Parser.parseForEvent(parameter) == null) {
-				return INVALID_ADD_PARAMETER_MSG;
-			}
-			Event newEvent = Parser.parseForEvent(parameter);
-
-			if (newEvent.getDetail().equals("")) {
-				return EMPTY_ADD_PARAMETER_MSG;
-			} else {
-				fullList.add(newEvent);
-				s.saveE(fullList);
-				canUndo = true;
-				readAll(s);
-				return ADD_SUCCESS_MSG;
-			}
-		} catch (IOException|ParseException e) {
-			return ERROR_PARSER_ADD_MSG;
+		Event newEvent = Parser.parseForEvent(parameter);
+		if (newEvent.getDetail().equals("")) {
+			return EMPTY_ADD_PARAMETER_MSG;
+		} else {
+			fullList.add(newEvent);
+			s.saveE(fullList);
+			canUndo = true;
+			readAll(s);
+			return ADD_SUCCESS_MSG;
 		}
 	}
 
