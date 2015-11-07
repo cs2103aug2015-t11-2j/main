@@ -1,4 +1,4 @@
-package Yui;
+package GUI;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;

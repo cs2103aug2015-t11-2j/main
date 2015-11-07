@@ -1,4 +1,4 @@
-package Yui;
+package GUI;
 
 
 import java.io.File;

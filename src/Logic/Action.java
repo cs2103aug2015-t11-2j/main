@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import GUI.Yui_GUI;
 import Parser.Parser;
 import Storage.Storage;
 import Tasks.Event;
 import Tasks.NumberedEvent;
-import Yui.Yui_GUI;
 
 public class Action {
 

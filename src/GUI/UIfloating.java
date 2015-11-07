@@ -1,4 +1,4 @@
-package Yui;
+package GUI;
 
 import javafx.geometry.Insets;
 import javafx.scene.Group;
