@@ -9,12 +9,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import Fonts.ChineseJudge;
+import Image.ImageJudge;
 import Tasks.Event;
 import Tasks.NumberedEvent;
 
 public class UIfloating {
-	private static Event floating;
-	public GridPane memoPane = new GridPane();
+	private Event floating;
+	private GridPane memoPane = new GridPane();
 	//Event data
 	private String eventName;
 	private String commentString;
@@ -31,8 +32,10 @@ public class UIfloating {
 	private Group numberBackg = new Group();
 	private Group nameBackg = new Group();
 	private Group commentBackg = new Group();
-	private static int NAME_MAX_LENGTH = 17;
-	private static int SINGLE_BIT_NUMBER = 9;
+	private final int NAME_MAX_LENGTH = 17;
+	private final int SINGLE_BIT_NUMBER = 9;
+	private static ChineseJudge myChineseJudge;
+	private static ImageJudge myImageJudge;
 	
 	public UIfloating(NumberedEvent numberedEvent){
 		readEvent(numberedEvent);
@@ -51,6 +54,8 @@ public class UIfloating {
 		eventName = floating.getDetail();
 		commentString = floating.getComment();
 		num = numberedEvent.getIndex();
+		myChineseJudge = ChineseJudge.getInstance();
+		myImageJudge = ImageJudge.getInstance();
 	}
 	
 	private void buildGrids(){
@@ -67,7 +72,7 @@ public class UIfloating {
 		
 		numberBk = new ImageView(numberImage);
 		nameBk = new ImageView(nameImage);
-		if(!commentString.equals("")){
+		if(myImageJudge.isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
 	    	commentBk = new ImageView(uncommentImage);
@@ -96,7 +101,7 @@ public class UIfloating {
 	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
-	    if(ChineseJudge.isContainsChinese(eventName)){
+	    if(myChineseJudge.isContainsChinese(eventName)){
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));
 	    } else {
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));

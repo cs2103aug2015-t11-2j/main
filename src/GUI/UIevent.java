@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class UIevent {
-	private static Event events;
+	private Event events;
 	public GridPane eventPane = new GridPane();
 	//Event data
 	private Date theDate;
@@ -46,11 +46,13 @@ public class UIevent {
 	private Group nameBackg = new Group();
 	private Group dateBackg = new Group();
 	private Group commentBackg = new Group();
-	private static int NAME_MAX_LENGTH = 14;
-	private static int SINGLE_BIT_NUMBER = 9;
-	private static SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
-	private static SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
-
+	private final int NAME_MAX_LENGTH = 14;
+	private final int SINGLE_BIT_NUMBER = 9;
+	private final SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
+	private final SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
+	private static ChineseJudge myChineseJudge;
+	private static ImageJudge myImageJudge;
+	
 	public UIevent(NumberedEvent numberedEvent){
 		readEvent(numberedEvent);
 		buildGrids();
@@ -74,6 +76,8 @@ public class UIevent {
 		eventName = events.getDetail();
 		commentString = events.getComment();
 		num = numberedEvent.getIndex();
+		myChineseJudge = ChineseJudge.getInstance();
+		myImageJudge = ImageJudge.getInstance();
 	}
 	
 	private void buildGrids(){
@@ -92,14 +96,14 @@ public class UIevent {
 		Image commentImage = new Image(getClass().getResourceAsStream("/Image/comment.png"));
 		
 		numberBk = new ImageView(numberImage);
-		if(ImageJudge.isToday(theDate)){
+		if(myImageJudge.isToday(theDate)){
 			nameBk = new ImageView(dangerImage);
 		} else {
 			nameBk = new ImageView(nameDateTimeImage);
 		}
 		timeBk = new ImageView(nameDateTimeImage);
 		dateBk = new ImageView(nameDateTimeImage);
-		if(ImageJudge.isCommented(commentString)){
+		if(myImageJudge.isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
 	    	commentBk = new ImageView(uncommentImage);
@@ -138,7 +142,7 @@ public class UIevent {
 	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
-	    if(ChineseJudge.isContainsChinese(eventName)){
+	    if(myChineseJudge.isContainsChinese(eventName)){
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));
 	    } else {
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));

@@ -52,7 +52,7 @@ public class Yui_GUI extends Application{
 	protected static ImageView deadlineIcon = new ImageView();
 	protected static ImageView eventIcon = new ImageView();
 	protected static ImageView floatingIcon = new ImageView();
-	protected static TextArea showBox = new TextArea();
+	protected TextArea showBox = new TextArea();
 	protected static WebView webBox = new WebView();
 	protected static ImageView btnTodolist = new ImageView();
 	protected static ImageView btnCalendar = new ImageView();
@@ -61,6 +61,7 @@ public class Yui_GUI extends Application{
 	public static Image listBkImage2;
 	public static Image listBkImage3;
 	public static Image listBkImage;
+	protected static GUILogic myGUILogic;
 	
    public static void main(String[] args) {
        launch(args);
@@ -78,7 +79,7 @@ public class Yui_GUI extends Application{
        setEventGrid(eventPane);
        setTaskIcon(DEADLINE_ICON_PATH, EVENT_ICON_PATH, FLOAT_ICON_PATH);
        
-       GUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
+       myGUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
 
        setBackground(BACKGROUND_PATH);
        setLogo(LOGO_PATH, backgroundGrid);
@@ -87,7 +88,7 @@ public class Yui_GUI extends Application{
        setOKButton(OK_PATH, backgroundGrid);
 
        //Control the dragging of stage
-       DragController.dragStage(backgroundGrid, myStage);
+       myGUILogic.dragStage(backgroundGrid, myStage);
        
        setScene();
        setShowBox(mainGrid);
@@ -102,6 +103,7 @@ public class Yui_GUI extends Application{
    private void initializeMsg() throws IOException, ParseException{
 	   UIBuffer.initializeCommand(userCommand);
 	   returnCommand = UIBuffer.returnedCommand();
+	   myGUILogic  = GUILogic.getInstance();
    }
    
    private void setMyStage(Stage primaryStage, String iconString){
@@ -145,7 +147,7 @@ public class Yui_GUI extends Application{
        if(new File(listBackgroundPath3).exists()){
     	   listBkImage3 = new Image(new File(listBackgroundPath3).toURI().toURL().toString());
        }
-       GUILogic.refreshTheme();
+       myGUILogic.refreshTheme();
        Group listAllBack = new Group();
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
@@ -229,8 +231,8 @@ public class Yui_GUI extends Application{
    }
    
    private void MotionCatch(){
-	   MotionCatcher.keyboardCatcher(userCommandBox, showBox);
-       MotionCatcher.mouseCatcher(enterKey, userCommandBox, showBox);
+	   myGUILogic.keyboardCatcher(userCommandBox, showBox);
+       myGUILogic.mouseCatcher(enterKey, userCommandBox, showBox);
    }
 }
 
