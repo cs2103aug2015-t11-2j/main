@@ -98,7 +98,7 @@ public class Yui_GUI extends Application{
        setCommandBox(backgroundGrid);
        setWebGrid(backgroundGrid);
        
-       HotKey(myStage);
+       //HotKey(myStage);
        showBox.appendText(returnCommand + "\n");
        MotionCatch();
    }
