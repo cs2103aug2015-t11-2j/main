@@ -8,68 +8,79 @@ import Logic.ToDoList;
 import Tasks.NumberedEvent;
 
 public class UIBuffer {
-	private static ArrayList<NumberedEvent> DeadLineList;
-	private static ArrayList<NumberedEvent> EventList;
-	private static ArrayList<NumberedEvent> FloatingList;
-	private static String returnedCommand;
-	private static boolean isShowMainGrid;
-	private static String theme;
+	private ArrayList<NumberedEvent> DeadLineList;
+	private ArrayList<NumberedEvent> EventList;
+	private ArrayList<NumberedEvent> FloatingList;
+	private String returnedCommand;
+	private boolean isShowMainGrid;
+	private String theme;
+	private static UIBuffer theUIBuffer;
 	
-	private static void getDealineList() throws IOException, ParseException{
+	private UIBuffer(){
+	}
+	
+	protected static UIBuffer getInstance(){
+		if(theUIBuffer == null){
+			theUIBuffer = new UIBuffer();
+		}
+		return theUIBuffer;
+	}
+	
+	private void getDealineList() throws IOException, ParseException{
 		DeadLineList = ToDoList.getDealine();
 	}
 	
-	private static void getEventList() throws IOException, ParseException{
+	private void getEventList() throws IOException, ParseException{
 		EventList = ToDoList.getEventTime();
 	}
 	
-	private static void getFloatingList() throws IOException, ParseException{
+	private void getFloatingList() throws IOException, ParseException{
 		FloatingList = ToDoList.getFloating();
 	}
 	
-	protected static void getTheme(){
+	protected void getTheme(){
 		theme = ToDoList.getTheme();
 	}
 	
-	public static void getList() throws IOException, ParseException{
+	public void getList() throws IOException, ParseException{
 		getDealineList();
 		getEventList();
 		getFloatingList();
 	}
 	
-	public static ArrayList<NumberedEvent> DeadlineList(){
+	public ArrayList<NumberedEvent> DeadlineList(){
 		return DeadLineList;
 	}
 	
-	public static ArrayList<NumberedEvent> EventList(){
+	public ArrayList<NumberedEvent> EventList(){
 		return EventList;
 	}
 	
-	public static ArrayList<NumberedEvent> FloatingList(){
+	public ArrayList<NumberedEvent> FloatingList(){
 		return FloatingList;
 	}
 	
-	public static void initializeCommand(String userCommand) throws IOException, ParseException{
+	public void initializeCommand(String userCommand) throws IOException, ParseException{
 		returnedCommand = ToDoList.initialize();
 	}
 	
-	public static void getFeedback(String userCommand) throws IOException, ParseException{
+	public void getFeedback(String userCommand) throws IOException, ParseException{
 		returnedCommand = ToDoList.implement(userCommand);
 	}
 	
-	public static String returnedCommand(){
+	public String returnedCommand(){
 		return returnedCommand;
 	}
 	
-	protected static void getIsShowMainGrid(){
+	protected void getIsShowMainGrid(){
 		isShowMainGrid = !ToDoList.getIsShow();
 	}
 	
-	protected static boolean isShowMainGrid(){
+	protected boolean isShowMainGrid(){
 		return isShowMainGrid;
 	}
 	
-	public static String theme(){
+	public String theme(){
 		return theme;
 	}
 }

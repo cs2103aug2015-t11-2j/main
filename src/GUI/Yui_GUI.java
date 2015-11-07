@@ -24,22 +24,22 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Yui_GUI extends Application{
-	private static final String OK_PATH = "/Image/ok.png";
-	private static final String DEADLINE_ICON_PATH = "/Image/deadlineN.png";
-	private static final String EVENT_ICON_PATH = "/Image/eventN.png";
-	private static final String FLOAT_ICON_PATH = "/Image/floatingN.png";
-	private static final String BACKGROUND_PATH = "/Image/uigroundN.png";
-	private static final String LOGO_PATH = "/Image/logo.png";
+	private final String OK_PATH = "/Image/ok.png";
+	private final String DEADLINE_ICON_PATH = "/Image/deadlineN.png";
+	private final String EVENT_ICON_PATH = "/Image/eventN.png";
+	private final String FLOAT_ICON_PATH = "/Image/floatingN.png";
+	private final String BACKGROUND_PATH = "/Image/uigroundN.png";
+	private final String LOGO_PATH = "/Image/logo.png";
 	public static final String ICON_PATH = "/Image/icon.png";
-	private static final String EXIT_PATH = "/Image/exit.png";
-	private static final String MENU_STATE1_PATH = "/Image/menu.png";
-	private static final String MENU_STATE2_PATH = "/Image/menu2.png";
-	private static final String LIST_BACK_PATH1 = "/Image/theme1.png";
-	private static final String LIST_BACK_PATH2 = "/Image/theme2.png";
-	private static Stage myStage;
-	private static GridPane backgroundGrid = new GridPane();
-	private static ImageView enterKey = new ImageView();
-	private static Group backg = new Group();
+	private final String EXIT_PATH = "/Image/exit.png";
+	private final String MENU_STATE1_PATH = "/Image/menu.png";
+	private final String MENU_STATE2_PATH = "/Image/menu2.png";
+	private final String LIST_BACK_PATH1 = "/Image/theme1.png";
+	private final String LIST_BACK_PATH2 = "/Image/theme2.png";
+	private Stage myStage;
+	private GridPane backgroundGrid = new GridPane();
+	private ImageView enterKey = new ImageView();
+	private Group backg = new Group();
 	private static TextField userCommandBox = new TextField();
 	protected static String userCommand;
 	protected static String returnCommand;
@@ -62,6 +62,9 @@ public class Yui_GUI extends Application{
 	public static Image listBkImage3;
 	public static Image listBkImage;
 	protected static GUILogic myGUILogic;
+	protected static TrayController myTrayController;
+	protected static UIHotKey myUIHotKey;
+	protected static UIBuffer myUIBuffer;
 	
    public static void main(String[] args) {
        launch(args);
@@ -101,9 +104,12 @@ public class Yui_GUI extends Application{
    }
    
    private void initializeMsg() throws IOException, ParseException{
-	   UIBuffer.initializeCommand(userCommand);
-	   returnCommand = UIBuffer.returnedCommand();
+	   myUIBuffer = UIBuffer.getInstance();
+	   myUIBuffer.initializeCommand(userCommand);
+	   returnCommand = myUIBuffer.returnedCommand();
 	   myGUILogic  = GUILogic.getInstance();
+	   myTrayController = TrayController.getInstance();
+	   myUIHotKey = UIHotKey.getInstance();
    }
    
    private void setMyStage(Stage primaryStage, String iconString){
@@ -226,8 +232,8 @@ public class Yui_GUI extends Application{
    }
    
    private void HotKey(Stage myStage) throws IOException{
-	   UI_HotKey.listenHotKey(myStage);
-       TrayController.createTrayIcon(myStage);
+	   myUIHotKey.listenHotKey(myStage);
+	   myTrayController.createTrayIcon(myStage);
    }
    
    private void MotionCatch(){

@@ -13,27 +13,40 @@ import Lib.LoadLib;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-public class UI_HotKey {
-	private static final int SHOW_WINDOWS = 1;
-	private static final int HIDE_WINDOWS = 2;
-	private static final String LIB_PATH_32 = "JIntellitype";
+public class UIHotKey {
+	private final int SHOW_WINDOWS = 1;
+	private final int HIDE_WINDOWS = 2;
+	private final String LIB_PATH_32 = "JIntellitype";
 	//static File try1 = new File(Yui_GUI.class.getResourceAsStream("/Lib/JIntellitype.dll")); 
-	private static final String LIB_PATH_64 = "JIntellitype64";
-	private static String libPath;
-	private static InputStream in;
+	private final String LIB_PATH_64 = "JIntellitype64";
+	private String libPath;
+	private InputStream in;
+	private static UIHotKey theUIHotKey;
+	private static LoadLib myLoadLib;
 	
-	private static void JudgeSystem(){
+	private UIHotKey(){
+	}
+	
+	protected static UIHotKey getInstance(){
+		if(theUIHotKey == null){
+			theUIHotKey = new UIHotKey();
+		}
+		myLoadLib = LoadLib.getInstance();
+		return theUIHotKey;
+	}
+	
+	private void JudgeSystem(){
 		String arch = System.getProperty("os.arch");
 			if(arch.contains("x86")){
 				libPath = LIB_PATH_32;
-				in = LoadLib.getLib32();
+				in = myLoadLib.getLib32();
 			} else {
 				libPath = LIB_PATH_64;
-				in = LoadLib.getLib64();
+				in = myLoadLib.getLib64();
 			}
 	}
 	
-	public static void initialize(){
+	public void initialize(){
 		JIntellitype.setLibraryLocation(libPath);
 		if (JIntellitype.checkInstanceAlreadyRunning("Yui")) {  
 		    System.exit(1);  
@@ -44,7 +57,7 @@ public class UI_HotKey {
 	}
 	
 	//set Hot Key
-	public static void listenHotKey(final Stage myStage) throws IOException{
+	public void listenHotKey(final Stage myStage) throws IOException{
 		JudgeSystem();
 		loadLib(libPath);
 		//JIntellitype.setLibraryLocation(libPath); 
@@ -70,7 +83,7 @@ public class UI_HotKey {
 						public void run() {
 							myStage.hide();
 							myStage.toBack();
-							TrayController.showTrayMsg();
+							Yui_GUI.myTrayController.showTrayMsg();
 						}
 					});
 				}
@@ -79,7 +92,7 @@ public class UI_HotKey {
 	    
 	}
 	
-	private synchronized static void loadLib(String libName) throws IOException {   
+	private synchronized void loadLib(String libName) throws IOException {   
 	    String systemType = System.getProperty("os.name");   
 	    String libExtension = (systemType.toLowerCase().indexOf("win")!=-1) ? ".dll" : ".so";   
 	       

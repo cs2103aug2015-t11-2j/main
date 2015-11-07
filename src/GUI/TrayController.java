@@ -11,21 +11,26 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class TrayController {
-	public static TrayIcon trayIcon;
+	private TrayIcon trayIcon;
 	Stage stage;
 	Scene scene;
-	StackPane root;
-
-	public void TrayService(Stage stage) {
-		this.stage = stage;
+	private static TrayController theTrayController;
+	
+	private TrayController(){
+	}
+	
+	protected static TrayController getInstance(){
+		if(theTrayController == null){
+			theTrayController = new TrayController();
+		}
+		return theTrayController;
 	}
 
-	public static TrayIcon createTrayIcon(final Stage stage) {
+	public TrayIcon createTrayIcon(final Stage stage) {
 
 		if (SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
@@ -91,7 +96,7 @@ public class TrayController {
 		return trayIcon;
 	}
 
-	public static void showTrayMsg() {
+	public void showTrayMsg() {
 		trayIcon.displayMessage("Yui", "My Master, I am still here~", TrayIcon.MessageType.INFO);
 	}
 }

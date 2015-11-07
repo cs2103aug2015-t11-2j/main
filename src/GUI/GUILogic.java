@@ -50,13 +50,13 @@ public class GUILogic {
 	}
 	
 	private boolean isShowMainGrid(){
-		UIBuffer.getIsShowMainGrid();
-		return UIBuffer.isShowMainGrid();
+		Yui_GUI.myUIBuffer.getIsShowMainGrid();
+		return Yui_GUI.myUIBuffer.isShowMainGrid();
 	}
 	
 	public void refreshTheme(){
-		UIBuffer.getTheme();
-		String thisTheme = UIBuffer.theme();
+		Yui_GUI.myUIBuffer.getTheme();
+		String thisTheme = Yui_GUI.myUIBuffer.theme();
 		if(thisTheme.equals("1")){
 			Yui_GUI.listBkImage = Yui_GUI.listBkImage1;
 		}
@@ -73,7 +73,7 @@ public class GUILogic {
 	}
 	
 	private void initialize() throws IOException, ParseException{
-		UIBuffer.getList();
+		Yui_GUI.myUIBuffer.getList();
 		Y = 0;
 	}
 	
@@ -83,7 +83,7 @@ public class GUILogic {
 	}
 	
 	private void addDeadlineBox(GridPane taskGrid) throws MalformedURLException{
-		ArrayList<NumberedEvent> deadlines = UIBuffer.DeadlineList();
+		ArrayList<NumberedEvent> deadlines = Yui_GUI.myUIBuffer.DeadlineList();
 		int ddlLength = deadlines.size();
 		GridPane deadlineBox = new GridPane();
 		deadlineBox.setVgap(1);
@@ -98,7 +98,7 @@ public class GUILogic {
 	}
 	
 	private void addEventBox(GridPane taskGrid) throws MalformedURLException{
-		ArrayList<NumberedEvent> events = UIBuffer.EventList();
+		ArrayList<NumberedEvent> events = Yui_GUI.myUIBuffer.EventList();
 		int entLength = events.size();
 		GridPane eventBox = new GridPane();
 		eventBox.setVgap(1);
@@ -112,7 +112,7 @@ public class GUILogic {
 	}
 	
 	private void addFloatingBox(GridPane taskGrid) throws MalformedURLException{
-		ArrayList<NumberedEvent> floating = UIBuffer.FloatingList();
+		ArrayList<NumberedEvent> floating = Yui_GUI.myUIBuffer.FloatingList();
 		int fltLength = floating.size();
 		GridPane floatingBox = new GridPane();
 		floatingBox.setVgap(1);
@@ -195,8 +195,8 @@ public class GUILogic {
 	private void refreshWithTry(TextArea showBox){
 		try {
 			   logger.log(Level.INFO, "get the output");
-			   UIBuffer.getFeedback(Yui_GUI.userCommand);
-			   Yui_GUI.returnCommand =  UIBuffer.returnedCommand();
+			   Yui_GUI.myUIBuffer.getFeedback(Yui_GUI.userCommand);
+			   Yui_GUI.returnCommand =  Yui_GUI.myUIBuffer.returnedCommand();
 			   Yui_GUI.eventGrid.getChildren().clear();
 			   Yui_GUI.myGUILogic.showEvents(Yui_GUI.eventGrid,Yui_GUI.deadlineIcon, Yui_GUI.eventIcon, Yui_GUI.floatingIcon);
 		   } catch (IOException e) {
