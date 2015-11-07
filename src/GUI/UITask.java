@@ -1,6 +1,6 @@
 package GUI;
 
-
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -18,9 +18,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class UIevent {
-	private Event events;
-	public GridPane eventPane = new GridPane();
+public class UITask {
+	private Event thisTask;
+	public GridPane TaskPane = new GridPane();
 	//Event data
 	private Date theDate;
 	private String timeString;
@@ -50,59 +50,94 @@ public class UIevent {
 	private final int SINGLE_BIT_NUMBER = 9;
 	private final SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
 	private final SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
+	private final int TYPE_DEADLINE_OR_EVERNT = 0;
+	private final int TYPE_FLOATING = 1;
+	private int type;
 	private static ChineseJudge myChineseJudge;
 	private static ImageJudge myImageJudge;
 	
-	public UIevent(NumberedEvent numberedEvent){
+	public UITask(NumberedEvent numberedEvent) throws MalformedURLException{
 		readEvent(numberedEvent);
-		buildGrids();
-		buildImageView();
-		setBackground();
-		eventPane.setHgap(1);
-		setNum();
-		setTime();
+		buildGrid(type);
+		buildImageView(type);
+		setBackground(type);
+		TaskPane.setHgap(1);
+		setNum();	
 		setName();
-		setDate();	
-	    
-	    addAllElements();
+		if(type == 0){
+			setTime();
+			setDate();
+		}	
+	    addAllElements(type);
 	}
-
+	
 	private void readEvent(NumberedEvent numberedEvent){
-		events = numberedEvent.getEvent();
-		theDate = events.getEventTime().getStart();
-		timeString = DATE_FORMATE_TIME.format(events.getEventTime().getStart()) + " -"
-					+ DATE_FORMATE_TIME.format(events.getEventTime().getEnd());
-		dateString = DATE_FORMATE_DATE.format(theDate);
-		eventName = events.getDetail();
-		commentString = events.getComment();
+		thisTask = numberedEvent.getEvent();
+		typeJudge(thisTask);
+		eventName = thisTask.getDetail();
+		commentString = thisTask.getComment();
 		num = numberedEvent.getIndex();
 		myChineseJudge = ChineseJudge.getInstance();
 		myImageJudge = ImageJudge.getInstance();
 	}
 	
-	private void buildGrids(){
+	private void typeJudge(Event thisTask){
+		if(!(thisTask.getDeadline() == null) ||!(thisTask.getEventTime() == null)){
+			if(!(thisTask.getDeadline() == null)){
+				readDeadline();
+			}
+			if(!(thisTask.getEventTime() == null)){
+				readEvent();
+			}
+			dateString = DATE_FORMATE_DATE.format(theDate);
+			type = TYPE_DEADLINE_OR_EVERNT;
+		} else {
+			type = TYPE_FLOATING;
+		}
+	}
+	
+	private void readDeadline(){
+		theDate = thisTask.getDeadline().getDeadline();
+		timeString = DATE_FORMATE_TIME.format(theDate);
+	}
+	
+	private void readEvent(){
+		theDate = thisTask.getEventTime().getStart();
+		timeString = DATE_FORMATE_TIME.format(thisTask.getEventTime().getStart()) + " -"
+					+ DATE_FORMATE_TIME.format(thisTask.getEventTime().getEnd());
+	}
+	
+	private void buildGrid(int type){
+		if(type == 0){
+			time = new GridPane();
+			date = new GridPane();
+		}
 		number = new GridPane();
-		time = new GridPane();
 		name = new GridPane();		
-		date = new GridPane();
 		comment = new GridPane();
 	}
 	
-	private void buildImageView(){
+	private void buildImageView(int type){
+		if(type == 0){
+			Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
+			Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
+			if(myImageJudge.isToday(theDate)){
+				nameBk = new ImageView(dangerImage);
+			} else {
+				nameBk = new ImageView(nameDateTimeImage);
+			}
+			timeBk = new ImageView(nameDateTimeImage);
+			dateBk = new ImageView(nameDateTimeImage);
+		}
+		if(type == 1){
+			Image nameImage = new Image(getClass().getResourceAsStream("/Image/memoPad.png"));
+			nameBk = new ImageView(nameImage);
+		}
 		Image numberImage = new Image(getClass().getResourceAsStream("/Image/number.png"));
-		Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
-		Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
 		Image uncommentImage = new Image(getClass().getResourceAsStream("/Image/uncomment.png"));
 		Image commentImage = new Image(getClass().getResourceAsStream("/Image/comment.png"));
 		
 		numberBk = new ImageView(numberImage);
-		if(myImageJudge.isToday(theDate)){
-			nameBk = new ImageView(dangerImage);
-		} else {
-			nameBk = new ImageView(nameDateTimeImage);
-		}
-		timeBk = new ImageView(nameDateTimeImage);
-		dateBk = new ImageView(nameDateTimeImage);
 		if(myImageJudge.isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
@@ -110,11 +145,13 @@ public class UIevent {
 	    }
 	}
 	
-	private void setBackground(){
+	private void setBackground(int type){
+		if(type == 0){
+			timeBackg.getChildren().addAll(timeBk,time);
+			dateBackg.getChildren().addAll(dateBk,date);
+		}
 		numberBackg.getChildren().addAll(numberBk,number);
-		timeBackg.getChildren().addAll(timeBk,time);
 		nameBackg.getChildren().addAll(nameBk,name);
-		dateBackg.getChildren().addAll(dateBk,date);
 		commentBackg.getChildren().addAll(commentBk,comment);
 	}
 	
@@ -139,7 +176,7 @@ public class UIevent {
 	
 	private void setName(){
 		if(eventName.length() > NAME_MAX_LENGTH){
-	    	eventName = eventName.substring(0, NAME_MAX_LENGTH);
+	    	eventName = eventName.substring(0, NAME_MAX_LENGTH - 1) + "..";
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
 	    if(myChineseJudge.isContainsChinese(eventName)){
@@ -160,16 +197,24 @@ public class UIevent {
 	    date.add(tD, 0, 0);
 	}
 	
-	private void addAllElements(){
-		eventPane.setPrefSize(380, 25);
-		eventPane.add(numberBackg, 0, 0);
-		eventPane.add(timeBackg, 1, 0);
-		eventPane.add(nameBackg, 2, 0);
-		eventPane.add(dateBackg, 3, 0);
-		eventPane.add(commentBackg, 4, 0);
+	private void addAllElements(int type){
+		if(type == 0){
+			TaskPane.setPrefSize(380, 25);
+			TaskPane.add(numberBackg, 0, 0);
+			TaskPane.add(timeBackg, 1, 0);
+			TaskPane.add(nameBackg, 2, 0);
+			TaskPane.add(dateBackg, 3, 0);
+			TaskPane.add(commentBackg, 4, 0);
+		} else {
+			TaskPane.setPrefSize(190, 25);
+		    TaskPane.add(numberBackg, 0, 0);
+		    TaskPane.add(nameBackg, 1, 0);
+		    TaskPane.add(commentBackg, 2, 0);
+		}
+		
 	}
 	
-	public GridPane getEntBox(){
-		return eventPane;
+	public GridPane getTaskBox(){
+		return TaskPane;
 	}
 }

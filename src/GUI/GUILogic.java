@@ -40,10 +40,10 @@ public class GUILogic {
 		initialize();
 		// deadline icon
 		addIcon(eventGrid, deadline);
-		addDeadlineBox(eventGrid);
+		addTaskBox(eventGrid, Yui_GUI.myUIBuffer.DeadlineList());
 		// event icon
 		addIcon(eventGrid, eventIcon);
-		addEventBox(eventGrid);
+		addTaskBox(eventGrid, Yui_GUI.myUIBuffer.EventList());
 		// floating tasks icon
 		addIcon(eventGrid, floatingIcon);
 		addFloatingBox(eventGrid);
@@ -82,32 +82,18 @@ public class GUILogic {
 		Y = Y + 1;
 	}
 	
-	private void addDeadlineBox(GridPane taskGrid) throws MalformedURLException{
-		ArrayList<NumberedEvent> deadlines = Yui_GUI.myUIBuffer.DeadlineList();
-		int ddlLength = deadlines.size();
+	private void addTaskBox(GridPane taskGrid, ArrayList<NumberedEvent> tasksList) throws MalformedURLException{
+		ArrayList<NumberedEvent> tasks = tasksList;
+		int ddlLength = tasks.size();
 		GridPane deadlineBox = new GridPane();
 		deadlineBox.setVgap(1);
 		// Y = ddlLength;
 		for (int i = 0; i < ddlLength; i++) {
-			NumberedEvent thisEvent = deadlines.get(i);
-			UIdeadline thisDdlBox = new UIdeadline(thisEvent);
-			deadlineBox.add(thisDdlBox.getDdlBox(), X, i);
+			NumberedEvent thisTask = tasks.get(i);
+			UITask thisTasksBox = new UITask(thisTask);
+			deadlineBox.add(thisTasksBox.getTaskBox(), X, i);
 		}
 		taskGrid.add(deadlineBox, 0, Y);
-		Y = Y + 1;
-	}
-	
-	private void addEventBox(GridPane taskGrid) throws MalformedURLException{
-		ArrayList<NumberedEvent> events = Yui_GUI.myUIBuffer.EventList();
-		int entLength = events.size();
-		GridPane eventBox = new GridPane();
-		eventBox.setVgap(1);
-		for (int i = 0; i < entLength; i++) {
-			NumberedEvent thisEvent = events.get(i);
-			UIevent thisEntBox = new UIevent(thisEvent);
-			eventBox.add(thisEntBox.getEntBox(), X, i);
-		}
-		taskGrid.add(eventBox, 0, Y);
 		Y = Y + 1;
 	}
 	
@@ -118,15 +104,15 @@ public class GUILogic {
 		floatingBox.setVgap(1);
 		floatingBox.setHgap(1);
 		for (int i = 0; i < fltLength; i++) {
-			NumberedEvent thisEvent = floating.get(i);
-			UIfloating thisEntBox = new UIfloating(thisEvent);
+			NumberedEvent thisFloating = floating.get(i);
+			UITask thisFltBox = new UITask(thisFloating);
 			if (i % 2 == 0) {
 				X = 0;
 			} else {
 				X = 1;
 			}
 			int y = i / 2;
-			floatingBox.add(thisEntBox.getFltBox(), X, y);
+			floatingBox.add(thisFltBox.getTaskBox(), X, y);
 		}
 		taskGrid.add(floatingBox, 0, Y);
 	}
