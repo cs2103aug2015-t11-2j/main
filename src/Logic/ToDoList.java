@@ -35,8 +35,8 @@ public class ToDoList {
 		assert!userCommand.equals("");
 		String command = Parser.getAction(userCommand);
 		ArrayList<String> parameter = Parser.getParameter(userCommand);
-		ArrayList<String> sentence = Parser.getParameter("so hard to debug this!!!!");
-		
+		ArrayList<String> sentence = Parser.getSentence(userCommand);
+		System.out.println(sentence);
 		String returnCommand = nowTime + SPACE + "Command Entered: " + userCommand + "\n" + SPACE
 				+ modify(s, command, parameter, sentence);
 		Action.setRecur(s);

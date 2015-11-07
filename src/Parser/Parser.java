@@ -21,6 +21,12 @@ public class Parser {
 		return action;
 	}
 
+	public static ArrayList<String> getSentence(String userCommand) {
+		ArrayList<String> parameter = new ArrayList<String>();
+		parameter.add(Splitter.removeFirstWord(userCommand));
+		return parameter;
+	}
+
 	public static ArrayList<String> getParameter(String userCommand) {
 		String action = getAction(userCommand);
 		ArrayList<String> parameter = new ArrayList<String>();
@@ -30,8 +36,11 @@ public class Parser {
 		switch (commandType) {
 		case ADD:
 			String unsplitParameter = Splitter.removeFirstWord(userCommand);
-			if (unsplitParameter.contains("from") && unsplitParameter.contains("by")) { // event with specific time
-														// interval
+			if (unsplitParameter.contains("from") && unsplitParameter.contains("to")) { // event
+																						// with
+																						// specific
+																						// time
+				// interval
 				parameter = Splitter.splitEvent(parameter, unsplitParameter);
 			}
 
@@ -59,8 +68,7 @@ public class Parser {
 			throws ParseException, IOException {
 		String updateParameter = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		ArrayList<String> eventParameter = new ArrayList<String>();
-		if (updateParameter.contains("from") && updateParameter.contains("by")) { // event with specific time
-												// interval
+		if (updateParameter.contains("from") && updateParameter.contains("to")) {
 			eventParameter = Splitter.splitEvent(eventParameter, updateParameter);
 		}
 
@@ -70,7 +78,7 @@ public class Parser {
 			eventParameter.add(updateParameter);
 		}
 		Event updatedEvent = parseForEvent(eventParameter);
-		if (updatedEvent == null){
+		if (updatedEvent == null) {
 			return null;
 		}
 		updatedEvent.setComment(fullList.get(getUpdateIndex(fullList, parameter)).getComment());
@@ -78,6 +86,9 @@ public class Parser {
 	}
 
 	public static Event parseForEvent(ArrayList<String> parameter) throws ParseException {
+		if (parameter == null) {
+			throw new ParseException(null, 0);
+		}
 		if (parameter.size() == 1) {
 			return new Event(parameter.get(0));
 		} else if (parameter.size() == 3) {
@@ -85,7 +96,8 @@ public class Parser {
 		} else if (parameter.size() == 4) {
 			return new Event(parameter.get(0), parseForEventTime(parameter.get(1), parameter.get(2), parameter.get(3)));
 		}
-		return null;// run when parameter size different from above, cannot happen
+		return null;// run when parameter size different from above, cannot
+					// happen
 	}
 
 	// Determines command type (add or other)
@@ -117,7 +129,7 @@ public class Parser {
 			endDate = dateF1.parse(endDateAndTime);
 
 		} else if (date.equalsIgnoreCase("tomorrow") || date.equalsIgnoreCase("tmr")) {
-			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// 
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;
 			thisDate.setTime(time * 1000);
 			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
@@ -126,16 +138,13 @@ public class Parser {
 			String endDateAndTime = end + " " + dateString;
 			startDate = dateF1.parse(startDateAndTime);
 			endDate = dateF1.parse(endDateAndTime);
-		} else if (start.indexOf(':') != -1) {
+		} else {
 			String startS = start + " " + date;
 			String endS = end + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			startDate = dateF.parse(startS);
 			endDate = dateF.parse(endS);
-		} else {
-			return null;
 		}
-
 		return new EventTime(startDate, endDate);
 	}
 
@@ -156,12 +165,10 @@ public class Parser {
 			String dateString = dateF2.format(thisDate);
 			String dateAndTime = deadline + " " + dateString;
 			thisDate = dateF1.parse(dateAndTime);
-		} else if (deadline.indexOf(':') != -1) {
+		} else {
 			String timeAndDate = deadline + " " + date;
 			SimpleDateFormat dateF = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			thisDate = dateF.parse(timeAndDate);
-		} else {
-			return null;
 		}
 		return new Deadline(thisDate);// parseForCalendarTime(deadline,cal));
 	}
