@@ -98,7 +98,7 @@ public class Yui_GUI extends Application{
        setCommandBox(backgroundGrid);
        setWebGrid(backgroundGrid);
        
-       //HotKey(myStage);
+       HotKey(myStage);
        showBox.appendText(returnCommand + "\n");
        MotionCatch();
    }
@@ -109,7 +109,7 @@ public class Yui_GUI extends Application{
 	   returnCommand = myUIBuffer.returnedCommand();
 	   myGUILogic  = GUILogic.getInstance();
 	   myTrayController = TrayController.getInstance();
-	  // myUIHotKey = UIHotKey.getInstance();
+	   //myUIHotKey = UIHotKey.getInstance();
    }
    
    private void setMyStage(Stage primaryStage, String iconString){
@@ -233,7 +233,7 @@ public class Yui_GUI extends Application{
    
    private void HotKey(Stage myStage) throws IOException{
 	   //myUIHotKey.listenHotKey(myStage);
-	   //myTrayController.createTrayIcon(myStage);
+	   myTrayController.createTrayIcon(myStage);
    }
    
    private void MotionCatch(){
