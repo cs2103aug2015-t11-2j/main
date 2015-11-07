@@ -760,11 +760,12 @@ public class Action {
 		}
 	}
 
-	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException {
+	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		ToDoList.s = new Storage("Yui",Paths.get(parameter.get(0)));
 		ArrayList<String> config = ToDoList.s.loadConfig();
 		config.set(0, Paths.get(parameter.get(0)).toString());
 		ToDoList.s.saveConfig(config);
+		readAll(ToDoList.s);
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 }
