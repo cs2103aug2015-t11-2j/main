@@ -1,9 +1,13 @@
-package main;
+package Storage;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.EventTime;
 
 public class Converter {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -11,18 +15,18 @@ public class Converter {
 	static ArrayList<String> eventToString(ArrayList<Event> eventList) {
 		ArrayList<String> arr = new ArrayList<String>();
 		for (Event e : eventList) {
-			arr.add(e.detail);
-			arr.add(e.comment);
-			arr.add(e.status);
-			arr.add(e.priority);
-			if (e.deadline != null) {
-				arr.add(dateFormat.format(e.deadline.deadline));
+			arr.add(e.getDetail());
+			arr.add(e.getComment());
+			arr.add(e.getStatus());
+			arr.add(e.getPriority());
+			if (e.getDeadline() != null) {
+				arr.add(dateFormat.format(e.getDeadline().getDeadline()));
 			} else {
 				arr.add("------");
 			}
-			if (e.eventTime != null) {
-				arr.add(dateFormat.format(e.eventTime.start));
-				arr.add(dateFormat.format(e.eventTime.end));
+			if (e.getEventTime() != null) {
+				arr.add(dateFormat.format(e.getEventTime().getStart()));
+				arr.add(dateFormat.format(e.getEventTime().getEnd()));
 			} else {
 				arr.add("------");
 				arr.add("------");
@@ -45,18 +49,18 @@ public class Converter {
 
 		while(arr.size() != 0){
 			Event e = new Event();
-			e.detail = arr.get(0);
-			e.comment = arr.get(1);
-			e.status = arr.get(2);
-			e.priority = arr.get(3);
+			e.setDetail(arr.get(0));
+			e.setComment(arr.get(1));
+			e.setStatus(arr.get(2));
+			e.setPriority(arr.get(3));
 			if (!arr.get(4).equals("------")) {
-				e.deadline = new Deadline();
-				e.deadline.deadline = dateFormat.parse(arr.get(4));
+				e.setDeadline(new Deadline());
+				e.getDeadline().setDeadline(dateFormat.parse(arr.get(4)));
 			}
 			if (!arr.get(5).equals("------") && !arr.get(6).equals("------")) {
-				e.eventTime = new EventTime();
-				e.eventTime.start = dateFormat.parse(arr.get(5));
-				e.eventTime.end = dateFormat.parse(arr.get(6));
+				e.setEventTime(new EventTime());
+				e.getEventTime().setStart(dateFormat.parse(arr.get(5)));
+				e.getEventTime().setEnd(dateFormat.parse(arr.get(6)));
 			}
 			eventList.add(e);
 			for(int i = 0; i < 7; i++){

@@ -1,14 +1,14 @@
-package main;
+package Tasks;
 
 import java.util.Date;
 
 public class Event implements Comparable<Event> {
-	protected String detail = "";
-	protected String comment = "";
-	protected String status = ""; // done, in-progress, etc.
-	protected String priority = "";
-	protected Deadline deadline = null;
-	protected EventTime eventTime = null;
+	private String detail = "";
+	private String comment = "";
+	private String status = ""; // done, in-progress, etc.
+	private String priority = "";
+	private Deadline deadline = null;
+	private EventTime eventTime = null;
 
 	/*
 	 * may need to parse it through Calendar.getInstance(), since it cannot use
@@ -68,6 +68,30 @@ public class Event implements Comparable<Event> {
 		return this.eventTime;
 	}
 
+	public void setPriority(String p){
+		this.priority = p;
+	}
+	
+	public void setComment(String c){
+		this.comment = c;
+	}
+	
+	public void setDetail(String d){
+		this.detail = d;
+	}
+	
+	public void setStatus(String s){
+		this.status = s;
+	}
+	
+	public void setDeadline(Deadline d){
+		this.deadline = d;
+	}
+	
+	public void setEventTime(EventTime e){
+		this.eventTime = e;
+	}
+	
 	@Override
 	public int compareTo(Event compareEvent) {
 		Date compareEventDate = new Date(0);

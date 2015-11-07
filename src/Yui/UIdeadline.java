@@ -8,6 +8,9 @@ import java.util.Locale;
 
 import Fonts.ChineseJudge;
 import Image.ImageJudge;
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.NumberedEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -16,9 +19,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import main.Deadline;
-import main.Event;
-import main.NumberedEvent;
 
 public class UIdeadline {
 	private static Event deadline;

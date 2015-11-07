@@ -27,15 +27,15 @@ public class Deadline {
 }
 */
 
-package main;
+package Tasks;
 
 import java.util.Date;
 
 public class Deadline {
-	protected Date deadline = null;
+	private Date deadline = null;
 
 	// constructor
-	Deadline(){
+	public Deadline(){
 
 	}
 
@@ -45,5 +45,9 @@ public class Deadline {
 
 	public Date getDeadline(){
 		return this.deadline;
+	}
+	
+	public void setDeadline(Date d){
+		this.deadline = d; 
 	}
 }

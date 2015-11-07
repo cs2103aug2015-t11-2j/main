@@ -3,8 +3,9 @@ package Yui;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import main.NumberedEvent;
-import main.ToDoList;
+
+import Logic.ToDoList;
+import Tasks.NumberedEvent;
 
 public class UIBuffer {
 	private static ArrayList<NumberedEvent> DeadLineList;

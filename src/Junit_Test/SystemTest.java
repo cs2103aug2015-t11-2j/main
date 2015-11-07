@@ -3,8 +3,8 @@ package Junit_Test;
 import java.io.IOException;
 import java.text.ParseException;
 
+import Logic.ToDoList;
 import junit.framework.TestCase;
-import main.ToDoList;
 
 public class SystemTest extends TestCase{
 	private static String SPACE = " ";

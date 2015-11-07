@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import Fonts.ChineseJudge;
-import main.Event;
-import main.NumberedEvent;
+import Tasks.Event;
+import Tasks.NumberedEvent;
 
 public class UIfloating {
 	private static Event floating;

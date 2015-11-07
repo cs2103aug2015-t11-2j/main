@@ -1,4 +1,4 @@
-package main;
+package Logic;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import Parser.Parser;
+import Storage.Storage;
+import Tasks.NumberedEvent;
 
 public class ToDoList {
 	private static Logger logger = Logger.getLogger("ToDoList");

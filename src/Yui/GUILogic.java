@@ -5,9 +5,9 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import Tasks.NumberedEvent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import main.NumberedEvent;
 
 public class GUILogic {
 	private static int X = 0;

@@ -37,16 +37,16 @@ public class EventTime {
 */
 
 
-package main;
+package Tasks;
 
 import java.util.Date;
 
 public class EventTime {
-	protected Date start = null;
-	protected Date end = null;
+	private Date start = null;
+	private Date end = null;
 
 	// constructor
-	EventTime(){
+	public EventTime(){
 
 	}
 
@@ -60,6 +60,14 @@ public class EventTime {
 	}
 	public Date getEnd(){
 		return this.end;
+	}
+	
+	public void setStart(Date s){
+		this.start = s;
+	}
+	
+	public void setEnd(Date e){
+		this.end = e;
 	}
 }
 

@@ -1,4 +1,4 @@
-package main;
+package Storage;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -9,6 +9,8 @@ import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import Tasks.Event;
 
 /**
  * 
@@ -22,27 +24,32 @@ public class Storage {
 	private static final Path DEFAULT_MAIN_DIRECTORY = Paths.get("user.dir");
 	// .get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
 	private static final Path DEFAULT_TEMP_DIRECTORY = Paths.get("temp.dir");
-	// .get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\temp");
+	private static final Path CONFIG_DIRECTPRY = Paths.get("config");
 
 	// public non-static, so you can get it using s.mainDir (for Storage s)
 	public Path mainDir;
 	public Path tempDir;
+	public Path configDir;
 
 	// constructor, existing file will not be overwritten
 	// must use to initiate the directory use default directory
 	public Storage(String fileName) throws IOException {
 		mainDir = Paths.get(DEFAULT_MAIN_DIRECTORY + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + File.separator + fileName);
+		configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
 		createFile(mainDir);
 		createFile(tempDir);
+		createFile(configDir);
 	}
 
 	// use specified folder directory, create sub-folder to store temp file inside
 	public Storage(String fileName, Path folderDir) throws IOException {
 		mainDir = Paths.get(folderDir.toString() + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + "\\temp\\" + fileName);
+		configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
 		createFile(mainDir);
 		createFile(tempDir);
+		createFile(configDir);
 	}
 
 	// public method, non-static

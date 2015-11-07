@@ -1,9 +1,12 @@
-package main;
+package Storage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import org.junit.Test;
 
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.EventTime;
 import junit.framework.TestCase;
 
 public class SUTStorage extends TestCase {
@@ -40,22 +43,22 @@ public class SUTStorage extends TestCase {
 
 		// event with deadline
 		Event e1 = new Event();
-		e1.comment = "e1 comment";
-		e1.detail = "e1 detail";
-		e1.status = "e1 status";
-		e1.priority = "e1 priority";
-		e1.deadline = new Deadline();
-		e1.deadline.deadline = dateFormat.parse(dateS);
+		e1.setComment("e1 comment");
+		e1.setDetail("e1 detail");
+		e1.setStatus("e1 status");
+		e1.setPriority("e1 priority");
+		e1.setDeadline(new Deadline());
+		e1.getDeadline().setDeadline(dateFormat.parse(dateS));
 
 		// event with event time
 		Event e2 = new Event();
-		e2.comment = "e2 comment";
-		e2.detail = "e2 detail";
-		e2.status = "e2 status";
-		e2.priority = "e2 priority";
-		e2.eventTime = new EventTime();
-		e2.eventTime.start = dateFormat.parse(dateS);
-		e2.eventTime.end = dateFormat.parse(dateS);
+		e2.setComment("e2 comment");
+		e2.setDetail("e2 detail");
+		e2.setStatus("e2 status");
+		e2.setPriority("e2 priority");
+		e2.setEventTime(new EventTime());
+		e2.getEventTime().setStart(dateFormat.parse(dateS));
+		e2.getEventTime().setEnd(dateFormat.parse(dateS));
 
 		arrE1.add(e1);
 		arrE1.add(e2);

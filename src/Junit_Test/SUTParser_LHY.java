@@ -1,14 +1,14 @@
 package Junit_Test;
-import main.Event;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import Parser.Parser;
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.EventTime;
 import junit.framework.TestCase;
-import main.Deadline;
-import main.EventTime;
-import main.Parser;
 
 
 public class SUTParser_LHY extends TestCase{

@@ -1,4 +1,4 @@
-package main;
+package Tasks;
 
 public class NumberedEvent {
 	protected int index;
@@ -8,7 +8,7 @@ public class NumberedEvent {
 		
 	}
 	
-	NumberedEvent(int index, Event event){
+	public NumberedEvent(int index, Event event){
 		this.index = index;
 		this.event = event;
 	}

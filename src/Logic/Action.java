@@ -1,4 +1,4 @@
-package main;
+package Logic;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import Parser.Parser;
+import Storage.Storage;
+import Tasks.Event;
+import Tasks.NumberedEvent;
 import Yui.Yui_GUI;
 
 public class Action {
@@ -489,7 +493,7 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(commentEvent)) {
-					temp.get(i).comment = comment;
+					temp.get(i).setComment(comment);
 					break;
 				}
 			}
@@ -526,7 +530,7 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(priorityEvent)) {
-					temp.get(i).priority = priority;
+					temp.get(i).setPriority(priority);
 					break;
 				}
 			}
@@ -563,8 +567,8 @@ public class Action {
 						para2 -= noOfIteration;
 
 						Event newEvent = temp.getEvent();
-						newEvent.deadline.deadline = newDate;
-						newEvent.priority = para1 + " " + para2;
+						newEvent.getDeadline().setDeadline(newDate);
+						newEvent.setPriority(para1 + " " + para2);
 						fullList.remove(indexInFullList);
 						fullList.add(newEvent);
 						s.saveE(fullList);
@@ -593,9 +597,9 @@ public class Action {
 						para2 -= noOfIteration;
 
 						Event newEvent = temp2.getEvent();
-						newEvent.eventTime.start = newDateStart;
-						newEvent.eventTime.end = newDateEnd;
-						newEvent.priority = para1 + " " + para2;
+						newEvent.getEventTime().setStart(newDateStart);
+						newEvent.getEventTime().setEnd(newDateEnd);
+						newEvent.setPriority(para1 + " " + para2);
 						fullList.remove(indexInFullList);
 						fullList.add(newEvent);
 						s.saveE(fullList);
@@ -618,7 +622,7 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(markedEvent)) {
-					temp.get(i).status = "done";
+					temp.get(i).setStatus("done");
 					break;
 				}
 			}
@@ -726,7 +730,7 @@ public class Action {
 			ArrayList<Event> temp = s.loadE();
 			for (int i = 0; i < temp.size(); i++) {
 				if (temp.get(i).equals(markedEvent)) {
-					temp.get(i).status = "";
+					temp.get(i).setStatus("");
 					break;
 				}
 			}

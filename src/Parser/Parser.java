@@ -1,9 +1,13 @@
-package main;
+package Parser;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.EventTime;
 
 public class Parser {
 
@@ -71,7 +75,7 @@ public class Parser {
 		if (updatedEvent == null){
 			return null;
 		}
-		updatedEvent.comment = fullList.get(getUpdateIndex(fullList, parameter)).getComment();
+		updatedEvent.setComment(fullList.get(getUpdateIndex(fullList, parameter)).getComment());
 		return updatedEvent;
 	}
 
@@ -167,7 +171,7 @@ public class Parser {
 		return new Deadline(thisDate);// parseForCalendarTime(deadline,cal));
 	}
 
-	protected static int indexInFullList(ArrayList<Event> fullList, String typeAndIndex)
+	public static int indexInFullList(ArrayList<Event> fullList, String typeAndIndex)
 			throws IOException, ParseException {
 		if (typeAndIndex.contains(" ")) {
 			return -2;
@@ -182,7 +186,7 @@ public class Parser {
 		if (typeAndIndex.toLowerCase().charAt(0) == 'd') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
-				if (fullList.get(i).getDeadline() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
+				if (fullList.get(i).getDeadline() != null && !fullList.get(i).getStatus().equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -195,7 +199,7 @@ public class Parser {
 		} else if (typeAndIndex.toLowerCase().charAt(0) == 'e') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
-				if (fullList.get(i).getEventTime() != null && !fullList.get(i).status.equalsIgnoreCase("done")) {
+				if (fullList.get(i).getEventTime() != null && !fullList.get(i).getStatus().equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -209,7 +213,7 @@ public class Parser {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
 				if (fullList.get(i).getEventTime() == null && fullList.get(i).getDeadline() == null
-						&& !fullList.get(i).status.equalsIgnoreCase("done")) {
+						&& !fullList.get(i).getStatus().equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -225,7 +229,7 @@ public class Parser {
 		return -3;
 	}
 
-	protected static int indexInDoneList(ArrayList<Event> fullList, String typeAndIndex)
+	public static int indexInDoneList(ArrayList<Event> fullList, String typeAndIndex)
 			throws IOException, ParseException {
 		if (typeAndIndex.contains(" ")) {
 			return -2;
@@ -240,7 +244,7 @@ public class Parser {
 		if (typeAndIndex.toLowerCase().charAt(0) == 'd') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
-				if (fullList.get(i).getDeadline() != null && fullList.get(i).status.equalsIgnoreCase("done")) {
+				if (fullList.get(i).getDeadline() != null && fullList.get(i).getStatus().equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -253,7 +257,7 @@ public class Parser {
 		} else if (typeAndIndex.toLowerCase().charAt(0) == 'e') {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
-				if (fullList.get(i).getEventTime() != null && fullList.get(i).status.equalsIgnoreCase("done")) {
+				if (fullList.get(i).getEventTime() != null && fullList.get(i).getStatus().equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
@@ -267,7 +271,7 @@ public class Parser {
 			int count = 0;
 			for (int i = 0; i < fullList.size(); i++) {
 				if (fullList.get(i).getEventTime() == null && fullList.get(i).getDeadline() == null
-						&& fullList.get(i).status.equalsIgnoreCase("done")) {
+						&& fullList.get(i).getStatus().equalsIgnoreCase("done")) {
 					count++;
 					if (count == index) {
 						return i;
