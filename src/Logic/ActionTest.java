@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import Parser.Parser;
 import Storage.Storage;
 
 public class ActionTest {
@@ -24,7 +22,6 @@ public class ActionTest {
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
 	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m)!";
-	private static final ArrayList<String> sentence = Parser.getParameter("so hard to debug this!!!!");
 
 	@Before
 	public void setUp() throws Exception {
@@ -34,9 +31,9 @@ public class ActionTest {
 	public void testAddToList() throws IOException, ParseException {
 		Storage s = new Storage("test");
 		ArrayList<String> parameter = new ArrayList<String>();
-		assertEquals(Action.addToList(s, parameter, sentence), INVALID_ADD_PARAMETER_MSG);
+		assertEquals(Action.addToList(s, parameter, parameter), INVALID_ADD_PARAMETER_MSG);
 		parameter.add("abc");
-		assertEquals(Action.addToList(s, parameter, sentence), ADD_SUCCESS_MSG);
+		assertEquals(Action.addToList(s, parameter, parameter), ADD_SUCCESS_MSG);
 		s.reset();
 	}
 
@@ -46,7 +43,7 @@ public class ActionTest {
 		ArrayList<String> parameter = new ArrayList<String>();
 		parameter.add("event1");
 		assertEquals(Action.searchKey(s, parameter), SEARCH_NOT_FOUND_MSG);
-		Action.addToList(s, parameter, sentence);
+		Action.addToList(s, parameter, parameter);
 		assertEquals(Action.searchKey(s, parameter), "1. event1");
 		s.reset();
 	}
@@ -56,7 +53,7 @@ public class ActionTest {
 		Storage s = new Storage("test");
 		ArrayList<String> parameter = new ArrayList<String>();
 		parameter.add("event1");
-		Action.addToList(s, parameter, sentence);
+		Action.addToList(s, parameter, parameter);
 		assertEquals(Action.undo(s), UNDO_MSG);
 		assertEquals(Action.undo(s), UNABLE_UNDO_MSG);
 		s.reset();
@@ -67,7 +64,7 @@ public class ActionTest {
 		Storage s = new Storage("test");
 		ArrayList<String> parameter = new ArrayList<String>();
 		parameter.add("event1");
-		Action.addToList(s, parameter, sentence);
+		Action.addToList(s, parameter, parameter);
 		Action.undo(s);
 		assertEquals(Action.redo(s), REDO_MSG);
 		assertEquals(Action.redo(s), UNABLE_REDO_MSG);
@@ -80,7 +77,7 @@ public class ActionTest {
 		Storage s = new Storage("test");
 		ArrayList<String> parameter = new ArrayList<String>();
 		parameter.add("event1");
-		Action.addToList(s, parameter, sentence);
+		Action.addToList(s, parameter, parameter);
 		ArrayList<String> deleteParameter = new ArrayList<String>();
 		deleteParameter.add("a1");
 		assertEquals(Action.deleteEvent(s, deleteParameter), INVALID_LIST_TYPE_MSG);
