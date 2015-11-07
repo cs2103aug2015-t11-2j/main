@@ -24,7 +24,7 @@ public class Storage {
 	private static final Path DEFAULT_MAIN_DIRECTORY = Paths.get("user.dir");
 	// .get("C:\\Users\\Le Nguyen\\Desktop\\cs2103\\main\\testfolder\\main");
 	private static final Path DEFAULT_TEMP_DIRECTORY = Paths.get("temp.dir");
-	private static final Path CONFIG_DIRECTPRY = Paths.get("config");
+	private static final Path CONFIG_DIRECTORY = Paths.get("config");
 
 	// public non-static, so you can get it using s.mainDir (for Storage s)
 	public Path mainDir;
@@ -36,17 +36,18 @@ public class Storage {
 	public Storage(String fileName) throws IOException {
 		mainDir = Paths.get(DEFAULT_MAIN_DIRECTORY + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + File.separator + fileName);
-		configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
+		configDir = Paths.get(CONFIG_DIRECTORY + File.separator + "config.Yui");
 		createFile(mainDir);
 		createFile(tempDir);
 		createFile(configDir);
 	}
 
-	// use specified folder directory, create sub-folder to store temp file inside
+	// use specified folder directory, create sub-folder to store temp file
+	// inside
 	public Storage(String fileName, Path folderDir) throws IOException {
 		mainDir = Paths.get(folderDir.toString() + File.separator + fileName);
 		tempDir = Paths.get(DEFAULT_TEMP_DIRECTORY + "\\temp\\" + fileName);
-		configDir = Paths.get(CONFIG_DIRECTPRY + File.separator + "config.Yui");
+		configDir = Paths.get(CONFIG_DIRECTORY + File.separator + "config.Yui");
 		createFile(mainDir);
 		createFile(tempDir);
 		createFile(configDir);
@@ -59,10 +60,11 @@ public class Storage {
 		backup();
 		writeIntoFile(arr);
 	}
+
 	public void saveE(ArrayList<Event> arr) throws IOException {
 		save(Converter.eventToString(arr));
 	}
-	
+
 	// switch main directory to the new one and save
 	// to export, saveAs(new location) and then saveAs(old location)
 	public void saveAs(ArrayList<String> arr, Path dir) throws IOException {
@@ -70,37 +72,53 @@ public class Storage {
 		mainDir = dir;
 		writeIntoFile(arr);
 	}
+
 	public void saveAsE(ArrayList<Event> arr, Path dir) throws IOException {
-		saveAs(Converter.eventToString(arr),dir);
+		saveAs(Converter.eventToString(arr), dir);
 	}
-	
+
 	// load the file from the directory
 	public ArrayList<String> load(Path dir) throws IOException {
 		return readFile(dir);
 	}
+
 	public ArrayList<Event> loadE(Path dir) throws IOException, ParseException {
-		return Converter.stringToEvent(load(dir));
+		try {
+			return Converter.stringToEvent(load(dir));
+		} catch (IOException | ParseException e) {
+			try {
+				Files.copy(tempDir, mainDir, StandardCopyOption.REPLACE_EXISTING);
+				return Converter.stringToEvent(load(dir));
+			} catch (IOException | ParseException f) {
+				reset();
+				backup();
+				createFile(mainDir);
+				return Converter.stringToEvent(load(dir));
+			}
+		}
 	}
-	
+
 	// default load
 	public ArrayList<String> load() throws IOException {
 		return load(mainDir);
 	}
+	//ParseE wont happen, IOE when do not have permission to save/ load
 	public ArrayList<Event> loadE() throws IOException, ParseException {
 		return loadE(mainDir);
 	}
-	
+
 	// load the file from the directory, change main directory here
 	// to import, use loadAs and then saveAs
 	public ArrayList<String> loadAs(Path dir) throws IOException {
 		mainDir = dir;
-		return readFile(dir);
+		return load(mainDir);
 	}
+
 	public ArrayList<Event> loadAsE(Path dir) throws IOException, ParseException {
-		return Converter.stringToEvent(loadAs(dir));
+		mainDir = dir;
+		return loadE(mainDir);
 	}
-	
-	
+
 	// private method
 
 	// create file, do nothing if file already exist
@@ -112,7 +130,7 @@ public class Storage {
 	}
 
 	// read the file into arrayList
-	private static ArrayList<String> readFile(Path dir) throws IOException,FileNotFoundException {
+	private static ArrayList<String> readFile(Path dir) throws IOException, FileNotFoundException {
 		List<String> preCopy = Files.readAllLines(dir, Charset.forName("GBK"));
 		ArrayList<String> copy = new ArrayList<String>();
 		for (String line : preCopy) {
@@ -144,7 +162,7 @@ public class Storage {
 		Files.copy(mainDir, tempDir, StandardCopyOption.REPLACE_EXISTING);
 	}
 
-	public void reset() throws IOException{
+	public void reset() throws IOException {
 		Files.deleteIfExists(mainDir);
 	}
 }

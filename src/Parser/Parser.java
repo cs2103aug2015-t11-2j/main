@@ -30,7 +30,7 @@ public class Parser {
 		switch (commandType) {
 		case ADD:
 			String unsplitParameter = Splitter.removeFirstWord(userCommand);
-			if (unsplitParameter.contains("from")) { // event with specific time
+			if (unsplitParameter.contains("from") && unsplitParameter.contains("by")) { // event with specific time
 														// interval
 				parameter = Splitter.splitEvent(parameter, unsplitParameter);
 			}
@@ -43,9 +43,7 @@ public class Parser {
 			return parameter;
 
 		case OTHER:
-			parameter.add(Splitter.removeFirstWord(userCommand)); // not an
-																	// "add"
-																	// event
+			parameter.add(Splitter.removeFirstWord(userCommand)); // not"add"event
 			return parameter;
 		default:
 			return null;
@@ -61,7 +59,7 @@ public class Parser {
 			throws ParseException, IOException {
 		String updateParameter = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		ArrayList<String> eventParameter = new ArrayList<String>();
-		if (updateParameter.contains("from")) { // event with specific time
+		if (updateParameter.contains("from") && updateParameter.contains("by")) { // event with specific time
 												// interval
 			eventParameter = Splitter.splitEvent(eventParameter, updateParameter);
 		}
@@ -80,9 +78,6 @@ public class Parser {
 	}
 
 	public static Event parseForEvent(ArrayList<String> parameter) throws ParseException {
-		if (parameter == null) {
-			return null;
-		}
 		if (parameter.size() == 1) {
 			return new Event(parameter.get(0));
 		} else if (parameter.size() == 3) {
@@ -90,7 +85,7 @@ public class Parser {
 		} else if (parameter.size() == 4) {
 			return new Event(parameter.get(0), parseForEventTime(parameter.get(1), parameter.get(2), parameter.get(3)));
 		}
-		return null;
+		return null;// run when parameter size different from above, cannot happen
 	}
 
 	// Determines command type (add or other)
@@ -122,7 +117,7 @@ public class Parser {
 			endDate = dateF1.parse(endDateAndTime);
 
 		} else if (date.equalsIgnoreCase("tomorrow") || date.equalsIgnoreCase("tmr")) {
-			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// Ãë
+			long time = (thisDate.getTime() / 1000) + 60 * 60 * 24;// ï¾ƒï¿½
 			thisDate.setTime(time * 1000);
 			SimpleDateFormat dateF1 = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 			SimpleDateFormat dateF2 = new SimpleDateFormat("dd/MM/yyyy");
