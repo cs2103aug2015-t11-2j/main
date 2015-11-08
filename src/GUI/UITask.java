@@ -46,7 +46,7 @@ public class UITask {
 	private Group nameBackg = new Group();
 	private Group dateBackg = new Group();
 	private Group commentBackg = new Group();
-	private final int NAME_MAX_LENGTH = 14;
+	private final int NAME_MAX_LENGTH = 20;
 	private final int SINGLE_BIT_NUMBER = 9;
 	private final SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
 	private final SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
