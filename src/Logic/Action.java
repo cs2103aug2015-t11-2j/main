@@ -95,11 +95,6 @@ public class Action {
 			throws IOException, ParseException {
 		fullList = s.loadE();
 
-		// if (Parser.parseForEvent(parameter) == null) {
-		// readAll(s);
-		// return INVALID_EVENT_PARAMETER_MSG;
-		// }
-		// null case will fail parse exception check, so no need to do here
 		Event newEvent = new Event();
 		try {
 			newEvent = Parser.parseForEvent(parameter);
@@ -135,7 +130,7 @@ public class Action {
 		Collections.sort(fullList);
 	}
 
-	// @@author A0133992X
+	//@@author A0133992X
 	public static String bground(Storage s, ArrayList<String> parameter) throws IOException {
 		if (!(parameter.get(0).toLowerCase().equals("default") || parameter.get(0).equals("1"))) {
 			String theme = parameter.get(0);
@@ -163,7 +158,7 @@ public class Action {
 		}
 	}
 
-	// @@author A0133992X
+	//@@author A0133992X
 	private static void saveConfigedTheme(Storage s) throws IOException {
 		ArrayList<String> config = s.loadConfig();
 		config.set(1, configedTheme);
@@ -675,6 +670,7 @@ public class Action {
 		return isShowNusMods;
 	}
 
+
 	//@@author A0127142R
 	public static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
@@ -737,6 +733,7 @@ public class Action {
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 
+	// @@author A0127142R
 	public static String help(ArrayList<String> parameterArrayList) {
 		String parameter = parameterArrayList.get(0).toLowerCase();
 		if (parameter.equals("")) {

@@ -1,3 +1,4 @@
+//@@author A0127142R
 /*
 package main;
 
@@ -35,7 +36,7 @@ public class Deadline {
 	private Date deadline = null;
 
 	// constructor
-	public Deadline(){
+	public Deadline() {
 
 	}
 
@@ -43,11 +44,11 @@ public class Deadline {
 		this.deadline = deadline;
 	}
 
-	public Date getDeadline(){
+	public Date getDeadline() {
 		return this.deadline;
 	}
-	
-	public void setDeadline(Date d){
-		this.deadline = d; 
+
+	public void setDeadline(Date d) {
+		this.deadline = d;
 	}
 }
