@@ -17,18 +17,19 @@ import Tasks.NumberedEvent;
 
 public class MainLogic {
 	private static Logger logger = Logger.getLogger("ToDoList");
-	private static final String EXIT_MSG = "Thanks for using Yui!";
-	private static final String SPACE = " ";
+
+	protected static Storage s;
+	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+	private static String nowTime;
+	protected static boolean shouldExit = false;
 	private static final String WELCOME_MSG = " Hello, my master. Welcome back." + "\n" + " This is Yui!  <(^v^)/ "
 			+ "\n" + " The events of today is shown on the right " + "\n" + " -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
-	protected static Storage s;
-	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static final String READ_MSG = "All events are displayed!";
 	private static final String READMARK_MSG = "All marked events are displayed!";
 	private static final String PARA_EXCEPTION_MSG = "Unrecognized parameter!";
-	private static String nowTime;
-	protected static boolean shouldExit = false;
+	private static final String EXIT_MSG = "Thanks for using Yui!";
+	private static final String SPACE = " ";
 
 	public static String implement(String userCommand) throws IOException, ParseException {
 		nowTime = DATAFORMAT.format(new Date()) + "\n";
@@ -133,7 +134,8 @@ public class MainLogic {
 					return PARA_EXCEPTION_MSG;
 				}
 				Action.exit();
-				return EXIT_MSG;
+				return EXIT_MSG; // will not be shown since the program is
+									// closed
 			}
 			default: {
 				return ERROR_MSG;
@@ -173,7 +175,7 @@ public class MainLogic {
 		return Action.configedTheme;
 	}
 
-	//@@author A0127142R
+	// @@author A0127142R
 	public static String initialize() throws IOException, ParseException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		loadConfigInLogic();
