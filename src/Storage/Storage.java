@@ -63,7 +63,7 @@ public class Storage {
 	public void saveE(ArrayList<Event> arr) throws IOException {
 		save(Converter.eventToString(arr));
 	}
-	
+	//@@author A0133992X
 	public void saveConfig(ArrayList<String> config){
 		BufferedWriter bw;
 		try {
@@ -80,13 +80,13 @@ public class Storage {
 			e.printStackTrace();
 		}
 	}
-	
+	//@@author A0133992X
 	private void initConfig(ArrayList<String> config){
 		config.add(mainDir.toString());
 		config.add("1");
 		saveConfig(config);
 	}
-	
+	//@@author A0133992X
 	public ArrayList<String> loadConfig() throws IOException{
 		createFile(CONFIG_DIR);
 		List<String> preCopy = Files.readAllLines(CONFIG_DIR, Charset.forName("GBK"));

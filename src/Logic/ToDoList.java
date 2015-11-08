@@ -163,11 +163,11 @@ public class ToDoList {
 	public static void getFullList() throws IOException, ParseException {
 		Action.readAll(s);
 	}
-	
+	//@@author A0133992X
 	public static boolean getIsShow(){
 		return Action.getIsShow();
 	}
-	
+	//@@author A0133992X
 	public static String getTheme(){
 		return Action.configedTheme;
 	}
@@ -184,7 +184,7 @@ public class ToDoList {
 		Action.read(s, todayParameter);
 		return nowTime + WELCOME_MSG;
 	}
-
+	//@@author A0133992X
 	private static void loadConfigInLogic() throws IOException{
 		s = new Storage("Yui");
 		ArrayList<String> config = s.loadConfig();
