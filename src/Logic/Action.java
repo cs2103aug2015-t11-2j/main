@@ -22,28 +22,28 @@ public class Action {
 	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
 	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
-	private static final String ADD_SUCCESS_MSG = "Event added successful!";
+	private static final String ADD_SUCCESS_MSG = "Event added successfully!";
 	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
 	private static final String UNDO_MSG = "Undo operation successful!";
-	private static final String UNABLE_UNDO_MSG = "Cannot undo! Have some operations first!";
+	private static final String UNABLE_UNDO_MSG = "Cannot undo! Do some operations first!";
 	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static final String INVALID_EVENT_PARAMETER_MSG = "Invalid Event!";
 	private static final String EMPTY_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
 	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m) followed by the index!";
-	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event of the index entered!";
+	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event at the input index!";
 	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
-	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot comment. Index entered is larger than current event amount!";
+	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot add comment. Index entered is larger than current event amount!";
 	private static final String PRIORITY_OUT_OF_BOUND_MSG = "Cannot set recur. Index entered is larger than current event amount!";
 	private static final String PRIORITY_SUCCESSFUL_MSG = "Recur set successfully!";
 	private static final String MARK_OUT_OF_BOUND_MSG = "Cannot mark. Index entered is larger than current event amount!";
 	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
 	private static final String UNMARK_SUCCESSFUL_MSG = "Event unmarked successfully!";
-	private static final String CHANGR_BK_SUCCESSFUL = "Background is changed successfully!";
-	private static final String CHANGR_BK_DEFAULT = "Background is changed as default!";
-	private static final String INVALID_THEME = "It is an invalid theme!";
-	private static final String NO_MY_THEME = "There is no user's theme! \n Please add in user.dir and name it as myTheme.png";
+	private static final String CHANGE_BG_SUCCESSFUL = "Background is changed successfully!";
+	private static final String CHANGE_BG_DEFAULT = "Background is changed to the default!";
+	private static final String INVALID_THEME = "Invalid theme selected!";
+	private static final String NO_MY_THEME = "There is no custom user theme! \n Please add the picture in user.dir and name the file as myTheme.png";
 	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
@@ -137,13 +137,13 @@ public class Action {
 			if (theme.equals("2")) {
 				configedTheme = theme;
 				saveConfigedTheme(s);
-				return CHANGR_BK_SUCCESSFUL;
+				return CHANGE_BG_SUCCESSFUL;
 			} else if (theme.equals("my theme")) {
 				configedTheme = theme;
 				File myTheme = new File(Yui_GUI.listBackgroundPath3);
 				if (myTheme.exists()) {
 					saveConfigedTheme(s);
-					return CHANGR_BK_SUCCESSFUL;
+					return CHANGE_BG_SUCCESSFUL;
 				} else {
 					return NO_MY_THEME;
 				}
@@ -154,7 +154,7 @@ public class Action {
 		} else {
 			configedTheme = "1";
 			saveConfigedTheme(s);
-			return CHANGR_BK_DEFAULT;
+			return CHANGE_BG_DEFAULT;
 		}
 	}
 
