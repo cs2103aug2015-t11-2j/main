@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import Logic.ToDoList;
+import Logic.MainLogic;
 import Tasks.NumberedEvent;
 
 public class UIBuffer {
@@ -28,19 +28,19 @@ public class UIBuffer {
 	}
 	
 	private void getDealineList() throws IOException, ParseException{
-		DeadLineList = ToDoList.getDealine();
+		DeadLineList = MainLogic.getDealine();
 	}
 	
 	private void getEventList() throws IOException, ParseException{
-		EventList = ToDoList.getEventTime();
+		EventList = MainLogic.getEventTime();
 	}
 	
 	private void getFloatingList() throws IOException, ParseException{
-		FloatingList = ToDoList.getFloating();
+		FloatingList = MainLogic.getFloating();
 	}
 	
 	protected void getTheme(){
-		theme = ToDoList.getTheme();
+		theme = MainLogic.getTheme();
 	}
 	
 	public void getList() throws IOException, ParseException{
@@ -62,11 +62,11 @@ public class UIBuffer {
 	}
 	
 	public void initializeCommand(String userCommand) throws IOException, ParseException{
-		returnedCommand = ToDoList.initialize();
+		returnedCommand = MainLogic.initialize();
 	}
 	
 	public void getFeedback(String userCommand) throws IOException, ParseException{
-		returnedCommand = ToDoList.implement(userCommand);
+		returnedCommand = MainLogic.implement(userCommand);
 	}
 	
 	public String returnedCommand(){
@@ -74,7 +74,7 @@ public class UIBuffer {
 	}
 	
 	protected void getIsShowMainGrid(){
-		isShowMainGrid = !ToDoList.getIsShow();
+		isShowMainGrid = !MainLogic.getIsShow();
 	}
 	
 	protected boolean isShowMainGrid(){

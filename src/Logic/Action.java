@@ -118,7 +118,7 @@ public class Action {
 	}
 
 	static void exit() {
-		ToDoList.shouldExit = true;
+		MainLogic.shouldExit = true;
 		System.exit(0);
 	}
 
@@ -776,11 +776,11 @@ public class Action {
 
 	// @@author A0133992X
 	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ToDoList.s = new Storage("Yui", Paths.get(parameter.get(0)));
-		ArrayList<String> config = ToDoList.s.loadConfig();
+		MainLogic.s = new Storage("Yui", Paths.get(parameter.get(0)));
+		ArrayList<String> config = MainLogic.s.loadConfig();
 		config.set(0, Paths.get(parameter.get(0)).toString());
-		ToDoList.s.saveConfig(config);
-		readAll(ToDoList.s);
+		MainLogic.s.saveConfig(config);
+		readAll(MainLogic.s);
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 }
