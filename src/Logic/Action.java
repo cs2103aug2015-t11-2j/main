@@ -3,7 +3,6 @@ package Logic;
 
 import java.io.File;
 import java.io.IOException;
-//import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,35 +19,51 @@ import Tasks.NumberedEvent;
 public class Action {
 
 	private static ArrayList<Event> fullList;
+	// successful operation msgs
+	private static final String ADD_SUCCESSFUL_MSG = "Event added successfully!";
+	private static final String DELETE_SUCCESSFUL_MSG = "Delete successfully!";
+	private static final String UPDATE_SUCCESSFUL_MSG = "Event updated successfully!";
+	private static final String UNDO_SUCCESSFUL_MSG = "Undo operation successful!";
+	private static final String REDO_SUCCESSFUL_MSG = "Redo operation successful!";
+	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
+	private static final String PRIORITY_SUCCESSFUL_MSG = "Recur set successfully!";
+	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
+	private static final String UNMARK_SUCCESSFUL_MSG = "Event unmarked successfully!";
+	private static final String CHANGE_BG_SUCCESSFUL_MSG = "Background is changed successfully!";
+	private static final String SETPATH_SUCCESSFUL_MSG = "New path set successfully!";
+	private static final String SEARCH_FOUND_SUCCESSFUL_MSG = "The list of found results are on the right!";
+	private static final String CLEARALL_SUCCESSFUL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
+	private static final String NUS_MOD_SUCCESSFUL_MSG = "Show nusmods successfully!";
+	private static final String TODOLIST_SUCCESSFUL_MSG = "Show TodoList successfully!";
+	private static final String EVENT_TMR_DISPLAYED_SUCCESSFUL_MSG = "Events of tomorrow displayed on the right!";
+	private static final String EVENT_TODAY_DISPLAYED_SUCCESSFUL_MSG = "Events of today displayed on the right!";
+	private static final String EVENT_TODAY_AND_TMR_DISPLAYED_SUCCESSFUL_MSG = "Events of today and tomorrow displayed on the right!";
+	private static final String CHANGE_BG_DEFAULT_SUCCESSFUL_MSG = "Background is changed to the default!";
+	// fail operation msgs
 	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
-	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
-	private static final String ADD_SUCCESS_MSG = "Event added successfully!";
-	private static final String UPDATE_SUCCESS_MSG = "Event updated successfully!";
-	private static final String UNDO_MSG = "Undo operation successful!";
 	private static final String UNABLE_UNDO_MSG = "Cannot undo! Do some operations first!";
-	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static final String INVALID_EVENT_PARAMETER_MSG = "Invalid Event!";
 	private static final String EMPTY_ADD_PARAMETER_MSG = "Cannot add empty event!";
 	private static final String NO_INDEX_TO_READ_MSG = "Please specify the event index to read!";
 	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m) followed by the index!";
 	private static final String READING_INDEX_OUTOFBOUND_MSG = "There is no event at the input index!";
-	private static final String COMMENT_SUCCESSFUL_MSG = "Comment added successfully!";
 	private static final String COMMENT_OUT_OF_BOUND_MSG = "Cannot add comment. Index entered is larger than current event amount!";
 	private static final String PRIORITY_OUT_OF_BOUND_MSG = "Cannot set recur. Index entered is larger than current event amount!";
-	private static final String PRIORITY_SUCCESSFUL_MSG = "Recur set successfully!";
 	private static final String MARK_OUT_OF_BOUND_MSG = "Cannot mark. Index entered is larger than current event amount!";
-	private static final String MARK_SUCCESSFUL_MSG = "Event marked successfully!";
-	private static final String UNMARK_SUCCESSFUL_MSG = "Event unmarked successfully!";
-	private static final String CHANGE_BG_SUCCESSFUL = "Background is changed successfully!";
-	private static final String CHANGE_BG_DEFAULT = "Background is changed to the default!";
-	private static final String INVALID_THEME = "Invalid theme selected!";
-	private static final String NO_MY_THEME = "There is no custom user theme! \n Please add the picture in user.dir and name the file as myTheme.png";
+	private static final String INVALID_THEME_MSG = "Invalid theme selected!";
+	private static final String NO_MY_THEME_MSG = "There is no custom user theme! \n Please add the picture in user.dir and name the file as myTheme.png";
 	private static final String UNRECOGNIZABLE_CLEARALL_MSG = "You cannot enter a value after clearall command!";
-	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
 	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
+	private static final String UNMARK_OUT_OF_BOUND_MSG = "Cannot unmark. Index entered is larger than current event amount!";
+	private static final String UPDATE_OUT_OF_BOUND_MSG = "Cannot undate. Index entered is larger than current event amount!";
+	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = "The command you entered is not found\n Please check to ensure you entered the correct command word!";
+	private static final String IMPROPER_SEARCH_KEY_MSG = "Please enter a proper keyword!";
+	private static final String NO_EVENT_TODAY_OR_TMR_MSG = "Have a rest! There is nothing to do today or tomorrow!";
+	private static final String INVALID_RECUR_MSG = "Please enter the correct values for recur!";
+	// help list
 	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n help\n clearall\n exit";
 	private static final String ADD_HELP_MSG = "You can add 3 types of event to your list, namely deadline event, event-time event and memo event\n For events with deadline, type in \"add (event name) by HH:MM DD/MM/YYYY\"\n For events with event time, type in \"add (event name) from HH:MM to HH:MM DD/MM/YYYY\"\n For events without a time, type in \"add (event name)\"";
 	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" (\"theme default\") and \"theme 2\"\n To use your own picture, manually add a picture of size 383*418 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
@@ -65,24 +80,12 @@ public class Action {
 	private static final String HELP_HELP_MSG = "You can always refer to helplist for all the commands available\n Type in \"help\" you can see a list of all commands available\n Type in \"help\" and the command you want to know to learn more about it!";
 	private static final String CLEARALL_HELP_MSG = "You can clear all the tasks in the list by typing in \"clearall\".\n Undo at once if you made a mistake! Otherwise you will permanently lose your list";
 	private static final String EXIT_HELP_MSG = "You can exit the app by typing in \"exit\"";
-	private static final String COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG = "The command you entered is not found\n Please check to ensure you entered the correct command word!";
-	private static final String SEARCH_FOUND_MSG = "The list of found results are on the right!";
-	private static final String IMPROPER_SEARCH_KEY_MSG = "Please enter a proper keyword!";
-	private static final String EVENT_TMR_DISPLAYED_MSG = "Events of tomorrow displayed on the right!";
-	private static final String EVENT_TODAY_DISPLAYED_MSG = "Events of today displayed on the right!";
-	private static final String NO_EVENT_TODAY_OR_TMR_MSG = "Have a rest! There is nothing to do today or tomorrow!";
-	private static final String EVENT_TODAY_AND_TMR_DISPLAYED_MSG = "Events of today and tomorrow displayed on the right!";
-	private static final String NUS_MOD_SUCESSFUL = "Show nusmods sucessfully!";
-	private static final String TODOLIST_SUCESSFUL = "Show TodoList sucessfully!";
-	private static final String INVALID_RECUR_MSG = "Please enter the correct values for recur!";
 	private static final String READMARK_HELP_MSG = "Type in \"readmark\" and you can see the list of marked event";
 	private static final String UNMARK_HELP_MSG = "After you have get the list of marked event, you can \"unmark\" it to let it appear in your normal list again. Note that unmarking an event which is not marked previously will make no changes";
-	private static final String UNMARK_OUT_OF_BOUND_MSG = "Cannot unmark. Index entered is larger than current event amount!";
-	private static final String SETPATH_SUCCESSFUL_MSG = "New path set successful!";
-	private static final String UPDATE_OUT_OF_BOUND_MSG = "Cannot undate. Index entered is larger than current event amount!";
 	private static final String SETPATH_HELP_MSG = "Type in \"setpath\" followed by the path you want to store your data file.\n Note that this will create a new empty file in the location you specified so please move your old data file to the new location if you still need the old list!";
 	private static final String NUSMODS_HELP_MSG = "Type in \"nusmods\" and you can go to the NUSMODS website to allow you to check the timetable quickly!\n To go back to your list, just type \"todolist\"";
 	private static final String TODOLIST_HELP_MSG = "Type in \"todolist\" to go back to your list from NUSMODS website or other features!";
+
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -109,7 +112,7 @@ public class Action {
 			s.saveE(fullList);
 			canUndo = true;
 			readAll(s);
-			return ADD_SUCCESS_MSG;
+			return ADD_SUCCESSFUL_MSG;
 		}
 	}
 
@@ -130,42 +133,42 @@ public class Action {
 		Collections.sort(fullList);
 	}
 
-	//@@author A0133992X
+	// @@author A0133992X
 	public static String bground(Storage s, ArrayList<String> parameter) throws IOException {
 		if (!(parameter.get(0).toLowerCase().equals("default") || parameter.get(0).equals("1"))) {
 			String theme = parameter.get(0);
 			if (theme.equals("2")) {
 				configedTheme = theme;
 				saveConfigedTheme(s);
-				return CHANGE_BG_SUCCESSFUL;
+				return CHANGE_BG_SUCCESSFUL_MSG;
 			} else if (theme.equals("my theme")) {
 				configedTheme = theme;
 				File myTheme = new File(Yui_GUI.listBackgroundPath3);
 				if (myTheme.exists()) {
 					saveConfigedTheme(s);
-					return CHANGE_BG_SUCCESSFUL;
+					return CHANGE_BG_SUCCESSFUL_MSG;
 				} else {
-					return NO_MY_THEME;
+					return NO_MY_THEME_MSG;
 				}
 			} else {
-				return INVALID_THEME;
+				return INVALID_THEME_MSG;
 			}
 
 		} else {
 			configedTheme = "1";
 			saveConfigedTheme(s);
-			return CHANGE_BG_DEFAULT;
+			return CHANGE_BG_DEFAULT_SUCCESSFUL_MSG;
 		}
 	}
 
-	//@@author A0133992X
+	// @@author A0133992X
 	private static void saveConfigedTheme(Storage s) throws IOException {
 		ArrayList<String> config = s.loadConfig();
 		config.set(1, configedTheme);
 		s.saveConfig(config);
 	}
 
-	//@@author A0127142R
+	// @@author A0127142R
 	public static String searchKey(Storage s, ArrayList<String> parameterArrayList) throws IOException, ParseException {
 		String parameter = parameterArrayList.get(0);
 		if (fullList.size() == 0) {
@@ -200,7 +203,7 @@ public class Action {
 				}
 			}
 			if (isFound) {
-				return SEARCH_FOUND_MSG;
+				return SEARCH_FOUND_SUCCESSFUL_MSG;
 			} else {
 				return SEARCH_NOT_FOUND_MSG; // no result found
 			}
@@ -213,7 +216,7 @@ public class Action {
 			s.saveE(s.loadE(s.tempDir));
 			canUndo = false;
 			readAll(s);
-			return UNDO_MSG;
+			return UNDO_SUCCESSFUL_MSG;
 		} else {
 			return UNABLE_UNDO_MSG;
 		}
@@ -224,7 +227,7 @@ public class Action {
 			s.saveE(s.loadE(s.tempDir));
 			canUndo = true;
 			readAll(s);
-			return REDO_MSG;
+			return REDO_SUCCESSFUL_MSG;
 		} else {
 			return UNABLE_REDO_MSG;
 		}
@@ -297,7 +300,7 @@ public class Action {
 			if (!hasEvent) {
 				return NO_EVENT_TODAY_MSG;
 			} else {
-				return EVENT_TODAY_DISPLAYED_MSG;
+				return EVENT_TODAY_DISPLAYED_SUCCESSFUL_MSG;
 			}
 
 		} else if (parameter.get(0).equalsIgnoreCase("tomorrow") || parameter.get(0).equalsIgnoreCase("tmr"))
@@ -331,7 +334,7 @@ public class Action {
 			if (!hasEvent) {
 				return NO_EVENT_TMR_MSG;
 			} else {
-				return EVENT_TMR_DISPLAYED_MSG;
+				return EVENT_TMR_DISPLAYED_SUCCESSFUL_MSG;
 			}
 
 		} else
@@ -417,7 +420,7 @@ public class Action {
 		if (!hasEvent) {
 			return NO_EVENT_TODAY_OR_TMR_MSG;
 		} else {
-			return EVENT_TODAY_AND_TMR_DISPLAYED_MSG;
+			return EVENT_TODAY_AND_TMR_DISPLAYED_SUCCESSFUL_MSG;
 		}
 
 	}
@@ -468,7 +471,7 @@ public class Action {
 			s.saveE(temp);
 			readAll(s);
 			canUndo = true;
-			return UPDATE_SUCCESS_MSG;
+			return UPDATE_SUCCESSFUL_MSG;
 		} else {
 			return null;
 		}
@@ -656,13 +659,13 @@ public class Action {
 	// @@author A0133992X
 	public static String nusmods() {
 		isShowNusMods = true;
-		return NUS_MOD_SUCESSFUL;
+		return NUS_MOD_SUCCESSFUL_MSG;
 	}
 
 	// @@author A0133992X
 	public static String todolist() {
 		isShowNusMods = false;
-		return TODOLIST_SUCESSFUL;
+		return TODOLIST_SUCCESSFUL_MSG;
 	}
 
 	// @@author A0133992X
@@ -670,8 +673,7 @@ public class Action {
 		return isShowNusMods;
 	}
 
-
-	//@@author A0127142R
+	// @@author A0127142R
 	public static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;
@@ -683,7 +685,7 @@ public class Action {
 			s = new Storage("Yui");
 			canUndo = true;
 			readAll(s);
-			return CLEARALL_MSG;
+			return CLEARALL_SUCCESSFUL_MSG;
 		}
 	}
 
