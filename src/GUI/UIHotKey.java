@@ -38,7 +38,7 @@ public class UIHotKey extends JFrame implements HotkeyListener{
 	}
 	
 	//set Hot Key
-	public void listenHotKey(Stage myStage) throws IOException{
+	public void listenHotKey(final Stage myStage) throws IOException{
 		//JudgeSystem();
 		//loadLib(libPath);
 		//JIntellitype.setLibraryLocation(try1); 
