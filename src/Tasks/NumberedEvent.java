@@ -2,8 +2,8 @@
 package Tasks;
 
 public class NumberedEvent {
-	protected int index;
-	protected Event event;
+	private int index;
+	private Event event;
 
 	NumberedEvent() {
 
