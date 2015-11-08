@@ -48,7 +48,7 @@ public class Action {
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
 	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
-	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n help\n clearall\n exit";
+	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n help\n clearall\n exit";
 	private static final String ADD_HELP_MSG = "You can add 3 types of event to your list, namely deadline event, event-time event and memo event\n For events with deadline, type in \"add (event name) by HH:MM DD/MM/YYYY\"\n For events with event time, type in \"add (event name) from HH:MM to HH:MM DD/MM/YYYY\"\n For events without a time, type in \"add (event name)\"";
 	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" (\"theme default\") and \"theme 2\"\n To use your own picture, manually add a picture of size 383*418 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
 	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about each one by typing in \"read\", event type (d, e, m) and index.\n For example, \"read d1\" can give you information on first deadline event.\n You can also use \"read\" to check all the events on today or tomorrow, simply type \"read today\" or \"read tomorrow(tmr)\"";
@@ -80,6 +80,8 @@ public class Action {
 	private static final String SETPATH_SUCCESSFUL_MSG = "New path set successful!";
 	private static final String UPDATE_OUT_OF_BOUND_MSG = "Cannot undate. Index entered is larger than current event amount!";
 	private static final String SETPATH_HELP_MSG = "Type in \"setpath\" followed by the path you want to store your data file.\n Note that this will create a new empty file in the location you specified so please move your old data file to the new location if you still need the old list!";
+	private static final String NUSMODS_HELP_MSG = "Type in \"nusmods\" and you can go to the NUSMODS website to allow you to check the timetable quickly!\n To go back to your list, just type \"todolist\"";
+	private static final String TODOLIST_HELP_MSG = "Type in \"todolist\" to go back to your list from NUSMODS website or other features!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -721,6 +723,10 @@ public class Action {
 			return UNMARK_HELP_MSG;
 		} else if (parameter.equals("setpath")) {
 			return SETPATH_HELP_MSG;
+		} else if (parameter.equals("nusmods")) {
+			return NUSMODS_HELP_MSG;
+		} else if (parameter.equals("todolist")) {
+			return TODOLIST_HELP_MSG;
 		} else if (parameter.equals("help")) {
 			return HELP_HELP_MSG;
 		} else if (parameter.equals("clearall")) {
