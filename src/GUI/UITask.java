@@ -46,7 +46,8 @@ public class UITask {
 	private Group nameBackg = new Group();
 	private Group dateBackg = new Group();
 	private Group commentBackg = new Group();
-	private final int NAME_MAX_LENGTH = 20;
+	private final int NAME_MAX_LENGTH_S = 14;
+	private final int NAME_MAX_LENGTH_L = 20;
 	private final int SINGLE_BIT_NUMBER = 9;
 	private final SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
 	private final SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
@@ -63,8 +64,8 @@ public class UITask {
 		setBackground(type);
 		TaskPane.setHgap(1);
 		setNum();	
-		setName();
-		if(type == 0){
+		setName(type);
+		if(type == TYPE_DEADLINE_OR_EVERNT){
 			setTime();
 			setDate();
 		}	
@@ -108,7 +109,7 @@ public class UITask {
 	}
 	
 	private void buildGrid(int type){
-		if(type == 0){
+		if(type == TYPE_DEADLINE_OR_EVERNT){
 			time = new GridPane();
 			date = new GridPane();
 		}
@@ -118,7 +119,7 @@ public class UITask {
 	}
 	
 	private void buildImageView(int type){
-		if(type == 0){
+		if(type == TYPE_DEADLINE_OR_EVERNT){
 			Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
 			Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
 			if(myImageJudge.isToday(theDate)){
@@ -129,7 +130,7 @@ public class UITask {
 			timeBk = new ImageView(nameDateTimeImage);
 			dateBk = new ImageView(nameDateTimeImage);
 		}
-		if(type == 1){
+		if(type == TYPE_FLOATING){
 			Image nameImage = new Image(getClass().getResourceAsStream("/Image/memoPad.png"));
 			nameBk = new ImageView(nameImage);
 		}
@@ -146,7 +147,7 @@ public class UITask {
 	}
 	
 	private void setBackground(int type){
-		if(type == 0){
+		if(type == TYPE_DEADLINE_OR_EVERNT){
 			timeBackg.getChildren().addAll(timeBk,time);
 			dateBackg.getChildren().addAll(dateBk,date);
 		}
@@ -174,9 +175,15 @@ public class UITask {
 	    time.add(tT, 0, 0);
 	}
 	
-	private void setName(){
-		if(eventName.length() > NAME_MAX_LENGTH){
-	    	eventName = eventName.substring(0, NAME_MAX_LENGTH - 1) + "..";
+	private void setName(int type){
+		int nameMaxLength;
+		if(type == TYPE_DEADLINE_OR_EVERNT){
+			nameMaxLength = NAME_MAX_LENGTH_S;
+		} else {
+			nameMaxLength = NAME_MAX_LENGTH_L;
+		}
+		if(eventName.length() > nameMaxLength){
+	    	eventName = eventName.substring(0, nameMaxLength - 1) + "..";
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
 	    if(myChineseJudge.isContainsChinese(eventName)){
@@ -198,7 +205,7 @@ public class UITask {
 	}
 	
 	private void addAllElements(int type){
-		if(type == 0){
+		if(type == TYPE_DEADLINE_OR_EVERNT){
 			TaskPane.setPrefSize(380, 25);
 			TaskPane.add(numberBackg, 0, 0);
 			TaskPane.add(timeBackg, 1, 0);
