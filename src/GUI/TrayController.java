@@ -24,7 +24,7 @@ public class TrayController {
 	private TrayController(){
 	}
 	
-	protected static TrayController getInstance(){
+	public static TrayController getInstance(){
 		if(theTrayController == null){
 			theTrayController = new TrayController();
 		}

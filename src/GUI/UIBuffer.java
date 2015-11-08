@@ -20,7 +20,7 @@ public class UIBuffer {
 	private UIBuffer(){
 	}
 	
-	protected static UIBuffer getInstance(){
+	public static UIBuffer getInstance(){
 		if(theUIBuffer == null){
 			theUIBuffer = new UIBuffer();
 		}
@@ -39,7 +39,7 @@ public class UIBuffer {
 		FloatingList = MainLogic.getFloating();
 	}
 	
-	protected void getTheme(){
+	public void getTheme(){
 		theme = MainLogic.getTheme();
 	}
 	
@@ -73,11 +73,11 @@ public class UIBuffer {
 		return returnedCommand;
 	}
 	
-	protected void getIsShowMainGrid(){
+	public void getIsShowMainGrid(){
 		isShowMainGrid = !MainLogic.getIsShow();
 	}
 	
-	protected boolean isShowMainGrid(){
+	public boolean isShowMainGrid(){
 		return isShowMainGrid;
 	}
 	

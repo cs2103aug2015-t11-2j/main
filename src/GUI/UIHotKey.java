@@ -8,7 +8,7 @@ import com.melloware.jintellitype.JIntellitype;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-public class UIHotKey extends JFrame implements HotkeyListener{
+public class UIHotKey extends JFrame{
 	/**
 	 * 
 	 */
@@ -21,7 +21,7 @@ public class UIHotKey extends JFrame implements HotkeyListener{
 	private UIHotKey(){
 	}
 	
-	protected static UIHotKey getInstance(){
+	public static UIHotKey getInstance(){
 		if(theUIHotKey == null){
 			theUIHotKey = new UIHotKey();
 		}
@@ -73,10 +73,6 @@ public class UIHotKey extends JFrame implements HotkeyListener{
 		});
 	}
 	
-	@Override
-	public void onHotKey(int arg0) {
-		// TODO Auto-generated method stub
-	}
 	/*
 	private synchronized void loadLib(String libName) throws IOException {     
 	       
