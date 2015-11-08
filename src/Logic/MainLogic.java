@@ -14,7 +14,7 @@ import Parser.Parser;
 import Storage.Storage;
 import Tasks.NumberedEvent;
 
-public class ToDoList {
+public class MainLogic {
 	private static Logger logger = Logger.getLogger("ToDoList");
 	private static final String EXIT_MSG = "Thanks for using Yui!";
 	private static final String SPACE = " ";
