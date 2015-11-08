@@ -61,7 +61,7 @@ public class Yui_GUI extends Application{
 	public static Image listBkImage2;
 	public static Image listBkImage3;
 	public static Image listBkImage;
-	protected static GUILogic myGUILogic;
+	protected static GUIController myGUIController;
 	protected static TrayController myTrayController;
 	//protected static UIHotKey myUIHotKey;
 	protected static UIBuffer myUIBuffer;
@@ -82,7 +82,7 @@ public class Yui_GUI extends Application{
        setEventGrid(eventPane);
        setTaskIcon(DEADLINE_ICON_PATH, EVENT_ICON_PATH, FLOAT_ICON_PATH);
        
-       myGUILogic.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
+       myGUIController.showEvents(eventGrid,deadlineIcon, eventIcon, floatingIcon);
 
        setBackground(BACKGROUND_PATH);
        setLogo(LOGO_PATH, backgroundGrid);
@@ -91,7 +91,7 @@ public class Yui_GUI extends Application{
        setOKButton(OK_PATH, backgroundGrid);
 
        //Control the dragging of stage
-       myGUILogic.dragStage(backgroundGrid, myStage);
+       myGUIController.dragStage(backgroundGrid, myStage);
        
        setScene();
        setShowBox(mainGrid);
@@ -107,7 +107,7 @@ public class Yui_GUI extends Application{
 	   myUIBuffer = UIBuffer.getInstance();
 	   myUIBuffer.initializeCommand(userCommand);
 	   returnCommand = myUIBuffer.returnedCommand();
-	   myGUILogic  = GUILogic.getInstance();
+	   myGUIController  = GUIController.getInstance();
 	   myTrayController = TrayController.getInstance();
 	   //myUIHotKey = UIHotKey.getInstance();
    }
@@ -153,7 +153,7 @@ public class Yui_GUI extends Application{
        if(new File(listBackgroundPath3).exists()){
     	   listBkImage3 = new Image(new File(listBackgroundPath3).toURI().toURL().toString());
        }
-       myGUILogic.refreshTheme();
+       myGUIController.refreshTheme();
        Group listAllBack = new Group();
        listAllBack.getChildren().addAll(listBk, eventGrid);
        eventPane.setContent(listAllBack);
@@ -237,8 +237,8 @@ public class Yui_GUI extends Application{
    }
    
    private void MotionCatch(){
-	   myGUILogic.keyboardCatcher(userCommandBox, showBox);
-       myGUILogic.mouseCatcher(enterKey, userCommandBox, showBox);
+	   myGUIController.keyboardCatcher(userCommandBox, showBox);
+       myGUIController.mouseCatcher(enterKey, userCommandBox, showBox);
    }
 }
 

@@ -20,20 +20,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class GUILogic {
+public class GUIController {
 	private int X = 0;
 	private int Y = 0;
 	private Logger logger = Logger.getLogger("GUILogic");
-	private static GUILogic theGUILogic;
+	private static GUIController theGUIController;
 	
-	private GUILogic(){
+	private GUIController(){
 	}
 	
-	protected static GUILogic getInstance(){
-		if(theGUILogic == null){
-			theGUILogic = new GUILogic();
+	protected static GUIController getInstance(){
+		if(theGUIController == null){
+			theGUIController = new GUIController();
 		}
-		return theGUILogic;
+		return theGUIController;
 	}
 	
 	public void showEvents(GridPane eventGrid, ImageView deadline, ImageView eventIcon, ImageView floatingIcon)
@@ -185,7 +185,7 @@ public class GUILogic {
 			   Yui_GUI.myUIBuffer.getFeedback(Yui_GUI.userCommand);
 			   Yui_GUI.returnCommand =  Yui_GUI.myUIBuffer.returnedCommand();
 			   Yui_GUI.eventGrid.getChildren().clear();
-			   Yui_GUI.myGUILogic.showEvents(Yui_GUI.eventGrid,Yui_GUI.deadlineIcon, Yui_GUI.eventIcon, Yui_GUI.floatingIcon);
+			   Yui_GUI.myGUIController.showEvents(Yui_GUI.eventGrid,Yui_GUI.deadlineIcon, Yui_GUI.eventIcon, Yui_GUI.floatingIcon);
 		   } catch (IOException e) {
 			   logger.log(Level.WARNING, "output error", e);
 			   e.printStackTrace();
@@ -196,12 +196,12 @@ public class GUILogic {
 	}
 	
 	private void refreshEveryTime(TextArea showBox){
-		Yui_GUI.mainGrid.setVisible(Yui_GUI.myGUILogic.isShowMainGrid());
-		Yui_GUI.btnTodolist.setVisible(Yui_GUI.myGUILogic.isShowMainGrid());
-		Yui_GUI.webBox.setVisible(!Yui_GUI.myGUILogic.isShowMainGrid());
-		Yui_GUI.btnCalendar.setVisible(!Yui_GUI.myGUILogic.isShowMainGrid());
+		Yui_GUI.mainGrid.setVisible(Yui_GUI.myGUIController.isShowMainGrid());
+		Yui_GUI.btnTodolist.setVisible(Yui_GUI.myGUIController.isShowMainGrid());
+		Yui_GUI.webBox.setVisible(!Yui_GUI.myGUIController.isShowMainGrid());
+		Yui_GUI.btnCalendar.setVisible(!Yui_GUI.myGUIController.isShowMainGrid());
 		showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
-		Yui_GUI.myGUILogic.refreshTheme();
+		Yui_GUI.myGUIController.refreshTheme();
 		logger.log(Level.INFO, "end of processing");
 	}
 	
