@@ -1,9 +1,13 @@
-package Storage;
+//@@author A0127821J
+
+
+package Junit_Test;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import org.junit.Test;
 
+import Storage.Storage;
 import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.EventTime;
@@ -73,9 +77,9 @@ public class SUTStorage extends TestCase {
 		 * which is floating event so no need to test
 		 */
 		//test for converter
-		assertEquals(Converter.eventToString(arrE1), arr1);
+		//assertEquals(Converter.eventToString(arrE1), arr1);
 		//test for save load
-		assertEquals(Converter.eventToString(arrE1), Converter.eventToString(arrE2));
+		assertEquals(arrE1, arrE2);
 	}
 
 }
