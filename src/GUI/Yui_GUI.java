@@ -40,7 +40,7 @@ public class Yui_GUI extends Application{
 	private GridPane backgroundGrid = new GridPane();
 	private ImageView enterKey = new ImageView();
 	private Group backg = new Group();
-	private static TextField userCommandBox = new TextField();
+	private TextField userCommandBox = new TextField();
 	protected static String userCommand;
 	protected static String returnCommand;
 	protected static double xOffset = 0;
@@ -66,12 +66,12 @@ public class Yui_GUI extends Application{
 	//protected static UIHotKey myUIHotKey;
 	protected static UIBuffer myUIBuffer;
 	
-   public static void main(String[] args) {
-       launch(args);
+	public static void main(String[] args) {
+       launch();
     }
 
-   @Override
-   public void start(final Stage primaryStage) throws IOException, ParseException {
+	@Override
+   	public void start(final Stage primaryStage) throws IOException, ParseException {
 	   setMyStage(primaryStage, ICON_PATH);
        
 	   initializeMsg();
