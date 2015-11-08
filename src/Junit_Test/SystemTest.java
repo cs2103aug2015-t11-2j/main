@@ -22,7 +22,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test memo").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test memo" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -30,7 +30,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test Event from 10:00 to 11:00 04/11/2015").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test Event from 10:00 to 11:00 04/11/2015" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -38,7 +38,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test deadline by 10:00 04/11/2015").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test deadline by 10:00 04/11/2015" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -46,7 +46,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test Event from 10:00 to 11:00 today").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test Event from 10:00 to 11:00 today" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -54,7 +54,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test deadline by 10:00 tomorrow").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test deadline by 10:00 tomorrow" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -62,7 +62,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test Event from 10:00 to 11:00 tmr").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test Event from 10:00 to 11:00 tmr" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -70,7 +70,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("add test deadline by 10:00 tmr").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test deadline by 10:00 tmr" + "\n" + SPACE 
-								+ "Event added successful!";
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -94,7 +94,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("read d1").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "read d1" + "\n" + SPACE 
-								+ "There is no event of the index entered!";
+								+ "Detail: test \n" + " Comment: \n" + " Time: 11:00 08/11/2015";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -172,10 +172,10 @@ public class SystemTest extends TestCase{
 	
 	public void testMainLogic() throws IOException, ParseException{
 		MainLogic.initialize();
-		MainLogic.implement("add test by 11:00 today");
-		String returnedMessage = MainLogic.implement("MainLogic").substring(20);
-		String expectedMessage = SPACE + "Command Entered: " + "MainLogic" + "\n" + SPACE 
-								+ "Show MainLogic sucessfully!";
+		MainLogic.implement("add test by 12:00 today");
+		String returnedMessage = MainLogic.implement("add test by 12:00 today").substring(20);
+		String expectedMessage = SPACE + "Command Entered: " + "add test by 12:00 today" + "\n" + SPACE 
+								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -213,7 +213,7 @@ public class SystemTest extends TestCase{
 		MainLogic.initialize();
 		String returnedMessage = MainLogic.implement("help").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "help" + "\n" + SPACE 
-								+ "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n help\n clearall\n exit";
+								+ "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n help\n clearall\n exit";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
