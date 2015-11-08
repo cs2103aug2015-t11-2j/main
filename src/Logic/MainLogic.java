@@ -1,3 +1,4 @@
+//@@author A0127142R
 package Logic;
 
 import java.io.IOException;
@@ -22,7 +23,6 @@ public class MainLogic {
 			+ "\n" + " The events of today is shown on the right " + "\n" + " -What would you like to do?\n";
 	private static final String ERROR_MSG = "Error!";
 	protected static Storage s;
-	// private static ArrayList<Event> fullList;
 	private static final SimpleDateFormat DATAFORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	private static final String READ_MSG = "All events are displayed!";
 	private static final String READMARK_MSG = "All marked events are displayed!";
@@ -59,7 +59,7 @@ public class MainLogic {
 				return Action.addToList(s, parameter, sentence);
 			}
 			case "theme": {
-				return Action.bground(s,parameter);
+				return Action.bground(s, parameter);
 			}
 			case "read": {
 				return Action.read(s, parameter);
@@ -147,7 +147,6 @@ public class MainLogic {
 
 	}
 
-	// need to be updated
 	public static ArrayList<NumberedEvent> getDealine() throws IOException, ParseException {
 		return Action.getDeadlineList();
 	}
@@ -163,15 +162,18 @@ public class MainLogic {
 	public static void getFullList() throws IOException, ParseException {
 		Action.readAll(s);
 	}
-	//@@author A0133992X
-	public static boolean getIsShow(){
+
+	// @@author A0133992X
+	public static boolean getIsShow() {
 		return Action.getIsShow();
 	}
-	//@@author A0133992X
-	public static String getTheme(){
+
+	// @@author A0133992X
+	public static String getTheme() {
 		return Action.configedTheme;
 	}
 
+	// @@author A0127142R
 	public static String initialize() throws IOException, ParseException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		loadConfigInLogic();
@@ -184,16 +186,17 @@ public class MainLogic {
 		Action.read(s, todayParameter);
 		return nowTime + WELCOME_MSG;
 	}
-	//@@author A0133992X
-	private static void loadConfigInLogic() throws IOException{
+
+	// @@author A0133992X
+	private static void loadConfigInLogic() throws IOException {
 		s = new Storage("Yui");
 		ArrayList<String> config = s.loadConfig();
 		Path mySavePath = Paths.get(config.get(0));
-		//Path myTempPath = Paths.get(config.get(0) + "\\temp\\");
-		s = new Storage("Yui",mySavePath);
-		//s.mainDir = mySavePath;
-		//s.tempDir = myTempPath;
+		// Path myTempPath = Paths.get(config.get(0) + "\\temp\\");
+		s = new Storage("Yui", mySavePath);
+		// s.mainDir = mySavePath;
+		// s.tempDir = myTempPath;
 		Action.configedTheme = config.get(1);
 	}
-	
+
 }

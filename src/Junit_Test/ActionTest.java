@@ -1,3 +1,4 @@
+//@@author A0127142R
 package Junit_Test;
 
 import static org.junit.Assert.*;
@@ -72,7 +73,6 @@ public class ActionTest {
 		assertEquals(Action.redo(s), UNABLE_REDO_MSG);
 		s.reset();
 	}
-
 
 	@Test
 	public void testDeleteEvent() throws IOException, ParseException {

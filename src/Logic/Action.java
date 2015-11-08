@@ -1,3 +1,4 @@
+//@@author A0127142R
 package Logic;
 
 import java.io.File;
@@ -94,11 +95,6 @@ public class Action {
 			throws IOException, ParseException {
 		fullList = s.loadE();
 
-		// if (Parser.parseForEvent(parameter) == null) {
-		// readAll(s);
-		// return INVALID_EVENT_PARAMETER_MSG;
-		// }
-		// null case will fail parse exception check, so no need to do here
 		Event newEvent = new Event();
 		try {
 			newEvent = Parser.parseForEvent(parameter);
@@ -169,6 +165,7 @@ public class Action {
 		s.saveConfig(config);
 	}
 
+	// @@author A0127142R
 	public static String searchKey(Storage s, ArrayList<String> parameterArrayList) throws IOException, ParseException {
 		String parameter = parameterArrayList.get(0);
 		if (fullList.size() == 0) {
@@ -673,6 +670,7 @@ public class Action {
 		return isShowNusMods;
 	}
 
+	// @@author A0127142R
 	public static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;
@@ -734,6 +732,7 @@ public class Action {
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 
+	// @@author A0127142R
 	public static String help(ArrayList<String> parameterArrayList) {
 		String parameter = parameterArrayList.get(0).toLowerCase();
 		if (parameter.equals("")) {
