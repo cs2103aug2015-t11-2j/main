@@ -1,3 +1,4 @@
+//@@author A0127142R
 package Logic;
 
 import java.io.IOException;
@@ -171,7 +172,7 @@ public class MainLogic {
 	public static String getTheme(){
 		return Action.configedTheme;
 	}
-
+	//@@author A0127142R
 	public static String initialize() throws IOException, ParseException {
 		logger.log(Level.INFO, "initialize the ToDoList");
 		loadConfigInLogic();

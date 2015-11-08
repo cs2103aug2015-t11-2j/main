@@ -1,3 +1,4 @@
+//@@author A0127142R
 package Logic;
 
 import java.io.File;
@@ -168,7 +169,7 @@ public class Action {
 		config.set(1, configedTheme);
 		s.saveConfig(config);
 	}
-
+	//@@author A0127142R
 	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList)
 			throws IOException, ParseException {
 		String parameter = parameterArrayList.get(0);
@@ -673,7 +674,7 @@ public class Action {
 	protected static boolean getIsShow() {
 		return isShowNusMods;
 	}
-
+	//@@author A0127142R
 	protected static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;
