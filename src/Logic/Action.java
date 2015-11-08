@@ -90,7 +90,7 @@ public class Action {
 	private static SimpleDateFormat formatCompare = new SimpleDateFormat("yyyyMMdd");
 	protected static String configedTheme;
 
-	static String addToList(Storage s, ArrayList<String> parameter, ArrayList<String> sentence)
+	public static String addToList(Storage s, ArrayList<String> parameter, ArrayList<String> sentence)
 			throws IOException, ParseException {
 		fullList = s.loadE();
 
@@ -117,7 +117,7 @@ public class Action {
 		}
 	}
 
-	static void exit() {
+	protected static void exit() {
 		MainLogic.shouldExit = true;
 		System.exit(0);
 	}
@@ -169,8 +169,7 @@ public class Action {
 		s.saveConfig(config);
 	}
 
-	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList)
-			throws IOException, ParseException {
+	public static String searchKey(Storage s, ArrayList<String> parameterArrayList) throws IOException, ParseException {
 		String parameter = parameterArrayList.get(0);
 		if (fullList.size() == 0) {
 			return SEARCH_NOT_FOUND_MSG;
@@ -447,7 +446,7 @@ public class Action {
 		return false;
 	}
 
-	protected static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String update(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (parameter == null) {
 			return INVALID_EVENT_PARAMETER_MSG;
 		}
@@ -478,7 +477,7 @@ public class Action {
 		}
 	}
 
-	protected static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String deleteEvent(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
@@ -502,7 +501,7 @@ public class Action {
 		}
 	}
 
-	protected static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String comment(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		String comment = parameter.get(0).substring(parameter.get(0).indexOf(" ") + 1);
 		int indexInFullList = Parser.indexInFullList(fullList,
 				parameter.get(0).substring(0, parameter.get(0).indexOf(" ")));
@@ -528,7 +527,7 @@ public class Action {
 		}
 	}
 
-	protected static String recur(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String recur(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (parameter.get(0).equals("") || !parameter.get(0).contains(" ")) {
 			return INVALID_RECUR_MSG;
 		}
@@ -633,7 +632,7 @@ public class Action {
 
 	}
 
-	protected static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String mark(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		int indexInFullList = Parser.indexInFullList(fullList, parameter.get(0));
 		if (indexInFullList == -2) {
 			return INVALID_LIST_TYPE_MSG;
@@ -658,23 +657,23 @@ public class Action {
 	}
 
 	// @@author A0133992X
-	protected static String nusmods() {
+	public static String nusmods() {
 		isShowNusMods = true;
 		return NUS_MOD_SUCESSFUL;
 	}
 
 	// @@author A0133992X
-	protected static String todolist() {
+	public static String todolist() {
 		isShowNusMods = false;
 		return TODOLIST_SUCESSFUL;
 	}
 
 	// @@author A0133992X
-	protected static boolean getIsShow() {
+	public static boolean getIsShow() {
 		return isShowNusMods;
 	}
 
-	protected static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
+	public static String clearAll(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
 		if (!parameter.get(0).equals("")) {
 			return UNRECOGNIZABLE_CLEARALL_MSG;
 		} else {
@@ -686,55 +685,6 @@ public class Action {
 			canUndo = true;
 			readAll(s);
 			return CLEARALL_MSG;
-		}
-	}
-
-	protected static String help(ArrayList<String> parameterArrayList) {
-		String parameter = parameterArrayList.get(0).toLowerCase();
-		if (parameter.equals("")) {
-			return HELPLIST;
-		} else if (parameter.equals("add")) {
-			return ADD_HELP_MSG;
-		} else if (parameter.equals("theme")) {
-			return THEME_HELP_MSG;
-		} else if (parameter.equals("read")) {
-			return READ_HELP_MSG;
-		} else if (parameter.equals("outline")) {
-			return OUTLINE_HELP_MSG;
-		} else if (parameter.equals("delete")) {
-			return DELETE_HELP_MSG;
-		} else if (parameter.equals("search")) {
-			return SEARCH_HELP_MSG;
-		} else if (parameter.equals("update")) {
-			return UPDATE_HELP_MSG;
-		} else if (parameter.equals("undo")) {
-			return UNDO_HELP_MSG;
-		} else if (parameter.equals("redo")) {
-			return REDO_HELP_MSG;
-		} else if (parameter.equals("comment")) {
-			return COMMENT_HELP_MSG;
-		} else if (parameter.equals("recur")) {
-			return PRIORITY_HELP_MSG; // used for recur
-		} else if (parameter.equals("mark")) {
-			return MARK_HELP_MSG;
-		} else if (parameter.equals("readmark")) {
-			return READMARK_HELP_MSG;
-		} else if (parameter.equals("unmark")) {
-			return UNMARK_HELP_MSG;
-		} else if (parameter.equals("setpath")) {
-			return SETPATH_HELP_MSG;
-		} else if (parameter.equals("nusmods")) {
-			return NUSMODS_HELP_MSG;
-		} else if (parameter.equals("todolist")) {
-			return TODOLIST_HELP_MSG;
-		} else if (parameter.equals("help")) {
-			return HELP_HELP_MSG;
-		} else if (parameter.equals("clearall")) {
-			return CLEARALL_HELP_MSG;
-		} else if (parameter.equals("exit")) {
-			return EXIT_HELP_MSG;
-		} else {
-			return COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG;
 		}
 	}
 
@@ -782,5 +732,54 @@ public class Action {
 		MainLogic.s.saveConfig(config);
 		readAll(MainLogic.s);
 		return SETPATH_SUCCESSFUL_MSG;
+	}
+
+	public static String help(ArrayList<String> parameterArrayList) {
+		String parameter = parameterArrayList.get(0).toLowerCase();
+		if (parameter.equals("")) {
+			return HELPLIST;
+		} else if (parameter.equals("add")) {
+			return ADD_HELP_MSG;
+		} else if (parameter.equals("theme")) {
+			return THEME_HELP_MSG;
+		} else if (parameter.equals("read")) {
+			return READ_HELP_MSG;
+		} else if (parameter.equals("outline")) {
+			return OUTLINE_HELP_MSG;
+		} else if (parameter.equals("delete")) {
+			return DELETE_HELP_MSG;
+		} else if (parameter.equals("search")) {
+			return SEARCH_HELP_MSG;
+		} else if (parameter.equals("update")) {
+			return UPDATE_HELP_MSG;
+		} else if (parameter.equals("undo")) {
+			return UNDO_HELP_MSG;
+		} else if (parameter.equals("redo")) {
+			return REDO_HELP_MSG;
+		} else if (parameter.equals("comment")) {
+			return COMMENT_HELP_MSG;
+		} else if (parameter.equals("recur")) {
+			return PRIORITY_HELP_MSG; // used for recur
+		} else if (parameter.equals("mark")) {
+			return MARK_HELP_MSG;
+		} else if (parameter.equals("readmark")) {
+			return READMARK_HELP_MSG;
+		} else if (parameter.equals("unmark")) {
+			return UNMARK_HELP_MSG;
+		} else if (parameter.equals("setpath")) {
+			return SETPATH_HELP_MSG;
+		} else if (parameter.equals("nusmods")) {
+			return NUSMODS_HELP_MSG;
+		} else if (parameter.equals("todolist")) {
+			return TODOLIST_HELP_MSG;
+		} else if (parameter.equals("help")) {
+			return HELP_HELP_MSG;
+		} else if (parameter.equals("clearall")) {
+			return CLEARALL_HELP_MSG;
+		} else if (parameter.equals("exit")) {
+			return EXIT_HELP_MSG;
+		} else {
+			return COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG;
+		}
 	}
 }

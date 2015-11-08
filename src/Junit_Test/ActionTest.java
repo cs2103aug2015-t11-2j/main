@@ -1,4 +1,4 @@
-package Logic;
+package Junit_Test;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Logic.Action;
 import Storage.Storage;
 
 public class ActionTest {
