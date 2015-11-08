@@ -48,7 +48,7 @@ public class Action {
 	private static final String CLEARALL_MSG = "All contents cleared! Please Undo now if you made a mistake!";
 	private static final String NO_EVENT_TODAY_MSG = "There is nothing to do today!";
 	private static final String NO_EVENT_TMR_MSG = "There is nothing to do tomorrow!";
-	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n help\n clearall\n exit";
+	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n help\n clearall\n exit";
 	private static final String ADD_HELP_MSG = "You can add 3 types of event to your list, namely deadline event, event-time event and memo event\n For events with deadline, type in \"add (event name) by HH:MM DD/MM/YYYY\"\n For events with event time, type in \"add (event name) from HH:MM to HH:MM DD/MM/YYYY\"\n For events without a time, type in \"add (event name)\"";
 	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" (\"theme default\") and \"theme 2\"\n To use your own picture, manually add a picture of size 383*418 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
 	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about each one by typing in \"read\", event type (d, e, m) and index.\n For example, \"read d1\" can give you information on first deadline event.\n You can also use \"read\" to check all the events on today or tomorrow, simply type \"read today\" or \"read tomorrow(tmr)\"";
@@ -79,6 +79,7 @@ public class Action {
 	private static final String UNMARK_OUT_OF_BOUND_MSG = "Cannot unmark. Index entered is larger than current event amount!";
 	private static final String SETPATH_SUCCESSFUL_MSG = "New path set successful!";
 	private static final String UPDATE_OUT_OF_BOUND_MSG = "Cannot undate. Index entered is larger than current event amount!";
+	private static final String SETPATH_HELP_MSG = "Type in \"setpath\" followed by the path you want to store your data file.\n Note that this will create a new empty file in the location you specified so please move your old data file to the new location if you still need the old list!";
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
 	private static SimpleDateFormat eventEnd_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
@@ -91,17 +92,17 @@ public class Action {
 			throws IOException, ParseException {
 		fullList = s.loadE();
 
-//		if (Parser.parseForEvent(parameter) == null) {
-//			readAll(s);
-//			return INVALID_EVENT_PARAMETER_MSG;
-//		}
-// null case will fail parse exception check, so no need to do here
+		// if (Parser.parseForEvent(parameter) == null) {
+		// readAll(s);
+		// return INVALID_EVENT_PARAMETER_MSG;
+		// }
+		// null case will fail parse exception check, so no need to do here
 		Event newEvent = new Event();
 		try {
 			newEvent = Parser.parseForEvent(parameter);
-		}catch (ParseException e) {
+		} catch (ParseException e) {
 			newEvent = Parser.parseForEvent(sentence);
-		}	
+		}
 		if (newEvent.getDetail().equals("")) {
 			readAll(s);
 			return EMPTY_ADD_PARAMETER_MSG;
@@ -130,7 +131,8 @@ public class Action {
 		fullList = temp;
 		Collections.sort(fullList);
 	}
-	//@@author A0133992X
+
+	// @@author A0133992X
 	public static String bground(Storage s, ArrayList<String> parameter) throws IOException {
 		if (!(parameter.get(0).toLowerCase().equals("default") || parameter.get(0).equals("1"))) {
 			String theme = parameter.get(0);
@@ -157,13 +159,14 @@ public class Action {
 			return CHANGE_BG_DEFAULT;
 		}
 	}
-	//@@author A0133992X
-	private static void saveConfigedTheme(Storage s) throws IOException{
+
+	// @@author A0133992X
+	private static void saveConfigedTheme(Storage s) throws IOException {
 		ArrayList<String> config = s.loadConfig();
 		config.set(1, configedTheme);
 		s.saveConfig(config);
 	}
-	
+
 	protected static String searchKey(Storage s, ArrayList<String> parameterArrayList)
 			throws IOException, ParseException {
 		String parameter = parameterArrayList.get(0);
@@ -651,17 +654,20 @@ public class Action {
 			return null;
 		}
 	}
-	//@@author A0133992X
+
+	// @@author A0133992X
 	protected static String nusmods() {
 		isShowNusMods = true;
 		return NUS_MOD_SUCESSFUL;
 	}
-	//@@author A0133992X
+
+	// @@author A0133992X
 	protected static String todolist() {
 		isShowNusMods = false;
 		return TODOLIST_SUCESSFUL;
 	}
-	//@@author A0133992X
+
+	// @@author A0133992X
 	protected static boolean getIsShow() {
 		return isShowNusMods;
 	}
@@ -713,6 +719,8 @@ public class Action {
 			return READMARK_HELP_MSG;
 		} else if (parameter.equals("unmark")) {
 			return UNMARK_HELP_MSG;
+		} else if (parameter.equals("setpath")) {
+			return SETPATH_HELP_MSG;
 		} else if (parameter.equals("help")) {
 			return HELP_HELP_MSG;
 		} else if (parameter.equals("clearall")) {
@@ -723,7 +731,7 @@ public class Action {
 			return COMMAND_NOT_RECOGNIZED_IN_HELPLIST_MSG;
 		}
 	}
-	
+
 	public static void readMark(Storage s) throws IOException, ParseException {
 		fullList = s.loadE();
 		ArrayList<Event> temp = new ArrayList<Event>();
@@ -759,9 +767,10 @@ public class Action {
 			return null;
 		}
 	}
-	//@@author A0133992X
+
+	// @@author A0133992X
 	public static String setpath(Storage s, ArrayList<String> parameter) throws IOException, ParseException {
-		ToDoList.s = new Storage("Yui",Paths.get(parameter.get(0)));
+		ToDoList.s = new Storage("Yui", Paths.get(parameter.get(0)));
 		ArrayList<String> config = ToDoList.s.loadConfig();
 		config.set(0, Paths.get(parameter.get(0)).toString());
 		ToDoList.s.saveConfig(config);
@@ -769,4 +778,3 @@ public class Action {
 		return SETPATH_SUCCESSFUL_MSG;
 	}
 }
-	
