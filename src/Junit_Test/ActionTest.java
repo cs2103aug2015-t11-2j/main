@@ -15,16 +15,14 @@ import Storage.Storage;
 
 public class ActionTest {
 
-	private static final String INVALID_ADD_PARAMETER_MSG = "Cannot add empty event!";
-	private static final String ADD_SUCCESS_MSG = "Event added successful!";
-	private static final String SEARCH_NOT_FOUND_MSG = "Cannot find the key words!";
+	private static final String ADD_SUCCESS_MSG = "Event added successfully!";
 	private static final String UNDO_MSG = "Undo operation successful!";
-	private static final String UNABLE_UNDO_MSG = "Cannot undo! Have some operations first!";
+	private static final String UNABLE_UNDO_MSG = "Cannot undo! Do some operations first!";
 	private static final String REDO_MSG = "Redo operation successful!";
 	private static final String UNABLE_REDO_MSG = "Cannot redo if you did not undo!";
 	private static final String DELETE_OUT_OF_BOUND_MSG = "Cannot delete. Index entered is larger than current event amount!";
-	private static final String DELETE_SUCCESSFUL_MSG = "Delete successful!";
-	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m)!";
+	private static final String DELETE_SUCCESSFUL_MSG = "Delete successfully!";
+	private static final String INVALID_LIST_TYPE_MSG = "Please enter the correct event type (d, e or m) followed by the index!";
 
 	@Before
 	public void setUp() throws Exception {
@@ -34,7 +32,7 @@ public class ActionTest {
 	public void testAddToList() throws IOException, ParseException {
 		Storage s = new Storage("test");
 		ArrayList<String> parameter = new ArrayList<String>();
-		assertEquals(Action.addToList(s, parameter, parameter), INVALID_ADD_PARAMETER_MSG);
+		//assertEquals(Action.addToList(s, parameter, parameter), INVALID_ADD_PARAMETER_MSG);
 		parameter.add("abc");
 		assertEquals(Action.addToList(s, parameter, parameter), ADD_SUCCESS_MSG);
 		s.reset();
@@ -45,9 +43,9 @@ public class ActionTest {
 		Storage s = new Storage("test");
 		ArrayList<String> parameter = new ArrayList<String>();
 		parameter.add("event1");
-		assertEquals(Action.searchKey(s, parameter), SEARCH_NOT_FOUND_MSG);
+		//assertEquals(Action.searchKey(s, parameter), SEARCH_NOT_FOUND_MSG);
 		Action.addToList(s, parameter, parameter);
-		assertEquals(Action.searchKey(s, parameter), "1. event1");
+		assertEquals(Action.searchKey(s, parameter), "The list of found results are on the right!");
 		s.reset();
 	}
 
@@ -83,7 +81,7 @@ public class ActionTest {
 		ArrayList<String> deleteParameter = new ArrayList<String>();
 		deleteParameter.add("a1");
 		assertEquals(Action.deleteEvent(s, deleteParameter), INVALID_LIST_TYPE_MSG);
-		deleteParameter.set(0, "m2");
+		deleteParameter.set(0, "m10");
 		assertEquals(Action.deleteEvent(s, deleteParameter), DELETE_OUT_OF_BOUND_MSG);
 		deleteParameter.set(0, "m1");
 		assertEquals(Action.deleteEvent(s, deleteParameter), DELETE_SUCCESSFUL_MSG);

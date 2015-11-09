@@ -79,7 +79,7 @@ public class SUTStorage extends TestCase {
 		//test for converter
 		//assertEquals(Converter.eventToString(arrE1), arr1);
 		//test for save load
-		assertEquals(arrE1, arrE2);
+		assertTrue(arrE1.get(0).equals(arrE2.get(0)) && arrE1.get(1).equals(arrE2.get(1)));
 	}
 
 }
