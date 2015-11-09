@@ -63,7 +63,7 @@ public class Yui_GUI extends Application{
 	public static Image listBkImage;
 	protected static GUIController myGUIController;
 	protected static TrayController myTrayController;
-	//protected static UIHotKey myUIHotKey;
+	protected static UIHotKey myUIHotKey;
 	protected static UIBuffer myUIBuffer;
 	
 	public static void main(String[] args) {
@@ -109,7 +109,7 @@ public class Yui_GUI extends Application{
 	   returnCommand = myUIBuffer.returnedCommand();
 	   myGUIController  = GUIController.getInstance();
 	   myTrayController = TrayController.getInstance();
-	   //myUIHotKey = UIHotKey.getInstance();
+	   myUIHotKey = UIHotKey.getInstance();
    }
    
    private void setMyStage(Stage primaryStage, String iconString){
@@ -232,7 +232,7 @@ public class Yui_GUI extends Application{
    }
    
    private void HotKey(Stage myStage) throws IOException{
-	   //myUIHotKey.listenHotKey(myStage);
+	   myUIHotKey.listenHotKey(myStage);
 	   myTrayController.createTrayIcon(myStage);
    }
    

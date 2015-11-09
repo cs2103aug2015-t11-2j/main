@@ -2,17 +2,12 @@
 package GUI;
 
 import java.io.IOException;
-import javax.swing.JFrame;
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-public class UIHotKey extends JFrame{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class UIHotKey{
 	private final int SHOW_WINDOWS = 1;
 	private final int HIDE_WINDOWS = 2;
 	private String libPath;
@@ -72,40 +67,4 @@ public class UIHotKey extends JFrame{
 			}
 		});
 	}
-	
-	/*
-	private synchronized void loadLib(String libName) throws IOException {     
-	       
-	    //String nativeTempDir = System.getProperty("java.io.tmpdir");   
-	       
-	    //InputStream in = null;   
-	    BufferedInputStream reader = null;   
-	    FileOutputStream writer = null;   
-	       
-	    File extractedLibFile = new File("user.dir/" + libName);   
-	    if(!extractedLibFile.exists()){   
-	        try {     
-	           // if(in==null)   
-	             //   in =  Yui_GUI.class.getResourceAsStream(libFullName);   
-	            //Yui_GUI.class.getResource(libFullName);   
-	            reader = new BufferedInputStream(in);   
-	            writer = new FileOutputStream(extractedLibFile);   
-	               
-	            byte[] buffer = new byte[1024];   
-	               
-	            while (reader.read(buffer) > 0){   
-	                writer.write(buffer);   
-	                buffer = new byte[1024];   
-	            }   
-	        } catch (IOException e){   
-	            e.printStackTrace();   
-	        } finally {   
-	            if(in!=null)   
-	                in.close();   
-	            if(writer!=null)   
-	                writer.close();   
-	        }   
-	    }
-	    JIntellitype.setLibraryLocation(extractedLibFile);   
-	}*/	
 }
