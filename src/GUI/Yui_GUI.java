@@ -232,8 +232,8 @@ public class Yui_GUI extends Application{
    }
    
    private void HotKey(Stage myStage) throws IOException{
-	   myUIHotKey.listenHotKey(myStage);
 	   myTrayController.createTrayIcon(myStage, ICON_PATH);
+	   myUIHotKey.listenHotKey(myStage, myTrayController);
    }
    
    private void MotionCatch(){
