@@ -31,12 +31,12 @@ public class TrayController {
 		return theTrayController;
 	}
 
-	public TrayIcon createTrayIcon(final Stage stage) {
+	public TrayIcon createTrayIcon(final Stage stage, String iconPath) {
 
 		if (SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
-			java.awt.Image image = Toolkit.getDefaultToolkit().getImage(TrayController.class.getResource(Yui_GUI.ICON_PATH));
-			stage.getIcons().add(new Image(Yui_GUI.ICON_PATH));
+			java.awt.Image image = Toolkit.getDefaultToolkit().getImage(TrayController.class.getResource(iconPath));
+			stage.getIcons().add(new Image(iconPath));
 
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
