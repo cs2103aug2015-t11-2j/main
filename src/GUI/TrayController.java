@@ -31,7 +31,7 @@ public class TrayController {
 		return theTrayController;
 	}
 
-	public TrayIcon createTrayIcon(final Stage stage, String iconPath) {
+	public void createTrayIcon(final Stage stage, String iconPath) {
 
 		if (SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
@@ -94,7 +94,6 @@ public class TrayController {
 				System.err.println(e);
 			}
 		}
-		return trayIcon;
 	}
 
 	public void showTrayMsg() {

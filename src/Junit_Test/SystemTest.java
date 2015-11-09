@@ -2,17 +2,12 @@
 package Junit_Test;
 
 import java.io.IOException;
-import java.util.Date;
-
-import Fonts.ChineseJudge;
-
 import java.text.ParseException;
 
 import GUI.TrayController;
 import GUI.UIBuffer;
 import GUI.UIHotKey;
 import GUI.UITask;
-import Image.ImageJudge;
 import Logic.MainLogic;
 import javafx.embed.swing.JFXPanel;
 import junit.framework.TestCase;
@@ -20,15 +15,11 @@ import junit.framework.TestCase;
 public class SystemTest extends TestCase{
 	private static String SPACE = " ";
 	private UIBuffer myUIBuffer = null;
-	private ImageJudge myImageJudge = null;
-	private ChineseJudge myChineseJudge = null;
 	private TrayController myTrayController = null;
 	@Override  
     protected void setUp() throws Exception {  
 		MainLogic.initialize();
 		myUIBuffer = UIBuffer.getInstance();
-		myImageJudge =  ImageJudge.getInstance();
-		myChineseJudge = ChineseJudge.getInstance();
 		myTrayController = TrayController.getInstance();
     } 
 	
@@ -43,6 +34,13 @@ public class SystemTest extends TestCase{
 	public void testAddMemo() throws IOException, ParseException{
 		String returnedMessage = MainLogic.implement("add test memo").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "add test memo" + "\n" + SPACE 
+								+ "Event added successfully!";
+		assertEquals(returnedMessage, expectedMessage);
+	}
+	
+	public void testAddChineseMemo() throws IOException, ParseException{
+		String returnedMessage = MainLogic.implement("add 中文").substring(20);
+		String expectedMessage = SPACE + "Command Entered: " + "add 中文" + "\n" + SPACE 
 								+ "Event added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
@@ -297,7 +295,7 @@ public class SystemTest extends TestCase{
 								+ "Comment added successfully!";
 		assertEquals(returnedMessage, expectedMessage);
 	}
-	
+	//@@author A0133992X
 	public void testMarkDeadline() throws IOException, ParseException{
 		MainLogic.implement("add test by 11:00 today");
 		String returnedMessage = MainLogic.implement("mark d1").substring(20);
@@ -367,7 +365,7 @@ public class SystemTest extends TestCase{
 		MainLogic.implement("delete d1");
 		assertEquals(returnedMessage, expectedMessage);
 	}
-	//@@author A0133992X
+	
 	public void testReadmark() throws IOException, ParseException{
 		MainLogic.implement("add test by 11:00 today");
 		String returnedMessage = MainLogic.implement("readmark").substring(20);
@@ -661,27 +659,6 @@ public class SystemTest extends TestCase{
 		assertEquals(myUIBuffer.isShowMainGrid(), true);
 	}
 	
-	public void testImageJudgeIsToday(){
-		Date today = new Date();
-		assertEquals(myImageJudge.isToday(today), true);
-	}
-	
-	public void testImageJudgeNotToday(){
-		Date notToday = new Date(0);
-		assertEquals(myImageJudge.isToday(notToday), false);
-	}
-	
-	public void testImageJudgeIsComment(){
-		assertEquals(myImageJudge.isCommented("abc"), true);
-	}
-	public void testChineseJudgeNotChinses(){
-		assertEquals(myChineseJudge.isContainsChinese("abc"), false);
-	}
-	
-	public void testChineseJudgeIsChinses(){
-		assertEquals(myChineseJudge.isContainsChinese("中文"), true);
-	}
-	
 	public void testTrayControllerInstance(){
 		myTrayController = TrayController.getInstance();
 		assertTrue(myTrayController != null);
@@ -693,6 +670,7 @@ public class SystemTest extends TestCase{
 	}
 	
 	public void testUITaskEvent() throws IOException, ParseException{
+		@SuppressWarnings("unused")
 		JFXPanel myPanel = new JFXPanel();
 		myUIBuffer.getList();
 		UITask myTaskEvent = null;

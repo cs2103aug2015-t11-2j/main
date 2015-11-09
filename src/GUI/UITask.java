@@ -5,9 +5,8 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import Fonts.ChineseJudge;
-import Image.ImageJudge;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import Tasks.Event;
 import Tasks.NumberedEvent;
 import javafx.geometry.Insets;
@@ -50,13 +49,14 @@ public class UITask {
 	private final int NAME_MAX_LENGTH_S = 14;
 	private final int NAME_MAX_LENGTH_L = 20;
 	private final int SINGLE_BIT_NUMBER = 9;
+	private final String REGEX = "[\u4e00-\u9fa5]";
+	private final Pattern PAT = Pattern.compile(REGEX);
 	private final SimpleDateFormat DATE_FORMATE_DATE = new SimpleDateFormat("EEE, dd/MM/yyyy", Locale.ENGLISH);
 	private final SimpleDateFormat DATE_FORMATE_TIME = new SimpleDateFormat("HH : mm");
+	private final SimpleDateFormat FORMATE_COMPARE = new SimpleDateFormat("yyyyMMdd");
 	private final int TYPE_DEADLINE_OR_EVERNT = 0;
 	private final int TYPE_FLOATING = 1;
 	private int type;
-	private static ChineseJudge myChineseJudge;
-	private static ImageJudge myImageJudge;
 	
 	public UITask(NumberedEvent numberedEvent) throws MalformedURLException{
 		readEvent(numberedEvent);
@@ -79,8 +79,6 @@ public class UITask {
 		eventName = thisTask.getDetail();
 		commentString = thisTask.getComment();
 		num = numberedEvent.getIndex();
-		myChineseJudge = ChineseJudge.getInstance();
-		myImageJudge = ImageJudge.getInstance();
 	}
 	
 	private void typeJudge(Event thisTask){
@@ -123,7 +121,7 @@ public class UITask {
 		if(type == TYPE_DEADLINE_OR_EVERNT){
 			Image nameDateTimeImage = new Image(getClass().getResourceAsStream("/Image/NTD.png"));
 			Image dangerImage = new Image(getClass().getResourceAsStream("/Image/danger.png"));
-			if(myImageJudge.isToday(theDate)){
+			if(isToday(theDate)){
 				nameBk = new ImageView(dangerImage);
 			} else {
 				nameBk = new ImageView(nameDateTimeImage);
@@ -140,7 +138,7 @@ public class UITask {
 		Image commentImage = new Image(getClass().getResourceAsStream("/Image/comment.png"));
 		
 		numberBk = new ImageView(numberImage);
-		if(myImageJudge.isCommented(commentString)){
+		if(isCommented(commentString)){
 			commentBk = new ImageView(commentImage);
 	    } else {
 	    	commentBk = new ImageView(uncommentImage);
@@ -187,7 +185,7 @@ public class UITask {
 	    	eventName = eventName.substring(0, nameMaxLength - 1) + "..";
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
-	    if(myChineseJudge.isContainsChinese(eventName)){
+	    if(isContainsChinese(eventName)){
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/CN.ttf"), 16));
 	    } else {
 	    	tNm.setFont(Font.loadFont(getClass().getResourceAsStream("/Fonts/UI.ttf"), 18));
@@ -219,7 +217,29 @@ public class UITask {
 		    TaskPane.add(nameBackg, 1, 0);
 		    TaskPane.add(commentBackg, 2, 0);
 		}
-		
+	}
+	
+	private boolean isToday(Date theDate){
+		Date today = new Date();
+		String theDateString = FORMATE_COMPARE.format(theDate);
+		String todayString = FORMATE_COMPARE.format(today);
+		if(theDateString.equals(todayString)){
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isCommented(String comment){
+		return !comment.equals("");
+	}
+	
+	private boolean isContainsChinese(String str){
+		Matcher matcher = PAT.matcher(str);
+		boolean flg = false;
+		if(matcher.find()){
+			flg = true;
+		}
+		return flg;
 	}
 	
 	public GridPane getTaskBox(){
