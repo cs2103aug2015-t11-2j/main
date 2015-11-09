@@ -407,7 +407,7 @@ public class SystemTest extends TestCase{
 	public void testHelp() throws IOException, ParseException{
 		String returnedMessage = MainLogic.implement("help").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "help" + "\n" + SPACE 
-								+ "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n help\n clearall\n exit";
+								+ "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n hotkey\n help\n clearall\n exit";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
@@ -548,6 +548,13 @@ public class SystemTest extends TestCase{
 		String returnedMessage = MainLogic.implement("help exit").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "help exit" + "\n" + SPACE 
 								+ "You can exit the app by typing in \"exit\"";
+		assertEquals(returnedMessage, expectedMessage);
+	}
+	
+	public void testHelpHotKey() throws IOException, ParseException{
+		String returnedMessage = MainLogic.implement("help hotkey").substring(20);
+		String expectedMessage = SPACE + "Command Entered: " + "help hotkey" + "\n" + SPACE 
+								+ "We provide the following hotkeys to allow easier control:\n \"¡ü\" or \"¡ý\" arrows to move the list on the right up or down\n Press \"Alt\" and \"¡ü\" or \"¡ý\" arrows to move the message on the left up or down\n Press \"Ctrl\" and \"H\" to hide Yui\n Press \"Ctrl\" and \"Y\" to show Yui";
 		assertEquals(returnedMessage, expectedMessage);
 	}
 	
