@@ -161,7 +161,7 @@ public class MainLogic {
 		return Action.getFloatingList();
 	}
 
-	public static void getFullList() throws IOException, ParseException {
+	private static void getFullList() throws IOException, ParseException {
 		Action.readAll(s);
 	}
 
