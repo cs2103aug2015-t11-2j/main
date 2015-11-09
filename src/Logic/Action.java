@@ -64,7 +64,7 @@ public class Action {
 	private static final String NO_EVENT_TODAY_OR_TMR_MSG = "Have a rest! There is nothing to do today or tomorrow!";
 	private static final String INVALID_RECUR_MSG = "Please enter the correct values for recur!";
 	// help list
-	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n help\n clearall\n exit";
+	private static final String HELPLIST = "add\n theme\n read\n outline\n delete\n search\n update\n undo\n redo\n comment\n recur\n mark\n readmark\n unmark\n setpath\n nusmods\n todolist\n hotkey\n help\n clearall\n exit";
 	private static final String ADD_HELP_MSG = "You can add 3 types of event to your list, namely deadline event, event-time event and memo event\n For events with deadline, type in \"add (event name) by HH:MM DD/MM/YYYY\"\n For events with event time, type in \"add (event name) from HH:MM to HH:MM DD/MM/YYYY\"\n For events without a time, type in \"add (event name)\"";
 	private static final String THEME_HELP_MSG = "You can change the picture you display on the right hand side panel. There are two pre-set pictures and you can change between them using \"theme 1\" (\"theme default\") and \"theme 2\"\n To use your own picture, manually add a picture of size 383*418 and file type png into the user.dir folder. Rename it to myTheme. Then you can change to this picture by typing in \"theme my theme\"";
 	private static final String READ_HELP_MSG = "As you can see your events listed under three categories on the right, you can read detailed information about each one by typing in \"read\", event type (d, e, m) and index.\n For example, \"read d1\" can give you information on first deadline event.\n You can also use \"read\" to check all the events on today or tomorrow, simply type \"read today\" or \"read tomorrow(tmr)\"";
@@ -85,6 +85,7 @@ public class Action {
 	private static final String SETPATH_HELP_MSG = "Type in \"setpath\" followed by the path you want to store your data file.\n Note that this will create a new empty file in the location you specified so please move your old data file to the new location if you still need the old list!";
 	private static final String NUSMODS_HELP_MSG = "Type in \"nusmods\" and you can go to the NUSMODS website to allow you to check the timetable quickly!\n To go back to your list, just type \"todolist\"";
 	private static final String TODOLIST_HELP_MSG = "Type in \"todolist\" to go back to your list from NUSMODS website or other features!";
+	private static final String HOTKEY_HELP_MSG = "We provide the following hotkeys to allow easier control:\n \"¡ü\" or \"¡ý\" arrows to move the list on the right up or down\n Press \"Alt\" and \"¡ü\" or \"¡ý\" arrows to move the message on the left up or down\n Press \"Ctrl\" and \"H\" to hide Yui\n Press \"Ctrl\" and \"Y\" to show Yui";
 
 	private static SimpleDateFormat deadline_format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	private static SimpleDateFormat eventStart_format = new SimpleDateFormat("HH:mm");
@@ -774,6 +775,8 @@ public class Action {
 			return NUSMODS_HELP_MSG;
 		} else if (parameter.equals("todolist")) {
 			return TODOLIST_HELP_MSG;
+		} else if (parameter.equals("hotkey")) {
+			return HOTKEY_HELP_MSG;
 		} else if (parameter.equals("help")) {
 			return HELP_HELP_MSG;
 		} else if (parameter.equals("clearall")) {
