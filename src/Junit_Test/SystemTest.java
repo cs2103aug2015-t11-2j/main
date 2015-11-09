@@ -32,6 +32,7 @@ public class SystemTest extends TestCase{
 		myTrayController = TrayController.getInstance();
     } 
 	
+	//@@author A0127142R
 	public void testClear() throws IOException, ParseException{
 		String returnedMessage = MainLogic.implement("clearall").substring(20);//MainLogic.implement("clearall").substring(20);
 		String expectedMessage = SPACE + "Command Entered: " + "clearall" + "\n" + SPACE 
@@ -366,7 +367,7 @@ public class SystemTest extends TestCase{
 		MainLogic.implement("delete d1");
 		assertEquals(returnedMessage, expectedMessage);
 	}
-	
+	//@@author A0133992X
 	public void testReadmark() throws IOException, ParseException{
 		MainLogic.implement("add test by 11:00 today");
 		String returnedMessage = MainLogic.implement("readmark").substring(20);
