@@ -46,7 +46,7 @@ public class UITask {
 	private Group nameBackg = new Group();
 	private Group dateBackg = new Group();
 	private Group commentBackg = new Group();
-	private final int NAME_MAX_LENGTH_S = 14;
+	private final int NAME_MAX_LENGTH_S = 15;
 	private final int NAME_MAX_LENGTH_L = 20;
 	private final int SINGLE_BIT_NUMBER = 9;
 	private final String REGEX = "[\u4e00-\u9fa5]";
@@ -182,7 +182,7 @@ public class UITask {
 			nameMaxLength = NAME_MAX_LENGTH_L;
 		}
 		if(eventName.length() > nameMaxLength){
-	    	eventName = eventName.substring(0, nameMaxLength - 1) + "..";
+	    	eventName = eventName.substring(0, nameMaxLength) + "..";
 	    }
 	    Text tNm = new Text(" " + " " + eventName);
 	    if(isContainsChinese(eventName)){
