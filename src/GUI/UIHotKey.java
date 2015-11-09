@@ -34,7 +34,7 @@ public class UIHotKey{
 	}
 	
 	//set Hot Key
-	public void listenHotKey(final Stage myStage, TrayController myTrayController) throws IOException{ 
+	public void listenHotKey(final Stage myStage, final TrayController myTrayController) throws IOException{ 
 		JIntellitype.getInstance().registerHotKey(SHOW_WINDOWS, JIntellitype.MOD_CONTROL, 'Y'); 
 		JIntellitype.getInstance().registerHotKey(HIDE_WINDOWS, JIntellitype.MOD_CONTROL, 'H');
 		
