@@ -1,0 +1,185 @@
+import java.util.*;
+import java.io.*;
+import java.nio.*;
+import java.nio.file.Files;
+
+/**
+ * This class is used to create and edit a "bullet point" form of text file, and
+ * provide simple commands for it, including add, remove, clear, display, and
+ * exit
+ * 
+ * @author Le Nguyen
+ *
+ */
+public class TextBuddy {
+	enum CMD_TYPE {
+		ADD, DELETE, CLEAR, DISPLAY, EXIT, FALSE_CMD
+	};
+
+	private static Scanner sc = new Scanner(System.in);
+	private static String fileName = "";
+
+	private static final int PARAM_INITIAL_SERIAL = 1;
+	private static final int FAKE_SERIAL = 0;
+
+	public static void main(String[] args) throws IOException {
+		File file = new File(args[0]);
+		initialize(args[0]);
+		System.out.print("Command:");
+		while (processInput(sc.nextLine(), file)) { // execute all command
+			System.out.print("Command:");
+		}
+		return;
+	}
+
+	private static void initialize(String args) {
+		fileName = args;
+		System.out.println("Welcome to TextBuddy. " + fileName + " is ready for use");
+	}
+
+	private static boolean processInput(String input, File file) {
+		CMD_TYPE cmd = findCmd(input);// extract command from input
+		if (cmd == CMD_TYPE.EXIT) {
+			return false;
+		}
+		if (cmd == CMD_TYPE.DISPLAY) {
+			runDisplay(file);
+		}
+		if (cmd == CMD_TYPE.CLEAR) {
+			runClear(file);
+		}
+		if (cmd == CMD_TYPE.ADD) {
+			runAdd(findText(input), file);
+		}
+		if (cmd == CMD_TYPE.DELETE) {
+			runDelete(findText(input), file);
+		}
+		if (cmd == CMD_TYPE.FALSE_CMD) {
+			System.out.println("Invalid input, try again: ");
+		}
+		return true;
+	}
+
+	private static CMD_TYPE findCmd(String input) {
+		String cmd = getFirstWord(input);
+		if (cmd.equalsIgnoreCase("ADD")) {
+			return CMD_TYPE.ADD;
+		}
+		if (cmd.equalsIgnoreCase("DELETE")) {
+			return CMD_TYPE.DELETE;
+		}
+		if (cmd.equalsIgnoreCase("CLEAR")) {
+			return CMD_TYPE.CLEAR;
+		}
+		if (cmd.equalsIgnoreCase("DISPLAY")) {
+			return CMD_TYPE.DISPLAY;
+		}
+		if (cmd.equalsIgnoreCase("EXIT")) {
+			return CMD_TYPE.EXIT;
+		}
+		return CMD_TYPE.FALSE_CMD;
+	}
+
+	private static String findText(String input) {
+		String text = removeFirstWord(input);
+		return text;
+	}
+
+	private static String removeFirstWord(String input) {
+		return input.replace(getFirstWord(input), "").trim();
+	}
+
+	private static String getFirstWord(String input) {
+		return input.trim().split("\\s+")[0];
+	}
+
+	private static void runAdd(String text, File file) {
+		String newText = FAKE_SERIAL + ". " + text;
+		try {
+			FileWriter fw = new FileWriter(file, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.append(newText);
+			bw.newLine();
+			bw.close();
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		serialize(file);// renumber all existing text lines
+		System.out.println("added to " + fileName + ": \"" + text + "\"");
+	}
+
+	private static void runDelete(String lineNumberDelete, File file) {
+		String lineDelete = null;
+		try {
+			File tempFile = new File(file.getAbsolutePath() + ".tmp");
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+			for (String line; (line = br.readLine()) != null;) {
+				if (line.substring(0, lineNumberDelete.length()).equals(lineNumberDelete)) {
+					lineDelete = line;
+				} else {
+					pw.println(line);
+					pw.flush();
+				}
+			}
+			pw.close();
+			br.close();
+			file.delete();
+			tempFile.renameTo(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		serialize(file);
+		if (lineDelete != null)
+			System.out.println("deleted from " + fileName + ": \"" + removeFirstWord(lineDelete) + "\"");
+		else
+			System.out.println("no such line exists.");
+	}
+
+	private static void runDisplay(File file) {
+		try {
+			List<String> lines = Files.readAllLines(file.toPath());
+			if (lines.isEmpty()) {
+				System.out.println(fileName + " is empty");
+			}
+			for (String line : lines) {
+				System.out.println(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void runClear(File file) {
+		try {
+			FileWriter fw = new FileWriter(file);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("all content deleted from " + fileName);
+	}
+
+	private static void serialize(File file) {
+		int serial = PARAM_INITIAL_SERIAL;
+		try {
+			File tempFile = new File(file.getAbsolutePath() + ".tmp");
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+			for (String line; (line = br.readLine()) != null;) {
+				String str = serial++ + ". " + removeFirstWord(line);
+				pw.println(str);
+				pw.flush();
+			}
+			pw.close();
+			br.close();
+			file.delete();
+			tempFile.renameTo(file);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
